@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -89,8 +90,8 @@ class _LogoutPopupComponentWidgetState
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               FFButtonWidget(
-                onPressed: () async {
-                  Navigator.pop(context);
+                onPressed: () {
+                  print('Button pressed ...');
                 },
                 text: 'CANCEL',
                 options: FFButtonOptions(
@@ -110,8 +111,12 @@ class _LogoutPopupComponentWidgetState
                 ),
               ),
               FFButtonWidget(
-                onPressed: () {
-                  print('Button pressed ...');
+                onPressed: () async {
+                  GoRouter.of(context).prepareAuthEvent();
+                  await authManager.signOut();
+                  GoRouter.of(context).clearRedirectLocation();
+
+                  context.goNamedAuth('UserLoginPage', context.mounted);
                 },
                 text: 'LOGOUT',
                 options: FFButtonOptions(

@@ -1,22 +1,39 @@
 // Export pages
-export '/pages/home/user_home_page/user_home_page_widget.dart'
+export '/attendee_pages/home/user_home_page/user_home_page_widget.dart'
     show UserHomePageWidget;
-export '/pages/auth/user_login_page/user_login_page_widget.dart'
+export '/attendee_pages/auth/user_login_page/user_login_page_widget.dart'
     show UserLoginPageWidget;
-export '/pages/q_r_code/user_q_r_code_list_page/user_q_r_code_list_page_widget.dart'
+export '/attendee_pages/q_r_code/user_q_r_code_list_page/user_q_r_code_list_page_widget.dart'
     show UserQRCodeListPageWidget;
-export '/pages/q_r_code/user_q_r_code_page/user_q_r_code_page_widget.dart'
+export '/attendee_pages/q_r_code/user_q_r_code_page/user_q_r_code_page_widget.dart'
     show UserQRCodePageWidget;
-export '/pages/activity/activity_page/activity_page_widget.dart'
+export '/attendee_pages/activity/activity_page/activity_page_widget.dart'
     show ActivityPageWidget;
-export '/pages/menu/menu_page/menu_page_widget.dart' show MenuPageWidget;
-export '/pages/home/event_details_page/event_details_page_widget.dart'
+export '/attendee_pages/menu/menu_page/menu_page_widget.dart'
+    show MenuPageWidget;
+export '/attendee_pages/home/event_details_page/event_details_page_widget.dart'
     show EventDetailsPageWidget;
-export '/pages/booth/booth_list_page/booth_list_page_widget.dart'
+export '/attendee_pages/booth/booth_list_page/booth_list_page_widget.dart'
     show BoothListPageWidget;
-export '/pages/networking/networking_page/networking_page_widget.dart'
+export '/attendee_pages/networking/networking_page/networking_page_widget.dart'
     show NetworkingPageWidget;
-export '/pages/booth/booth_details_page/booth_details_page_widget.dart'
+export '/attendee_pages/booth/booth_details_page/booth_details_page_widget.dart'
     show BoothDetailsPageWidget;
-export '/pages/booth/booth_list_page_v2/booth_list_page_v2_widget.dart'
+export '/attendee_pages/booth/booth_list_page_v2/booth_list_page_v2_widget.dart'
     show BoothListPageV2Widget;
+export '/attendee_pages/auth/user_login_page_copy/user_login_page_copy_widget.dart'
+    show UserLoginPageCopyWidget;
+export '/volunteer_screens/home/scan_qr_page/scan_qr_page_widget.dart'
+    show ScanQrPageWidget;
+export '/volunteer_screens/home/qr_scanner/qr_scanner_widget.dart'
+    show QrScannerWidget;
+export '/volunteer_screens/search/search_page/search_page_widget.dart'
+    show SearchPageWidget;
+export '/volunteer_screens/push_notification/notification_screen/notification_screen_widget.dart'
+    show NotificationScreenWidget;
+export '/volunteer_screens/agenda/agenda_home_screen/agenda_home_screen_widget.dart'
+    show AgendaHomeScreenWidget;
+export '/attendee_pages/profile/user_profile_page/user_profile_page_widget.dart'
+    show UserProfilePageWidget;
+export '/attendee_pages/profile/user_profile_page_edit/user_profile_page_edit_widget.dart'
+    show UserProfilePageEditWidget;

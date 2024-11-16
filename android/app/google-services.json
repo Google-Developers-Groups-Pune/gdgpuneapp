@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "38899088358",
+    "project_id": "devfest-pune-app",
+    "storage_bucket": "devfest-pune-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38899088358:android:bff69fc3b91bea8e68f427",
+        "android_client_info": {
+          "package_name": "com.google.gdgpune"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9WsA03g35d24c5jn-_HAC-5Q2qmRODWQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 
-import '/auth/custom_auth/custom_auth_user_provider.dart';
+import '/auth/base_auth_user_provider.dart';
 
 import '/index.dart';
 import '/main.dart';
@@ -20,8 +22,8 @@ class AppStateNotifier extends ChangeNotifier {
   static AppStateNotifier? _instance;
   static AppStateNotifier get instance => _instance ??= AppStateNotifier._();
 
-  GDGPuneAuthUser? initialUser;
-  GDGPuneAuthUser? user;
+  BaseAuthUser? initialUser;
+  BaseAuthUser? user;
   bool showSplashImage = true;
   String? _redirectLocation;
 
@@ -46,7 +48,7 @@ class AppStateNotifier extends ChangeNotifier {
   /// to perform subsequent actions (such as navigation) afterwards.
   void updateNotifyOnAuthChange(bool notify) => notifyOnAuthChange = notify;
 
-  void update(GDGPuneAuthUser newUser) {
+  void update(BaseAuthUser newUser) {
     final shouldUpdate =
         user?.uid == null || newUser.uid == null || user?.uid != newUser.uid;
     initialUser ??= newUser;
@@ -150,6 +152,49 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'boothListPageV2',
               path: 'boothListPageV2',
               builder: (context, params) => const BoothListPageV2Widget(),
+            ),
+            FFRoute(
+              name: 'UserLoginPageCopy',
+              path: 'userCreatePage',
+              builder: (context, params) => const UserLoginPageCopyWidget(),
+            ),
+            FFRoute(
+              name: 'scanQrPage',
+              path: 'scanQrPage',
+              builder: (context, params) => const ScanQrPageWidget(),
+            ),
+            FFRoute(
+              name: 'qrScanner',
+              path: 'qrScanner',
+              builder: (context, params) => const QrScannerWidget(),
+            ),
+            FFRoute(
+              name: 'searchPage',
+              path: 'searchPage',
+              builder: (context, params) => const SearchPageWidget(),
+            ),
+            FFRoute(
+              name: 'notificationScreen',
+              path: 'notificationScreen',
+              builder: (context, params) => const NotificationScreenWidget(),
+            ),
+            FFRoute(
+              name: 'agendaHomeScreen',
+              path: 'agendaHomeScreen',
+              builder: (context, params) => const NavBarPage(
+                initialPage: '',
+                page: AgendaHomeScreenWidget(),
+              ),
+            ),
+            FFRoute(
+              name: 'UserProfilePage',
+              path: 'userProfilePage',
+              builder: (context, params) => const UserProfilePageWidget(),
+            ),
+            FFRoute(
+              name: 'UserProfilePageEdit',
+              path: 'userProfilePageEdit',
+              builder: (context, params) => const UserProfilePageEditWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
@@ -270,6 +315,8 @@ class FFParameters {
     String paramName,
     ParamType type, {
     bool isList = false,
+    List<String>? collectionNamePath,
+    StructBuilder<T>? structBuilder,
   }) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
@@ -287,6 +334,8 @@ class FFParameters {
       param,
       type,
       isList,
+      collectionNamePath: collectionNamePath,
+      structBuilder: structBuilder,
     );
   }
 }
@@ -334,13 +383,18 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Container(
-                  color: Colors.transparent,
-                  child: Image.asset(
-                    'assets/images/DevFestLogo.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                )
+              ? isWeb
+                  ? Container()
+                  : Container(
+                      color: Colors.transparent,
+                      child: Center(
+                        child: Image.asset(
+                          'assets/images/DevFestLogo.jpg',
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
               : page;
 
           final transitionInfo = state.transitionInfo;
