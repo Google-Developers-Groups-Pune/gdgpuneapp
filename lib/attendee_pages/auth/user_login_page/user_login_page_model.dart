@@ -1,4 +1,3 @@
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'user_login_page_widget.dart' show UserLoginPageWidget;
@@ -18,8 +17,6 @@ class UserLoginPageModel extends FlutterFlowModel<UserLoginPageWidget> {
   String? Function(BuildContext, String?)? passwordTextControllerValidator;
   // State field(s) for RadioButton widget.
   FormFieldController<String>? radioButtonValueController;
-  // Stores action output result for [Firestore Query - Query a collection] action in Button widget.
-  UsersRecord? userDetailsOutput;
 
   @override
   void initState(BuildContext context) {

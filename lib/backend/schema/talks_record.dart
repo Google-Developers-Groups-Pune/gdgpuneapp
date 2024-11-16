@@ -20,11 +20,6 @@ class TalksRecord extends FirestoreRecord {
   bool get isLive => _isLive ?? false;
   bool hasIsLive() => _isLive != null;
 
-  // "at_time" field.
-  String? _atTime;
-  String get atTime => _atTime ?? '';
-  bool hasAtTime() => _atTime != null;
-
   // "location" field.
   String? _location;
   String get location => _location ?? '';
@@ -50,11 +45,15 @@ class TalksRecord extends FirestoreRecord {
   String get typeOfTalk => _typeOfTalk ?? '';
   bool hasTypeOfTalk() => _typeOfTalk != null;
 
+  // "at_time" field.
+  DateTime? _atTime;
+  DateTime? get atTime => _atTime;
+  bool hasAtTime() => _atTime != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
     _isLive = snapshotData['is_live'] as bool?;
-    _atTime = snapshotData['at_time'] as String?;
     _location = snapshotData['location'] as String?;
     _speakers = getStructList(
       snapshotData['speakers'],
@@ -63,6 +62,7 @@ class TalksRecord extends FirestoreRecord {
     _talksReference = snapshotData['talks_reference'] as DocumentReference?;
     _title = snapshotData['title'] as String?;
     _typeOfTalk = snapshotData['type_of_talk'] as String?;
+    _atTime = snapshotData['at_time'] as DateTime?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -107,20 +107,20 @@ class TalksRecord extends FirestoreRecord {
 
 Map<String, dynamic> createTalksRecordData({
   bool? isLive,
-  String? atTime,
   String? location,
   DocumentReference? talksReference,
   String? title,
   String? typeOfTalk,
+  DateTime? atTime,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'is_live': isLive,
-      'at_time': atTime,
       'location': location,
       'talks_reference': talksReference,
       'title': title,
       'type_of_talk': typeOfTalk,
+      'at_time': atTime,
     }.withoutNulls,
   );
 
@@ -134,23 +134,23 @@ class TalksRecordDocumentEquality implements Equality<TalksRecord> {
   bool equals(TalksRecord? e1, TalksRecord? e2) {
     const listEquality = ListEquality();
     return e1?.isLive == e2?.isLive &&
-        e1?.atTime == e2?.atTime &&
         e1?.location == e2?.location &&
         listEquality.equals(e1?.speakers, e2?.speakers) &&
         e1?.talksReference == e2?.talksReference &&
         e1?.title == e2?.title &&
-        e1?.typeOfTalk == e2?.typeOfTalk;
+        e1?.typeOfTalk == e2?.typeOfTalk &&
+        e1?.atTime == e2?.atTime;
   }
 
   @override
   int hash(TalksRecord? e) => const ListEquality().hash([
         e?.isLive,
-        e?.atTime,
         e?.location,
         e?.speakers,
         e?.talksReference,
         e?.title,
-        e?.typeOfTalk
+        e?.typeOfTalk,
+        e?.atTime
       ]);
 
   @override
