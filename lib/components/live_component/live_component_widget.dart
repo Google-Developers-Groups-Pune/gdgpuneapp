@@ -1,6 +1,8 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'live_component_model.dart';
 export 'live_component_model.dart';
 
@@ -38,14 +40,14 @@ class _LiveComponentWidgetState extends State<LiveComponentWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(4.0, 8.0, 4.0, 8.0),
+      padding: EdgeInsetsDirectional.fromSTEB(4.0, 8.0, 4.0, 8.0),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.green,
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text(
             'LIVE',
             style: FlutterFlowTheme.of(context).labelSmall.override(

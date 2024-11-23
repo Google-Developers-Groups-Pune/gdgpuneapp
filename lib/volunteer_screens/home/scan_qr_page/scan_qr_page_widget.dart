@@ -1,7 +1,14 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'scan_qr_page_model.dart';
 export 'scan_qr_page_model.dart';
 
@@ -64,7 +71,7 @@ class _ScanQrPageWidgetState extends State<ScanQrPageWidget> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 0.0, 0.0),
                     child: Text(
                       'Scan QR',
                       style:
@@ -117,14 +124,35 @@ class _ScanQrPageWidgetState extends State<ScanQrPageWidget> {
                       size: 23.0,
                     ),
                     onPressed: () async {
-                      context.pushNamed('UserQRCodeListPage');
+                      _model.outputQrData = await queryQrRecordOnce(
+                        queryBuilder: (qrRecord) => qrRecord.where(
+                          'attendee_email',
+                          isEqualTo: currentUserEmail,
+                        ),
+                        singleRecord: true,
+                      ).then((s) => s.firstOrNull);
+
+                      context.pushNamed(
+                        'UserQRCodeListPage',
+                        queryParameters: {
+                          'qrData': serializeParam(
+                            _model.outputQrData,
+                            ParamType.Document,
+                          ),
+                        }.withoutNulls,
+                        extra: <String, dynamic>{
+                          'qrData': _model.outputQrData,
+                        },
+                      );
+
+                      safeSetState(() {});
                     },
                   ),
-                ].divide(const SizedBox(width: 8.0)),
+                ].divide(SizedBox(width: 8.0)),
               ),
             ],
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 1.0,
         ),
@@ -135,7 +163,7 @@ class _ScanQrPageWidgetState extends State<ScanQrPageWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: EdgeInsets.all(12.0),
                 child: InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
@@ -170,7 +198,7 @@ class _ScanQrPageWidgetState extends State<ScanQrPageWidget> {
                             size: 35.0,
                           ),
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 10.0, 0.0, 0.0, 0.0),
                             child: Text(
                               'Scan QR',

@@ -1,9 +1,20 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_autocomplete_options_list.dart';
+import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:text_search/text_search.dart';
 import 'networking_page_model.dart';
 export 'networking_page_model.dart';
 
@@ -26,11 +37,16 @@ class _NetworkingPageWidgetState extends State<NetworkingPageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      FFAppState().searchActive = false;
-      safeSetState(() {});
+      _model.tagsList = await queryTagsCollectionRecordOnce(
+        queryBuilder: (tagsCollectionRecord) => tagsCollectionRecord.where(
+          'event',
+          isEqualTo: FFAppState().eventName,
+        ),
+        singleRecord: true,
+      ).then((s) => s.firstOrNull);
     });
 
-    _model.textController ??= TextEditingController();
+    _model.searchFieldTextController ??= TextEditingController();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -63,7 +79,7 @@ class _NetworkingPageWidgetState extends State<NetworkingPageWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 1.0,
         ),
@@ -71,15 +87,16 @@ class _NetworkingPageWidgetState extends State<NetworkingPageWidget> {
           top: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Align(
-                alignment: const AlignmentDirectional(0.0, -1.0),
+                alignment: AlignmentDirectional(0.0, 0.0),
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: SizedBox(
+                  padding: EdgeInsets.all(20.0),
+                  child: Container(
                     width: double.infinity,
                     child: Autocomplete<String>(
-                      initialValue: const TextEditingValue(),
+                      initialValue: TextEditingValue(),
                       optionsBuilder: (textEditingValue) {
                         if (textEditingValue.text == '') {
                           return const Iterable<String>.empty();
@@ -92,8 +109,8 @@ class _NetworkingPageWidgetState extends State<NetworkingPageWidget> {
                       },
                       optionsViewBuilder: (context, onSelected, options) {
                         return AutocompleteOptionsList(
-                          textFieldKey: _model.textFieldKey,
-                          textController: _model.textController!,
+                          textFieldKey: _model.searchFieldKey,
+                          textController: _model.searchFieldTextController!,
                           options: options.toList(),
                           onSelected: onSelected,
                           textStyle:
@@ -101,7 +118,7 @@ class _NetworkingPageWidgetState extends State<NetworkingPageWidget> {
                                     fontFamily: 'Inter',
                                     letterSpacing: 0.0,
                                   ),
-                          textHighlightStyle: const TextStyle(),
+                          textHighlightStyle: TextStyle(),
                           elevation: 4.0,
                           optionBackgroundColor:
                               FlutterFlowTheme.of(context).primaryBackground,
@@ -112,7 +129,7 @@ class _NetworkingPageWidgetState extends State<NetworkingPageWidget> {
                       },
                       onSelected: (String selection) {
                         safeSetState(
-                            () => _model.textFieldSelectedOption = selection);
+                            () => _model.searchFieldSelectedOption = selection);
                         FocusScope.of(context).unfocus();
                       },
                       fieldViewBuilder: (
@@ -121,14 +138,34 @@ class _NetworkingPageWidgetState extends State<NetworkingPageWidget> {
                         focusNode,
                         onEditingComplete,
                       ) {
-                        _model.textFieldFocusNode = focusNode;
+                        _model.searchFieldFocusNode = focusNode;
 
-                        _model.textController = textEditingController;
+                        _model.searchFieldTextController =
+                            textEditingController;
                         return TextFormField(
-                          key: _model.textFieldKey,
+                          key: _model.searchFieldKey,
                           controller: textEditingController,
                           focusNode: focusNode,
                           onEditingComplete: onEditingComplete,
+                          onChanged: (_) => EasyDebounce.debounce(
+                            '_model.searchFieldTextController',
+                            Duration(milliseconds: 2000),
+                            () async {
+                              safeSetState(() {
+                                _model.simpleSearchResults = TextSearch(_model
+                                        .tagsList!.tags
+                                        .map((str) => TextSearchItem.fromTerms(
+                                            str, [str]))
+                                        .toList())
+                                    .search(
+                                        _model.searchFieldTextController.text)
+                                    .map((r) => r.object)
+                                    .take(5)
+                                    .toList();
+                                ;
+                              });
+                            },
+                          ),
                           autofocus: false,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -144,19 +181,19 @@ class _NetworkingPageWidgetState extends State<NetworkingPageWidget> {
                                 .labelMedium
                                 .override(
                                   fontFamily: 'Roboto',
-                                  color: const Color(0x3C000000),
+                                  color: Color(0x3C000000),
                                   fontSize: 20.0,
                                   letterSpacing: 0.0,
                                 ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 color: Color(0x34000000),
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(89.0),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 color: Colors.black,
                                 width: 1.0,
                               ),
@@ -179,7 +216,7 @@ class _NetworkingPageWidgetState extends State<NetworkingPageWidget> {
                             filled: true,
                             fillColor: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
-                            prefixIcon: const Icon(
+                            prefixIcon: Icon(
                               Icons.search_sharp,
                               color: Color(0x9A000000),
                               size: 25.0,
@@ -191,7 +228,7 @@ class _NetworkingPageWidgetState extends State<NetworkingPageWidget> {
                                     letterSpacing: 0.0,
                                   ),
                           cursorColor: FlutterFlowTheme.of(context).primaryText,
-                          validator: _model.textControllerValidator
+                          validator: _model.searchFieldTextControllerValidator
                               .asValidator(context),
                         );
                       },
@@ -199,86 +236,181 @@ class _NetworkingPageWidgetState extends State<NetworkingPageWidget> {
                   ),
                 ),
               ),
-              Stack(
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      if (!FFAppState().searchActive)
-                        ListView(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          children: [
-                            Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                border: Border.all(
-                                  color: Colors.black,
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(80.0),
-                                      child: Image.network(
-                                        'https://picsum.photos/seed/812/600',
-                                        width: 80.0,
-                                        height: 80.0,
-                                        fit: BoxFit.cover,
-                                        alignment: const Alignment(0.0, 0.0),
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: const AlignmentDirectional(-1.0, 0.0),
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          10.0, 10.0, 0.0, 10.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Name',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                          Text(
-                                            '#student',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+              Align(
+                alignment: AlignmentDirectional(-1.0, 0.0),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(18.0, 0.0, 0.0, 18.0),
+                  child: FlutterFlowChoiceChips(
+                    options: _model.simpleSearchResults
+                        .map((label) => ChipData(label))
+                        .toList(),
+                    onChanged: (val) async {
+                      safeSetState(
+                          () => _model.choiceChipsValue = val?.firstOrNull);
+                      safeSetState(() {
+                        _model.searchFieldTextController?.text =
+                            _model.choiceChipsValue!;
+                        _model.searchFieldFocusNode?.requestFocus();
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          _model.searchFieldTextController?.selection =
+                              TextSelection.collapsed(
+                            offset:
+                                _model.searchFieldTextController!.text.length,
+                          );
+                        });
+                      });
+                      _model.usersWithTag = await queryUsersRecordOnce(
+                        queryBuilder: (usersRecord) => usersRecord.where(
+                          'tags',
+                          arrayContains: _model.choiceChipsValue,
                         ),
-                    ],
+                        limit: 100,
+                      );
+
+                      safeSetState(() {});
+                    },
+                    selectedChipStyle: ChipStyle(
+                      backgroundColor: FlutterFlowTheme.of(context).primary,
+                      textStyle:
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                                fontFamily: 'Inter',
+                                color: FlutterFlowTheme.of(context).info,
+                                letterSpacing: 0.0,
+                              ),
+                      iconColor: FlutterFlowTheme.of(context).info,
+                      iconSize: 16.0,
+                      elevation: 0.0,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    unselectedChipStyle: ChipStyle(
+                      backgroundColor:
+                          FlutterFlowTheme.of(context).secondaryBackground,
+                      textStyle: FlutterFlowTheme.of(context)
+                          .bodyMedium
+                          .override(
+                            fontFamily: 'Inter',
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                            letterSpacing: 0.0,
+                          ),
+                      iconColor: FlutterFlowTheme.of(context).secondaryText,
+                      iconSize: 16.0,
+                      labelPadding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      elevation: 0.0,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    chipSpacing: 8.0,
+                    rowSpacing: 8.0,
+                    multiselect: false,
+                    alignment: WrapAlignment.start,
+                    controller: _model.choiceChipsValueController ??=
+                        FormFieldController<List<String>>(
+                      [],
+                    ),
+                    wrapped: true,
                   ),
-                ],
+                ),
               ),
+              if (!FFAppState().searchActive)
+                Builder(
+                  builder: (context) {
+                    final usersList = _model.usersWithTag?.toList() ?? [];
+
+                    return ListView.separated(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: usersList.length,
+                      separatorBuilder: (_, __) => SizedBox(height: 12.0),
+                      itemBuilder: (context, usersListIndex) {
+                        final usersListItem = usersList[usersListIndex];
+                        return Container(
+                          width: 100.0,
+                          height: 100.0,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            border: Border.all(
+                              color: Colors.black,
+                            ),
+                          ),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.pushNamed(
+                                'UserProfilePage',
+                                queryParameters: {
+                                  'userReference': serializeParam(
+                                    usersListItem.reference,
+                                    ParamType.DocumentReference,
+                                  ),
+                                }.withoutNulls,
+                              );
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(80.0),
+                                    child: Image.network(
+                                      'https://picsum.photos/seed/812/600',
+                                      width: 80.0,
+                                      height: 80.0,
+                                      fit: BoxFit.cover,
+                                      alignment: Alignment(0.0, 0.0),
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10.0, 10.0, 0.0, 10.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          usersListItem.name,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                        Text(
+                                          usersListItem.bio.maybeHandleOverflow(
+                                            maxChars: 50,
+                                            replacement: '…',
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
             ],
           ),
         ),

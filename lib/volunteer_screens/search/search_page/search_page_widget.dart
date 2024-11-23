@@ -1,7 +1,10 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'search_page_model.dart';
 export 'search_page_model.dart';
 
@@ -50,7 +53,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: EdgeInsets.all(10.0),
                   child: Material(
                     color: Colors.transparent,
                     elevation: 2.0,
@@ -68,14 +71,14 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                         ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
+                        padding: EdgeInsetsDirectional.fromSTEB(
                             4.0, 16.0, 4.0, 16.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   10.0, 2.0, 0.0, 0.0),
                               child: Icon(
                                 Icons.search,
@@ -85,18 +88,18 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                               ),
                             ),
                             Expanded(
-                              child: SizedBox(
+                              child: Container(
                                 width: MediaQuery.sizeOf(context).width * 1.0,
                                 child: TextFormField(
                                   controller: _model.textController,
                                   focusNode: _model.textFieldFocusNode,
                                   onChanged: (_) => EasyDebounce.debounce(
                                     '_model.textController',
-                                    const Duration(milliseconds: 1000),
+                                    Duration(milliseconds: 1000),
                                     () => safeSetState(() {}),
                                   ),
                                   autofocus: false,
-                                  autofillHints: const [AutofillHints.name],
+                                  autofillHints: [AutofillHints.name],
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     isDense: false,
@@ -137,7 +140,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                 ),
                               ),
                             ),
-                          ].divide(const SizedBox(width: 12.0)),
+                          ].divide(SizedBox(width: 12.0)),
                         ),
                       ),
                     ),
@@ -145,8 +148,8 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                 ),
                 Padding(
                   padding:
-                      const EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 0.0),
-                  child: SizedBox(
+                      EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 0.0),
+                  child: Container(
                     width: MediaQuery.sizeOf(context).width * 1.0,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -192,7 +195,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                             letterSpacing: 0.0,
                                           ),
                                     ),
-                                  ].divide(const SizedBox(width: 12.0)),
+                                  ].divide(SizedBox(width: 12.0)),
                                 ),
                                 Icon(
                                   Icons.close,
@@ -226,7 +229,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                             letterSpacing: 0.0,
                                           ),
                                     ),
-                                  ].divide(const SizedBox(width: 12.0)),
+                                  ].divide(SizedBox(width: 12.0)),
                                 ),
                                 Icon(
                                   Icons.close,
@@ -260,7 +263,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                             letterSpacing: 0.0,
                                           ),
                                     ),
-                                  ].divide(const SizedBox(width: 12.0)),
+                                  ].divide(SizedBox(width: 12.0)),
                                 ),
                                 Icon(
                                   Icons.close,
@@ -270,9 +273,9 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                 ),
                               ],
                             ),
-                          ].divide(const SizedBox(height: 12.0)),
+                          ].divide(SizedBox(height: 12.0)),
                         ),
-                      ].divide(const SizedBox(height: 16.0)),
+                      ].divide(SizedBox(height: 16.0)),
                     ),
                   ),
                 ),

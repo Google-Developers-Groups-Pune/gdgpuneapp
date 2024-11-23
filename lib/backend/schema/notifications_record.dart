@@ -3,15 +3,16 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 class NotificationsRecord extends FirestoreRecord {
   NotificationsRecord._(
-    super.reference,
-    super.data,
-  ) {
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
     _initializeFields();
   }
 
@@ -25,15 +26,27 @@ class NotificationsRecord extends FirestoreRecord {
   String get title => _title ?? '';
   bool hasTitle() => _title != null;
 
-  // "attendee_id" field.
-  String? _attendeeId;
-  String get attendeeId => _attendeeId ?? '';
-  bool hasAttendeeId() => _attendeeId != null;
+  // "attendee_email" field.
+  String? _attendeeEmail;
+  String get attendeeEmail => _attendeeEmail ?? '';
+  bool hasAttendeeEmail() => _attendeeEmail != null;
+
+  // "event" field.
+  String? _event;
+  String get event => _event ?? '';
+  bool hasEvent() => _event != null;
+
+  // "time" field.
+  DateTime? _time;
+  DateTime? get time => _time;
+  bool hasTime() => _time != null;
 
   void _initializeFields() {
     _description = snapshotData['description'] as String?;
     _title = snapshotData['title'] as String?;
-    _attendeeId = snapshotData['attendee_id'] as String?;
+    _attendeeEmail = snapshotData['attendee_email'] as String?;
+    _event = snapshotData['event'] as String?;
+    _time = snapshotData['time'] as DateTime?;
   }
 
   static CollectionReference get collection => FirebaseFirestore.instanceFor(
@@ -74,13 +87,17 @@ class NotificationsRecord extends FirestoreRecord {
 Map<String, dynamic> createNotificationsRecordData({
   String? description,
   String? title,
-  String? attendeeId,
+  String? attendeeEmail,
+  String? event,
+  DateTime? time,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'description': description,
       'title': title,
-      'attendee_id': attendeeId,
+      'attendee_email': attendeeEmail,
+      'event': event,
+      'time': time,
     }.withoutNulls,
   );
 
@@ -95,12 +112,14 @@ class NotificationsRecordDocumentEquality
   bool equals(NotificationsRecord? e1, NotificationsRecord? e2) {
     return e1?.description == e2?.description &&
         e1?.title == e2?.title &&
-        e1?.attendeeId == e2?.attendeeId;
+        e1?.attendeeEmail == e2?.attendeeEmail &&
+        e1?.event == e2?.event &&
+        e1?.time == e2?.time;
   }
 
   @override
-  int hash(NotificationsRecord? e) =>
-      const ListEquality().hash([e?.description, e?.title, e?.attendeeId]);
+  int hash(NotificationsRecord? e) => const ListEquality()
+      .hash([e?.description, e?.title, e?.attendeeEmail, e?.event, e?.time]);
 
   @override
   bool isValidKey(Object? o) => o is NotificationsRecord;

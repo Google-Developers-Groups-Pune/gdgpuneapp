@@ -13,16 +13,12 @@ export '/attendee_pages/menu/menu_page/menu_page_widget.dart'
     show MenuPageWidget;
 export '/attendee_pages/home/event_details_page/event_details_page_widget.dart'
     show EventDetailsPageWidget;
-export '/attendee_pages/booth/booth_list_page/booth_list_page_widget.dart'
-    show BoothListPageWidget;
 export '/attendee_pages/networking/networking_page/networking_page_widget.dart'
     show NetworkingPageWidget;
 export '/attendee_pages/booth/booth_details_page/booth_details_page_widget.dart'
     show BoothDetailsPageWidget;
 export '/attendee_pages/booth/booth_list_page_v2/booth_list_page_v2_widget.dart'
     show BoothListPageV2Widget;
-export '/attendee_pages/auth/user_login_page_copy/user_login_page_copy_widget.dart'
-    show UserLoginPageCopyWidget;
 export '/volunteer_screens/home/scan_qr_page/scan_qr_page_widget.dart'
     show ScanQrPageWidget;
 export '/volunteer_screens/home/qr_scanner/qr_scanner_widget.dart'
@@ -37,3 +33,7 @@ export '/attendee_pages/profile/user_profile_page/user_profile_page_widget.dart'
     show UserProfilePageWidget;
 export '/attendee_pages/profile/user_profile_page_edit/user_profile_page_edit_widget.dart'
     show UserProfilePageEditWidget;
+export '/notifications/notification_page/notification_page_widget.dart'
+    show NotificationPageWidget;
+export '/feedback/feedback_page/feedback_page_widget.dart'
+    show FeedbackPageWidget;

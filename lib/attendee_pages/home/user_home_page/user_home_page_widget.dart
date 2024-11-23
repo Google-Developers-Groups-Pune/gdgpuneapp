@@ -4,9 +4,14 @@ import '/components/live_component/live_component_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'user_home_page_model.dart';
@@ -91,13 +96,13 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                       color: FlutterFlowTheme.of(context).primaryText,
                       size: 23.0,
                     ),
-                    onPressed: () {
-                      print('IconButton pressed ...');
+                    onPressed: () async {
+                      context.pushNamed('UserProfilePage');
                     },
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 0.0, 0.0),
                     child: Text(
                       'Home',
                       style:
@@ -123,8 +128,8 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                       color: FlutterFlowTheme.of(context).primaryText,
                       size: 23.0,
                     ),
-                    onPressed: () {
-                      print('locationBtn pressed ...');
+                    onPressed: () async {
+                      await launchURL(_model.requiredAgenda!.eventMapLink);
                     },
                   ),
                   FlutterFlowIconButton(
@@ -136,8 +141,8 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                       color: FlutterFlowTheme.of(context).primaryText,
                       size: 23.0,
                     ),
-                    onPressed: () {
-                      print('notificationBtn pressed ...');
+                    onPressed: () async {
+                      context.pushNamed('notification_page');
                     },
                   ),
                   FlutterFlowIconButton(
@@ -150,34 +155,55 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                       size: 23.0,
                     ),
                     onPressed: () async {
-                      context.pushNamed('UserQRCodeListPage');
+                      _model.outputQrData = await queryQrRecordOnce(
+                        queryBuilder: (qrRecord) => qrRecord.where(
+                          'attendee_email',
+                          isEqualTo: currentUserEmail,
+                        ),
+                        singleRecord: true,
+                      ).then((s) => s.firstOrNull);
+
+                      context.pushNamed(
+                        'UserQRCodeListPage',
+                        queryParameters: {
+                          'qrData': serializeParam(
+                            _model.outputQrData,
+                            ParamType.Document,
+                          ),
+                        }.withoutNulls,
+                        extra: <String, dynamic>{
+                          'qrData': _model.outputQrData,
+                        },
+                      );
+
+                      safeSetState(() {});
                     },
                   ),
-                ].divide(const SizedBox(width: 8.0)),
+                ].divide(SizedBox(width: 8.0)),
               ),
             ],
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
           child: Align(
-            alignment: const AlignmentDirectional(0.0, -1.0),
+            alignment: AlignmentDirectional(0.0, -1.0),
             child: Container(
-              constraints: const BoxConstraints(
+              constraints: BoxConstraints(
                 maxWidth: 570.0,
               ),
-              decoration: const BoxDecoration(),
+              decoration: BoxDecoration(),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Align(
-                    alignment: const AlignmentDirectional(-1.0, 0.0),
+                    alignment: AlignmentDirectional(-1.0, 0.0),
                     child: Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 0.0, 5.0),
+                          EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 0.0, 5.0),
                       child: Text(
                         'Agenda',
                         style: FlutterFlowTheme.of(context).titleLarge.override(
@@ -188,7 +214,7 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: EdgeInsets.all(12.0),
                     child:
                         PagedListView<DocumentSnapshot<Object?>?, TalksRecord>(
                       pagingController: _model.setListViewController(
@@ -230,7 +256,7 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                               .listViewPagingController!
                               .itemList![listViewIndex];
                           return Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 10.0),
                             child: InkWell(
                               splashColor: Colors.transparent,
@@ -238,7 +264,15 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context.pushNamed('eventDetailsPage');
+                                context.pushNamed(
+                                  'eventDetailsPage',
+                                  queryParameters: {
+                                    'eventReference': serializeParam(
+                                      listViewTalksRecord.talksReference,
+                                      ParamType.DocumentReference,
+                                    ),
+                                  }.withoutNulls,
+                                );
                               },
                               child: Card(
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -261,19 +295,24 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                             MediaQuery.sizeOf(context).height *
                                                 0.2,
                                       ),
-                                      decoration: const BoxDecoration(),
+                                      decoration: BoxDecoration(),
                                       child: Stack(
                                         children: [
                                           ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(0.0),
-                                            child: Image.network(
-                                              'https://picsum.photos/seed/30/603',
+                                            child: CachedNetworkImage(
+                                              fadeInDuration:
+                                                  Duration(milliseconds: 500),
+                                              fadeOutDuration:
+                                                  Duration(milliseconds: 500),
+                                              imageUrl:
+                                                  listViewTalksRecord.image,
                                               height: MediaQuery.sizeOf(context)
                                                       .height *
                                                   1.0,
                                               fit: BoxFit.cover,
-                                              errorBuilder: (context, error,
+                                              errorWidget: (context, error,
                                                       stackTrace) =>
                                                   Image.asset(
                                                 'assets/images/error_image.jpg',
@@ -300,20 +339,20 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                   .height *
                                               0.2,
                                         ),
-                                        decoration: const BoxDecoration(),
+                                        decoration: BoxDecoration(),
                                         child: Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   8.0, 0.0, 0.0, 0.0),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                                MainAxisAlignment.spaceEvenly,
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Padding(
-                                                padding: const EdgeInsetsDirectional
+                                                padding: EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         0.0, 0.0, 0.0, 12.0),
                                                 child: Container(
@@ -338,7 +377,7 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
+                                                            EdgeInsetsDirectional
                                                                 .fromSTEB(
                                                                     0.0,
                                                                     5.0,
@@ -358,36 +397,56 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                               ),
                                                         ),
                                                       ),
-                                                      Wrap(
-                                                        spacing: 8.0,
-                                                        runSpacing: 2.0,
-                                                        alignment:
-                                                            WrapAlignment.start,
-                                                        crossAxisAlignment:
-                                                            WrapCrossAlignment
-                                                                .start,
-                                                        direction:
-                                                            Axis.horizontal,
-                                                        runAlignment:
-                                                            WrapAlignment.start,
-                                                        verticalDirection:
-                                                            VerticalDirection
-                                                                .down,
-                                                        clipBehavior: Clip.none,
-                                                        children: [
-                                                          Text(
-                                                            '',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Inter',
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                          ),
-                                                        ],
+                                                      Builder(
+                                                        builder: (context) {
+                                                          final speakerNames =
+                                                              listViewTalksRecord
+                                                                  .speakers
+                                                                  .map((e) =>
+                                                                      e.name)
+                                                                  .toList();
+
+                                                          return Wrap(
+                                                            spacing: 8.0,
+                                                            runSpacing: 2.0,
+                                                            alignment:
+                                                                WrapAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                WrapCrossAlignment
+                                                                    .start,
+                                                            direction:
+                                                                Axis.horizontal,
+                                                            runAlignment:
+                                                                WrapAlignment
+                                                                    .start,
+                                                            verticalDirection:
+                                                                VerticalDirection
+                                                                    .down,
+                                                            clipBehavior:
+                                                                Clip.none,
+                                                            children: List.generate(
+                                                                speakerNames
+                                                                    .length,
+                                                                (speakerNamesIndex) {
+                                                              final speakerNamesItem =
+                                                                  speakerNames[
+                                                                      speakerNamesIndex];
+                                                              return Text(
+                                                                speakerNamesItem,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Inter',
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                              );
+                                                            }),
+                                                          );
+                                                        },
                                                       ),
                                                     ],
                                                   ),
@@ -414,7 +473,7 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                           letterSpacing: 0.0,
                                                         ),
                                                   ),
-                                                ].divide(const SizedBox(width: 8.0)),
+                                                ].divide(SizedBox(width: 8.0)),
                                               ),
                                               Row(
                                                 mainAxisSize: MainAxisSize.max,
@@ -427,8 +486,15 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                     size: 24.0,
                                                   ),
                                                   Text(
-                                                    listViewTalksRecord.atTime!
-                                                        .toString(),
+                                                    dateTimeFormat(
+                                                      "M/d h:mm a",
+                                                      listViewTalksRecord
+                                                          .atTime!,
+                                                      locale:
+                                                          FFLocalizations.of(
+                                                                  context)
+                                                              .languageCode,
+                                                    ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .labelMedium
@@ -437,10 +503,10 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                           letterSpacing: 0.0,
                                                         ),
                                                   ),
-                                                ].divide(const SizedBox(width: 8.0)),
+                                                ].divide(SizedBox(width: 8.0)),
                                               ),
                                               Padding(
-                                                padding: const EdgeInsetsDirectional
+                                                padding: EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         0.0, 0.0, 0.0, 5.0),
                                                 child: Row(
@@ -467,7 +533,7 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                                           ),
                                                     ),
                                                   ].divide(
-                                                      const SizedBox(width: 8.0)),
+                                                      SizedBox(width: 8.0)),
                                                 ),
                                               ),
                                             ],
@@ -475,7 +541,7 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                                         ),
                                       ),
                                     ),
-                                  ].divide(const SizedBox(width: 8.0)),
+                                  ].divide(SizedBox(width: 8.0)),
                                 ),
                               ),
                             ),

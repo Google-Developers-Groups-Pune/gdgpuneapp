@@ -3,15 +3,16 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 class TagsCollectionRecord extends FirestoreRecord {
   TagsCollectionRecord._(
-    super.reference,
-    super.data,
-  ) {
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
     _initializeFields();
   }
 
@@ -20,8 +21,14 @@ class TagsCollectionRecord extends FirestoreRecord {
   List<String> get tags => _tags ?? const [];
   bool hasTags() => _tags != null;
 
+  // "event" field.
+  String? _event;
+  String get event => _event ?? '';
+  bool hasEvent() => _event != null;
+
   void _initializeFields() {
     _tags = getDataList(snapshotData['tags']);
+    _event = snapshotData['event'] as String?;
   }
 
   static CollectionReference get collection => FirebaseFirestore.instanceFor(
@@ -59,9 +66,13 @@ class TagsCollectionRecord extends FirestoreRecord {
       reference.path.hashCode == other.reference.path.hashCode;
 }
 
-Map<String, dynamic> createTagsCollectionRecordData() {
+Map<String, dynamic> createTagsCollectionRecordData({
+  String? event,
+}) {
   final firestoreData = mapToFirestore(
-    <String, dynamic>{}.withoutNulls,
+    <String, dynamic>{
+      'event': event,
+    }.withoutNulls,
   );
 
   return firestoreData;
@@ -74,11 +85,12 @@ class TagsCollectionRecordDocumentEquality
   @override
   bool equals(TagsCollectionRecord? e1, TagsCollectionRecord? e2) {
     const listEquality = ListEquality();
-    return listEquality.equals(e1?.tags, e2?.tags);
+    return listEquality.equals(e1?.tags, e2?.tags) && e1?.event == e2?.event;
   }
 
   @override
-  int hash(TagsCollectionRecord? e) => const ListEquality().hash([e?.tags]);
+  int hash(TagsCollectionRecord? e) =>
+      const ListEquality().hash([e?.tags, e?.event]);
 
   @override
   bool isValidKey(Object? o) => o is TagsCollectionRecord;

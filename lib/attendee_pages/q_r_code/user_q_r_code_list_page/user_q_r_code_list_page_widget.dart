@@ -1,12 +1,21 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'user_q_r_code_list_page_model.dart';
 export 'user_q_r_code_list_page_model.dart';
 
 class UserQRCodeListPageWidget extends StatefulWidget {
-  const UserQRCodeListPageWidget({super.key});
+  const UserQRCodeListPageWidget({
+    super.key,
+    required this.qrData,
+  });
+
+  final QrRecord? qrData;
 
   @override
   State<UserQRCodeListPageWidget> createState() =>
@@ -65,37 +74,37 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(16.0),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 0.0, 0.0),
                     child: ListView(
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 1.0),
                           child: Container(
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
+                                  .primaryBackground,
                               boxShadow: [
                                 BoxShadow(
                                   blurRadius: 0.0,
                                   color: FlutterFlowTheme.of(context).alternate,
-                                  offset: const Offset(
+                                  offset: Offset(
                                     0.0,
                                     1.0,
                                   ),
@@ -108,25 +117,28 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                               ),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.all(12.0),
+                              padding: EdgeInsets.all(12.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Container(
-                                    decoration: const BoxDecoration(
+                                    decoration: BoxDecoration(
                                       shape: BoxShape.rectangle,
                                     ),
                                     child: Icon(
                                       Icons.qr_code_2,
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
+                                      color: widget!.qrData!.registerQrScanned
+                                          ? FlutterFlowTheme.of(context)
+                                              .secondary
+                                          : FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
                                       size: 72.0,
                                     ),
                                   ),
                                   Expanded(
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           12.0, 0.0, 0.0, 0.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -137,10 +149,12 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                                         children: [
                                           Padding(
                                             padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
+                                                EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 4.0),
                                             child: Text(
-                                              'Registration',
+                                              widget!.qrData!.registerQrScanned
+                                                  ? 'Already Registered'
+                                                  : 'Register',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .titleLarge
@@ -151,15 +165,19 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                                                       ),
                                             ),
                                           ),
-                                          Text(
-                                            'Show this at registration desk',
-                                            style: FlutterFlowTheme.of(context)
-                                                .labelMedium
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
+                                          if (widget!
+                                                  .qrData?.registerQrScanned ==
+                                              false)
+                                            Text(
+                                              'Show this at registration desk',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
                                         ],
                                       ),
                                     ),
@@ -176,7 +194,7 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 1.0),
                           child: InkWell(
                             splashColor: Colors.transparent,
@@ -197,13 +215,13 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                             child: Container(
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
+                                    .primaryBackground,
                                 boxShadow: [
                                   BoxShadow(
                                     blurRadius: 0.0,
                                     color:
                                         FlutterFlowTheme.of(context).alternate,
-                                    offset: const Offset(
+                                    offset: Offset(
                                       0.0,
                                       1.0,
                                     ),
@@ -216,13 +234,13 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                                 ),
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.all(12.0),
+                                padding: EdgeInsets.all(12.0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Container(
-                                      decoration: const BoxDecoration(
+                                      decoration: BoxDecoration(
                                         shape: BoxShape.rectangle,
                                       ),
                                       child: Icon(
@@ -234,7 +252,7 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                                     ),
                                     Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
                                             12.0, 0.0, 0.0, 0.0),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
@@ -244,7 +262,7 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
+                                              padding: EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 0.0, 0.0, 4.0),
                                               child: Text(
                                                 'Food',
@@ -285,7 +303,7 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 1.0),
                           child: Container(
                             decoration: BoxDecoration(
@@ -295,7 +313,7 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                                 BoxShadow(
                                   blurRadius: 0.0,
                                   color: FlutterFlowTheme.of(context).alternate,
-                                  offset: const Offset(
+                                  offset: Offset(
                                     0.0,
                                     1.0,
                                   ),
@@ -308,13 +326,13 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                               ),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.all(12.0),
+                              padding: EdgeInsets.all(12.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Container(
-                                    decoration: const BoxDecoration(
+                                    decoration: BoxDecoration(
                                       shape: BoxShape.rectangle,
                                     ),
                                     child: Icon(
@@ -326,7 +344,7 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                                   ),
                                   Expanded(
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           12.0, 0.0, 0.0, 0.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -337,7 +355,7 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                                         children: [
                                           Padding(
                                             padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
+                                                EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 4.0),
                                             child: Text(
                                               'Swags',
@@ -375,10 +393,10 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                             ),
                           ),
                         ),
-                      ].divide(const SizedBox(height: 16.0)),
+                      ].divide(SizedBox(height: 16.0)),
                     ),
                   ),
-                ].divide(const SizedBox(height: 16.0)),
+                ].divide(SizedBox(height: 16.0)),
               ),
             ),
           ),

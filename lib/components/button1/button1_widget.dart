@@ -2,6 +2,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'button1_model.dart';
 export 'button1_model.dart';
 
@@ -39,9 +41,9 @@ class _Button1WidgetState extends State<Button1Widget> {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: const AlignmentDirectional(0.0, 0.0),
+      alignment: AlignmentDirectional(0.0, 0.0),
       child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+        padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
         child: FFButtonWidget(
           onPressed: () {
             print('Button pressed ...');
@@ -50,8 +52,8 @@ class _Button1WidgetState extends State<Button1Widget> {
           options: FFButtonOptions(
             width: double.infinity,
             height: 52.0,
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-            iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+            iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
             color: FlutterFlowTheme.of(context).primary,
             textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                   fontFamily: 'Inter Tight',
@@ -59,7 +61,7 @@ class _Button1WidgetState extends State<Button1Widget> {
                   letterSpacing: 0.0,
                 ),
             elevation: 3.0,
-            borderSide: const BorderSide(
+            borderSide: BorderSide(
               color: Colors.transparent,
               width: 1.0,
             ),

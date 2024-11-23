@@ -3,15 +3,16 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 class UsersRecord extends FirestoreRecord {
   UsersRecord._(
-    super.reference,
-    super.data,
-  ) {
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
     _initializeFields();
   }
 
@@ -75,6 +76,11 @@ class UsersRecord extends FirestoreRecord {
   String get photoUrl => _photoUrl ?? '';
   bool hasPhotoUrl() => _photoUrl != null;
 
+  // "tags" field.
+  List<String>? _tags;
+  List<String> get tags => _tags ?? const [];
+  bool hasTags() => _tags != null;
+
   void _initializeFields() {
     _bio = snapshotData['bio'] as String?;
     _email = snapshotData['email'] as String?;
@@ -88,6 +94,7 @@ class UsersRecord extends FirestoreRecord {
     _displayName = snapshotData['display_name'] as String?;
     _phoneNumber = snapshotData['phone_number'] as String?;
     _photoUrl = snapshotData['photo_url'] as String?;
+    _tags = getDataList(snapshotData['tags']);
   }
 
   static CollectionReference get collection => FirebaseFirestore.instanceFor(
@@ -173,7 +180,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.createdTime == e2?.createdTime &&
         e1?.displayName == e2?.displayName &&
         e1?.phoneNumber == e2?.phoneNumber &&
-        e1?.photoUrl == e2?.photoUrl;
+        e1?.photoUrl == e2?.photoUrl &&
+        listEquality.equals(e1?.tags, e2?.tags);
   }
 
   @override
@@ -189,7 +197,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.createdTime,
         e?.displayName,
         e?.phoneNumber,
-        e?.photoUrl
+        e?.photoUrl,
+        e?.tags
       ]);
 
   @override

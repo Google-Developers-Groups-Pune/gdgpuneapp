@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
@@ -9,7 +11,11 @@ import '/auth/base_auth_user_provider.dart';
 
 import '/index.dart';
 import '/main.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/lat_lng.dart';
+import '/flutter_flow/place.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
@@ -74,34 +80,45 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const NavBarPage() : const UserLoginPageWidget(),
+          appStateNotifier.loggedIn ? NavBarPage() : UserLoginPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const NavBarPage() : const UserLoginPageWidget(),
+              appStateNotifier.loggedIn ? NavBarPage() : UserLoginPageWidget(),
           routes: [
             FFRoute(
               name: 'UserHomePage',
               path: 'userHomePage',
+              requireAuth: true,
               builder: (context, params) => params.isEmpty
-                  ? const NavBarPage(initialPage: 'UserHomePage')
-                  : const UserHomePageWidget(),
+                  ? NavBarPage(initialPage: 'UserHomePage')
+                  : UserHomePageWidget(),
             ),
             FFRoute(
               name: 'UserLoginPage',
               path: 'userLoginPage',
-              builder: (context, params) => const UserLoginPageWidget(),
+              builder: (context, params) => UserLoginPageWidget(),
             ),
             FFRoute(
               name: 'UserQRCodeListPage',
               path: 'userQRCodeListPage',
-              builder: (context, params) => const UserQRCodeListPageWidget(),
+              requireAuth: true,
+              asyncParams: {
+                'qrData': getDoc(['qr'], QrRecord.fromSnapshot),
+              },
+              builder: (context, params) => UserQRCodeListPageWidget(
+                qrData: params.getParam(
+                  'qrData',
+                  ParamType.Document,
+                ),
+              ),
             ),
             FFRoute(
               name: 'UserQRCodePage',
               path: 'userQRCodePage',
+              requireAuth: true,
               builder: (context, params) => UserQRCodePageWidget(
                 qrCodeData: params.getParam(
                   'qrCodeData',
@@ -112,9 +129,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'ActivityPage',
               path: 'activityPage',
+              requireAuth: true,
               builder: (context, params) => params.isEmpty
-                  ? const NavBarPage(initialPage: 'ActivityPage')
-                  : const NavBarPage(
+                  ? NavBarPage(initialPage: 'ActivityPage')
+                  : NavBarPage(
                       initialPage: 'ActivityPage',
                       page: ActivityPageWidget(),
                     ),
@@ -122,66 +140,77 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'MenuPage',
               path: 'menuPage',
+              requireAuth: true,
               builder: (context, params) => params.isEmpty
-                  ? const NavBarPage(initialPage: 'MenuPage')
-                  : const MenuPageWidget(),
+                  ? NavBarPage(initialPage: 'MenuPage')
+                  : MenuPageWidget(),
             ),
             FFRoute(
               name: 'eventDetailsPage',
               path: 'eventDetailsPage',
-              builder: (context, params) => const EventDetailsPageWidget(),
-            ),
-            FFRoute(
-              name: 'boothListPage',
-              path: 'boothListPage',
-              builder: (context, params) => params.isEmpty
-                  ? const NavBarPage(initialPage: 'boothListPage')
-                  : const BoothListPageWidget(),
+              requireAuth: true,
+              builder: (context, params) => EventDetailsPageWidget(
+                eventReference: params.getParam(
+                  'eventReference',
+                  ParamType.DocumentReference,
+                  isList: false,
+                  collectionNamePath: ['talk_details'],
+                ),
+              ),
             ),
             FFRoute(
               name: 'networkingPage',
               path: 'networkingPage',
-              builder: (context, params) => const NetworkingPageWidget(),
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'networkingPage')
+                  : NetworkingPageWidget(),
             ),
             FFRoute(
               name: 'boothDetailsPage',
               path: 'boothDetailsPage',
-              builder: (context, params) => const BoothDetailsPageWidget(),
+              requireAuth: true,
+              builder: (context, params) => BoothDetailsPageWidget(
+                boothReference: params.getParam(
+                  'boothReference',
+                  ParamType.DocumentReference,
+                  isList: false,
+                  collectionNamePath: ['booths'],
+                ),
+              ),
             ),
             FFRoute(
               name: 'boothListPageV2',
               path: 'boothListPageV2',
-              builder: (context, params) => const BoothListPageV2Widget(),
-            ),
-            FFRoute(
-              name: 'UserLoginPageCopy',
-              path: 'userCreatePage',
-              builder: (context, params) => const UserLoginPageCopyWidget(),
+              requireAuth: true,
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'boothListPageV2')
+                  : BoothListPageV2Widget(),
             ),
             FFRoute(
               name: 'scanQrPage',
               path: 'scanQrPage',
-              builder: (context, params) => const ScanQrPageWidget(),
+              builder: (context, params) => ScanQrPageWidget(),
             ),
             FFRoute(
               name: 'qrScanner',
               path: 'qrScanner',
-              builder: (context, params) => const QrScannerWidget(),
+              builder: (context, params) => QrScannerWidget(),
             ),
             FFRoute(
               name: 'searchPage',
               path: 'searchPage',
-              builder: (context, params) => const SearchPageWidget(),
+              requireAuth: true,
+              builder: (context, params) => SearchPageWidget(),
             ),
             FFRoute(
               name: 'notificationScreen',
               path: 'notificationScreen',
-              builder: (context, params) => const NotificationScreenWidget(),
+              builder: (context, params) => NotificationScreenWidget(),
             ),
             FFRoute(
               name: 'agendaHomeScreen',
               path: 'agendaHomeScreen',
-              builder: (context, params) => const NavBarPage(
+              builder: (context, params) => NavBarPage(
                 initialPage: '',
                 page: AgendaHomeScreenWidget(),
               ),
@@ -189,12 +218,38 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'UserProfilePage',
               path: 'userProfilePage',
-              builder: (context, params) => const UserProfilePageWidget(),
+              requireAuth: true,
+              builder: (context, params) => UserProfilePageWidget(
+                userReference: params.getParam(
+                  'userReference',
+                  ParamType.DocumentReference,
+                  isList: false,
+                  collectionNamePath: ['users'],
+                ),
+              ),
             ),
             FFRoute(
               name: 'UserProfilePageEdit',
               path: 'userProfilePageEdit',
-              builder: (context, params) => const UserProfilePageEditWidget(),
+              requireAuth: true,
+              builder: (context, params) => UserProfilePageEditWidget(
+                userReference: params.getParam(
+                  'userReference',
+                  ParamType.DocumentReference,
+                  isList: false,
+                  collectionNamePath: ['users'],
+                ),
+              ),
+            ),
+            FFRoute(
+              name: 'notification_page',
+              path: 'notificationPage',
+              builder: (context, params) => NotificationPageWidget(),
+            ),
+            FFRoute(
+              name: 'feedback_page',
+              path: 'feedbackPage',
+              builder: (context, params) => FeedbackPageWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
@@ -437,7 +492,7 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
 }
 
 class RootPageContext {

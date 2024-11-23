@@ -3,22 +3,18 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
-class TalksDetailRecord extends FirestoreRecord {
-  TalksDetailRecord._(
-    super.reference,
-    super.data,
-  ) {
+class TalkDetailsRecord extends FirestoreRecord {
+  TalkDetailsRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
     _initializeFields();
   }
-
-  // "duration" field.
-  int? _duration;
-  int get duration => _duration ?? 0;
-  bool hasDuration() => _duration != null;
 
   // "location" field.
   String? _location;
@@ -35,16 +31,6 @@ class TalksDetailRecord extends FirestoreRecord {
   String get description => _description ?? '';
   bool hasDescription() => _description != null;
 
-  // "speaker_name" field.
-  String? _speakerName;
-  String get speakerName => _speakerName ?? '';
-  bool hasSpeakerName() => _speakerName != null;
-
-  // "talk_img" field.
-  String? _talkImg;
-  String get talkImg => _talkImg ?? '';
-  bool hasTalkImg() => _talkImg != null;
-
   // "at_time" field.
   DateTime? _atTime;
   DateTime? get atTime => _atTime;
@@ -60,110 +46,127 @@ class TalksDetailRecord extends FirestoreRecord {
   String get typeOfTalk => _typeOfTalk ?? '';
   bool hasTypeOfTalk() => _typeOfTalk != null;
 
+  // "durationInMins" field.
+  int? _durationInMins;
+  int get durationInMins => _durationInMins ?? 0;
+  bool hasDurationInMins() => _durationInMins != null;
+
+  // "speakers" field.
+  List<SpeakersStruct>? _speakers;
+  List<SpeakersStruct> get speakers => _speakers ?? const [];
+  bool hasSpeakers() => _speakers != null;
+
+  // "talk_img" field.
+  String? _talkImg;
+  String get talkImg => _talkImg ?? '';
+  bool hasTalkImg() => _talkImg != null;
+
   void _initializeFields() {
-    _duration = castToType<int>(snapshotData['duration']);
     _location = snapshotData['location'] as String?;
     _topic = snapshotData['topic'] as String?;
     _description = snapshotData['description'] as String?;
-    _speakerName = snapshotData['speaker_name'] as String?;
-    _talkImg = snapshotData['talk_img'] as String?;
     _atTime = snapshotData['at_time'] as DateTime?;
     _isLive = snapshotData['is_live'] as bool?;
     _typeOfTalk = snapshotData['type_of_talk'] as String?;
+    _durationInMins = castToType<int>(snapshotData['durationInMins']);
+    _speakers = getStructList(
+      snapshotData['speakers'],
+      SpeakersStruct.fromMap,
+    );
+    _talkImg = snapshotData['talk_img'] as String?;
   }
 
   static CollectionReference get collection => FirebaseFirestore.instanceFor(
           app: Firebase.app(), databaseId: '(default)')
-      .collection('talks_detail');
+      .collection('talk_details');
 
-  static Stream<TalksDetailRecord> getDocument(DocumentReference ref) =>
-      ref.snapshots().map((s) => TalksDetailRecord.fromSnapshot(s));
+  static Stream<TalkDetailsRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => TalkDetailsRecord.fromSnapshot(s));
 
-  static Future<TalksDetailRecord> getDocumentOnce(DocumentReference ref) =>
-      ref.get().then((s) => TalksDetailRecord.fromSnapshot(s));
+  static Future<TalkDetailsRecord> getDocumentOnce(DocumentReference ref) =>
+      ref.get().then((s) => TalkDetailsRecord.fromSnapshot(s));
 
-  static TalksDetailRecord fromSnapshot(DocumentSnapshot snapshot) =>
-      TalksDetailRecord._(
+  static TalkDetailsRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      TalkDetailsRecord._(
         snapshot.reference,
         mapFromFirestore(snapshot.data() as Map<String, dynamic>),
       );
 
-  static TalksDetailRecord getDocumentFromData(
+  static TalkDetailsRecord getDocumentFromData(
     Map<String, dynamic> data,
     DocumentReference reference,
   ) =>
-      TalksDetailRecord._(reference, mapFromFirestore(data));
+      TalkDetailsRecord._(reference, mapFromFirestore(data));
 
   @override
   String toString() =>
-      'TalksDetailRecord(reference: ${reference.path}, data: $snapshotData)';
+      'TalkDetailsRecord(reference: ${reference.path}, data: $snapshotData)';
 
   @override
   int get hashCode => reference.path.hashCode;
 
   @override
   bool operator ==(other) =>
-      other is TalksDetailRecord &&
+      other is TalkDetailsRecord &&
       reference.path.hashCode == other.reference.path.hashCode;
 }
 
-Map<String, dynamic> createTalksDetailRecordData({
-  int? duration,
+Map<String, dynamic> createTalkDetailsRecordData({
   String? location,
   String? topic,
   String? description,
-  String? speakerName,
-  String? talkImg,
   DateTime? atTime,
   bool? isLive,
   String? typeOfTalk,
+  int? durationInMins,
+  String? talkImg,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'duration': duration,
       'location': location,
       'topic': topic,
       'description': description,
-      'speaker_name': speakerName,
-      'talk_img': talkImg,
       'at_time': atTime,
       'is_live': isLive,
       'type_of_talk': typeOfTalk,
+      'durationInMins': durationInMins,
+      'talk_img': talkImg,
     }.withoutNulls,
   );
 
   return firestoreData;
 }
 
-class TalksDetailRecordDocumentEquality implements Equality<TalksDetailRecord> {
-  const TalksDetailRecordDocumentEquality();
+class TalkDetailsRecordDocumentEquality implements Equality<TalkDetailsRecord> {
+  const TalkDetailsRecordDocumentEquality();
 
   @override
-  bool equals(TalksDetailRecord? e1, TalksDetailRecord? e2) {
-    return e1?.duration == e2?.duration &&
-        e1?.location == e2?.location &&
+  bool equals(TalkDetailsRecord? e1, TalkDetailsRecord? e2) {
+    const listEquality = ListEquality();
+    return e1?.location == e2?.location &&
         e1?.topic == e2?.topic &&
         e1?.description == e2?.description &&
-        e1?.speakerName == e2?.speakerName &&
-        e1?.talkImg == e2?.talkImg &&
         e1?.atTime == e2?.atTime &&
         e1?.isLive == e2?.isLive &&
-        e1?.typeOfTalk == e2?.typeOfTalk;
+        e1?.typeOfTalk == e2?.typeOfTalk &&
+        e1?.durationInMins == e2?.durationInMins &&
+        listEquality.equals(e1?.speakers, e2?.speakers) &&
+        e1?.talkImg == e2?.talkImg;
   }
 
   @override
-  int hash(TalksDetailRecord? e) => const ListEquality().hash([
-        e?.duration,
+  int hash(TalkDetailsRecord? e) => const ListEquality().hash([
         e?.location,
         e?.topic,
         e?.description,
-        e?.speakerName,
-        e?.talkImg,
         e?.atTime,
         e?.isLive,
-        e?.typeOfTalk
+        e?.typeOfTalk,
+        e?.durationInMins,
+        e?.speakers,
+        e?.talkImg
       ]);
 
   @override
-  bool isValidKey(Object? o) => o is TalksDetailRecord;
+  bool isValidKey(Object? o) => o is TalkDetailsRecord;
 }

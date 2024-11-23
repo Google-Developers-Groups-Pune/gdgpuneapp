@@ -1,8 +1,20 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/live_component/live_component_widget.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'user_home_page_widget.dart' show UserHomePageWidget;
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:provider/provider.dart';
 
 class UserHomePageModel extends FlutterFlowModel<UserHomePageWidget> {
   ///  State fields for stateful widgets in this page.
@@ -11,6 +23,8 @@ class UserHomePageModel extends FlutterFlowModel<UserHomePageWidget> {
   UsersRecord? requiredUser;
   // Stores action output result for [Firestore Query - Query a collection] action in UserHomePage widget.
   AgendasRecord? requiredAgenda;
+  // Stores action output result for [Firestore Query - Query a collection] action in qrBtn widget.
+  QrRecord? outputQrData;
   // State field(s) for ListView widget.
 
   PagingController<DocumentSnapshot?, TalksRecord>? listViewPagingController;
@@ -22,9 +36,7 @@ class UserHomePageModel extends FlutterFlowModel<UserHomePageWidget> {
 
   @override
   void dispose() {
-    for (var s in listViewStreamSubscriptions) {
-      s?.cancel();
-    }
+    listViewStreamSubscriptions.forEach((s) => s?.cancel());
     listViewPagingController?.dispose();
   }
 

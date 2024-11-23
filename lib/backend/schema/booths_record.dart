@@ -3,15 +3,16 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 class BoothsRecord extends FirestoreRecord {
   BoothsRecord._(
-    super.reference,
-    super.data,
-  ) {
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
     _initializeFields();
   }
 
@@ -45,11 +46,6 @@ class BoothsRecord extends FirestoreRecord {
   String get ceoDetails => _ceoDetails ?? '';
   bool hasCeoDetails() => _ceoDetails != null;
 
-  // "comp_logo" field.
-  String? _compLogo;
-  String get compLogo => _compLogo ?? '';
-  bool hasCompLogo() => _compLogo != null;
-
   // "comp_name" field.
   String? _compName;
   String get compName => _compName ?? '';
@@ -60,6 +56,16 @@ class BoothsRecord extends FirestoreRecord {
   String get ctoDetails => _ctoDetails ?? '';
   bool hasCtoDetails() => _ctoDetails != null;
 
+  // "event" field.
+  String? _event;
+  String get event => _event ?? '';
+  bool hasEvent() => _event != null;
+
+  // "comp_logo" field.
+  String? _compLogo;
+  String get compLogo => _compLogo ?? '';
+  bool hasCompLogo() => _compLogo != null;
+
   void _initializeFields() {
     _contact = snapshotData['contact'] as String?;
     _details = snapshotData['details'] as String?;
@@ -67,9 +73,10 @@ class BoothsRecord extends FirestoreRecord {
     _website = snapshotData['website'] as String?;
     _boothNumber = snapshotData['booth_number'] as String?;
     _ceoDetails = snapshotData['ceo_details'] as String?;
-    _compLogo = snapshotData['comp_logo'] as String?;
     _compName = snapshotData['comp_name'] as String?;
     _ctoDetails = snapshotData['cto_details'] as String?;
+    _event = snapshotData['event'] as String?;
+    _compLogo = snapshotData['comp_logo'] as String?;
   }
 
   static CollectionReference get collection => FirebaseFirestore.instanceFor(
@@ -113,9 +120,10 @@ Map<String, dynamic> createBoothsRecordData({
   String? website,
   String? boothNumber,
   String? ceoDetails,
-  String? compLogo,
   String? compName,
   String? ctoDetails,
+  String? event,
+  String? compLogo,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -125,9 +133,10 @@ Map<String, dynamic> createBoothsRecordData({
       'website': website,
       'booth_number': boothNumber,
       'ceo_details': ceoDetails,
-      'comp_logo': compLogo,
       'comp_name': compName,
       'cto_details': ctoDetails,
+      'event': event,
+      'comp_logo': compLogo,
     }.withoutNulls,
   );
 
@@ -145,9 +154,10 @@ class BoothsRecordDocumentEquality implements Equality<BoothsRecord> {
         e1?.website == e2?.website &&
         e1?.boothNumber == e2?.boothNumber &&
         e1?.ceoDetails == e2?.ceoDetails &&
-        e1?.compLogo == e2?.compLogo &&
         e1?.compName == e2?.compName &&
-        e1?.ctoDetails == e2?.ctoDetails;
+        e1?.ctoDetails == e2?.ctoDetails &&
+        e1?.event == e2?.event &&
+        e1?.compLogo == e2?.compLogo;
   }
 
   @override
@@ -158,9 +168,10 @@ class BoothsRecordDocumentEquality implements Equality<BoothsRecord> {
         e?.website,
         e?.boothNumber,
         e?.ceoDetails,
-        e?.compLogo,
         e?.compName,
-        e?.ctoDetails
+        e?.ctoDetails,
+        e?.event,
+        e?.compLogo
       ]);
 
   @override

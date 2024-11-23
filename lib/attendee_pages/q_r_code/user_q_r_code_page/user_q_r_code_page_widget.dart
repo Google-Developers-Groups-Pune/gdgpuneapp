@@ -1,8 +1,11 @@
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'user_q_r_code_page_model.dart';
 export 'user_q_r_code_page_model.dart';
 
@@ -71,7 +74,7 @@ class _UserQRCodePageWidgetState extends State<UserQRCodePageWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 2.0,
         ),
@@ -83,20 +86,20 @@ class _UserQRCodePageWidgetState extends State<UserQRCodePageWidget> {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Align(
-                          alignment: const AlignmentDirectional(0.0, -1.0),
+                          alignment: AlignmentDirectional(0.0, -1.0),
                           child: Container(
-                            constraints: const BoxConstraints(
+                            constraints: BoxConstraints(
                               maxWidth: 1270.0,
                             ),
-                            decoration: const BoxDecoration(),
+                            decoration: BoxDecoration(),
                             child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   16.0, 12.0, 16.0, 0.0),
                               child: Wrap(
                                 spacing: 16.0,
@@ -109,10 +112,10 @@ class _UserQRCodePageWidgetState extends State<UserQRCodePageWidget> {
                                 clipBehavior: Clip.none,
                                 children: [
                                   Container(
-                                    constraints: const BoxConstraints(
+                                    constraints: BoxConstraints(
                                       maxWidth: 570.0,
                                     ),
-                                    decoration: const BoxDecoration(),
+                                    decoration: BoxDecoration(),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
@@ -122,12 +125,12 @@ class _UserQRCodePageWidgetState extends State<UserQRCodePageWidget> {
                                       children: [
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   12.0, 0.0, 12.0, 0.0),
                                           child: Container(
                                             width: double.infinity,
                                             height: 330.0,
-                                            decoration: const BoxDecoration(
+                                            decoration: BoxDecoration(
                                               borderRadius: BorderRadius.only(
                                                 bottomLeft:
                                                     Radius.circular(12.0),
@@ -138,7 +141,7 @@ class _UserQRCodePageWidgetState extends State<UserQRCodePageWidget> {
                                               ),
                                             ),
                                             child: Padding(
-                                              padding: const EdgeInsets.all(12.0),
+                                              padding: EdgeInsets.all(12.0),
                                               child: BarcodeWidget(
                                                 data:
                                                     '{\n\"user_id\": 1234\n\"user_mail\": \"abc@gmail.com\",\n\"qr_code_type\": \"Food\"\n:}',
@@ -151,8 +154,8 @@ class _UserQRCodePageWidgetState extends State<UserQRCodePageWidget> {
                                                 backgroundColor:
                                                     Colors.transparent,
                                                 errorBuilder:
-                                                    (context, error) =>
-                                                        const SizedBox(
+                                                    (_context, _error) =>
+                                                        SizedBox(
                                                   width: 200.0,
                                                   height: 200.0,
                                                 ),
@@ -163,10 +166,10 @@ class _UserQRCodePageWidgetState extends State<UserQRCodePageWidget> {
                                         ),
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   12.0, 0.0, 12.0, 0.0),
                                           child: Container(
-                                            decoration: const BoxDecoration(
+                                            decoration: BoxDecoration(
                                               borderRadius: BorderRadius.only(
                                                 bottomLeft:
                                                     Radius.circular(4.0),
@@ -177,7 +180,7 @@ class _UserQRCodePageWidgetState extends State<UserQRCodePageWidget> {
                                               ),
                                             ),
                                             child: Padding(
-                                              padding: const EdgeInsetsDirectional
+                                              padding: EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       0.0, 12.0, 0.0, 12.0),
                                               child: Column(
@@ -226,14 +229,14 @@ class _UserQRCodePageWidgetState extends State<UserQRCodePageWidget> {
                                                                 ),
                                                       ),
                                                     ].divide(
-                                                        const SizedBox(width: 12.0)),
+                                                        SizedBox(width: 12.0)),
                                                   ),
                                                 ],
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ].divide(const SizedBox(height: 0.0)),
+                                      ].divide(SizedBox(height: 0.0)),
                                     ),
                                   ),
                                 ],
