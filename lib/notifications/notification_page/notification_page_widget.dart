@@ -3,12 +3,8 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'notification_page_model.dart';
 export 'notification_page_model.dart';
@@ -90,7 +86,7 @@ class _NotificationPageWidgetState extends State<NotificationPageWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: [],
+          actions: const [],
           centerTitle: false,
           elevation: 1.0,
         ),
@@ -113,7 +109,7 @@ class _NotificationPageWidgetState extends State<NotificationPageWidget> {
                           notificationList[notificationListIndex];
                       return Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(8.0, 4.0, 8.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(8.0, 4.0, 8.0, 0.0),
                         child: Container(
                           width: 100.0,
                           height: 100.0,
@@ -124,13 +120,13 @@ class _NotificationPageWidgetState extends State<NotificationPageWidget> {
                             shape: BoxShape.rectangle,
                           ),
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.all(12.0),
+                                  padding: const EdgeInsets.all(12.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment:
@@ -166,7 +162,7 @@ class _NotificationPageWidgetState extends State<NotificationPageWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       12.0, 0.0, 0.0, 0.0),
                                   child: Text(
                                     notificationListItem.description,

@@ -1,21 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
 import '/index.dart';
-import '/main.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/lat_lng.dart';
-import '/flutter_flow/place.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
@@ -79,27 +71,27 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? NavBarPage() : UserLoginPageWidget(),
+      errorBuilder: (context, state) => appStateNotifier.loggedIn
+          ? const UserHomePageWidget()
+          : const UserLoginPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) =>
-              appStateNotifier.loggedIn ? NavBarPage() : UserLoginPageWidget(),
+          builder: (context, _) => appStateNotifier.loggedIn
+              ? const UserHomePageWidget()
+              : const UserLoginPageWidget(),
           routes: [
             FFRoute(
               name: 'UserHomePage',
               path: 'userHomePage',
               requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'UserHomePage')
-                  : UserHomePageWidget(),
+              builder: (context, params) => const UserHomePageWidget(),
             ),
             FFRoute(
               name: 'UserLoginPage',
               path: 'userLoginPage',
-              builder: (context, params) => UserLoginPageWidget(),
+              builder: (context, params) => const UserLoginPageWidget(),
             ),
             FFRoute(
               name: 'UserQRCodeListPage',
@@ -130,20 +122,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'ActivityPage',
               path: 'activityPage',
               requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'ActivityPage')
-                  : NavBarPage(
-                      initialPage: 'ActivityPage',
-                      page: ActivityPageWidget(),
-                    ),
+              builder: (context, params) => const ActivityPageWidget(),
             ),
             FFRoute(
               name: 'MenuPage',
               path: 'menuPage',
               requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'MenuPage')
-                  : MenuPageWidget(),
+              builder: (context, params) => const MenuPageWidget(),
             ),
             FFRoute(
               name: 'eventDetailsPage',
@@ -161,9 +146,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'networkingPage',
               path: 'networkingPage',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'networkingPage')
-                  : NetworkingPageWidget(),
+              builder: (context, params) => const NetworkingPageWidget(),
             ),
             FFRoute(
               name: 'boothDetailsPage',
@@ -182,38 +165,33 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'boothListPageV2',
               path: 'boothListPageV2',
               requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'boothListPageV2')
-                  : BoothListPageV2Widget(),
+              builder: (context, params) => const BoothListPageV2Widget(),
             ),
             FFRoute(
               name: 'scanQrPage',
               path: 'scanQrPage',
-              builder: (context, params) => ScanQrPageWidget(),
+              builder: (context, params) => const ScanQrPageWidget(),
             ),
             FFRoute(
               name: 'qrScanner',
               path: 'qrScanner',
-              builder: (context, params) => QrScannerWidget(),
+              builder: (context, params) => const QrScannerWidget(),
             ),
             FFRoute(
               name: 'searchPage',
               path: 'searchPage',
               requireAuth: true,
-              builder: (context, params) => SearchPageWidget(),
+              builder: (context, params) => const SearchPageWidget(),
             ),
             FFRoute(
               name: 'notificationScreen',
               path: 'notificationScreen',
-              builder: (context, params) => NotificationScreenWidget(),
+              builder: (context, params) => const NotificationScreenWidget(),
             ),
             FFRoute(
               name: 'agendaHomeScreen',
               path: 'agendaHomeScreen',
-              builder: (context, params) => NavBarPage(
-                initialPage: '',
-                page: AgendaHomeScreenWidget(),
-              ),
+              builder: (context, params) => const AgendaHomeScreenWidget(),
             ),
             FFRoute(
               name: 'UserProfilePage',
@@ -244,12 +222,22 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'notification_page',
               path: 'notificationPage',
-              builder: (context, params) => NotificationPageWidget(),
+              builder: (context, params) => const NotificationPageWidget(),
             ),
             FFRoute(
               name: 'feedback_page',
               path: 'feedbackPage',
-              builder: (context, params) => FeedbackPageWidget(),
+              builder: (context, params) => const FeedbackPageWidget(),
+            ),
+            FFRoute(
+              name: 'AboutGdgPune',
+              path: 'aboutGdgPune',
+              builder: (context, params) => const AboutGdgPuneWidget(),
+            ),
+            FFRoute(
+              name: 'TeamPage',
+              path: 'teamPage',
+              builder: (context, params) => const TeamPageWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
@@ -492,7 +480,7 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
 }
 
 class RootPageContext {

@@ -5,16 +5,11 @@ import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import 'dart:math';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'user_profile_page_model.dart';
 export 'user_profile_page_model.dart';
 
@@ -46,9 +41,9 @@ class _UserProfilePageWidgetState extends State<UserProfilePageWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (widget!.userReference != null) {
+      if (widget.userReference != null) {
         _model.otherUserProfile =
-            await UsersRecord.getDocumentOnce(widget!.userReference!);
+            await UsersRecord.getDocumentOnce(widget.userReference!);
         _model.userProfile = _model.otherUserProfile;
         safeSetState(() {});
       } else {
@@ -80,8 +75,8 @@ class _UserProfilePageWidgetState extends State<UserProfilePageWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            begin: Offset(0.6, 0.6),
-            end: Offset(1.0, 1.0),
+            begin: const Offset(0.6, 0.6),
+            end: const Offset(1.0, 1.0),
           ),
         ],
       ),
@@ -100,8 +95,8 @@ class _UserProfilePageWidgetState extends State<UserProfilePageWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            begin: Offset(0.0, 20.0),
-            end: Offset(0.0, 0.0),
+            begin: const Offset(0.0, 20.0),
+            end: const Offset(0.0, 0.0),
           ),
         ],
       ),
@@ -120,8 +115,8 @@ class _UserProfilePageWidgetState extends State<UserProfilePageWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            begin: Offset(0.0, 20.0),
-            end: Offset(0.0, 0.0),
+            begin: const Offset(0.0, 20.0),
+            end: const Offset(0.0, 0.0),
           ),
         ],
       ),
@@ -140,8 +135,8 @@ class _UserProfilePageWidgetState extends State<UserProfilePageWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            begin: Offset(0.0, 20.0),
-            end: Offset(0.0, 0.0),
+            begin: const Offset(0.0, 20.0),
+            end: const Offset(0.0, 0.0),
           ),
         ],
       ),
@@ -165,8 +160,6 @@ class _UserProfilePageWidgetState extends State<UserProfilePageWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -180,7 +173,7 @@ class _UserProfilePageWidgetState extends State<UserProfilePageWidget>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                decoration: BoxDecoration(),
+                decoration: const BoxDecoration(),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -203,7 +196,7 @@ class _UserProfilePageWidgetState extends State<UserProfilePageWidget>
                       style:
                           FlutterFlowTheme.of(context).headlineSmall.override(
                                 fontFamily: 'Inter Tight',
-                                color: Color(0xFF14181B),
+                                color: const Color(0xFF14181B),
                                 fontSize: 22.0,
                                 letterSpacing: 0.0,
                               ),
@@ -211,353 +204,127 @@ class _UserProfilePageWidgetState extends State<UserProfilePageWidget>
                   ],
                 ),
               ),
-              FlutterFlowIconButton(
-                buttonSize: 40.0,
-                icon: Icon(
-                  Icons.edit,
-                  color: FlutterFlowTheme.of(context).primaryText,
-                  size: 24.0,
+              if (_model.userProfile?.email == currentUserEmail)
+                FlutterFlowIconButton(
+                  buttonSize: 40.0,
+                  icon: Icon(
+                    Icons.edit,
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    size: 24.0,
+                  ),
+                  onPressed: () async {
+                    context.pushNamed(
+                      'UserProfilePageEdit',
+                      queryParameters: {
+                        'userReference': serializeParam(
+                          widget.userReference,
+                          ParamType.DocumentReference,
+                        ),
+                      }.withoutNulls,
+                    );
+                  },
                 ),
-                onPressed: () async {
-                  if (widget!.userReference != null) {
-                    context.pushNamed(
-                      'UserProfilePage',
-                      queryParameters: {
-                        'userReference': serializeParam(
-                          widget!.userReference,
-                          ParamType.DocumentReference,
-                        ),
-                      }.withoutNulls,
-                    );
-                  } else {
-                    context.pushNamed(
-                      'UserProfilePage',
-                      queryParameters: {
-                        'userReference': serializeParam(
-                          FFAppState().userDetail,
-                          ParamType.DocumentReference,
-                        ),
-                      }.withoutNulls,
-                    );
-                  }
-                },
-              ),
             ],
           ),
-          actions: [],
+          actions: const [],
           centerTitle: false,
           elevation: 1.0,
         ),
         body: SafeArea(
           top: true,
-          child: Visibility(
-            visible: (_model.userProfile != null) &&
-                (_model.selfUserProfile?.reference != null),
-            child: Align(
-              alignment: AlignmentDirectional(0.0, -1.0),
-              child: Container(
-                constraints: BoxConstraints(
-                  maxWidth: 570.0,
-                ),
-                decoration: BoxDecoration(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: FlutterFlowTheme.of(context).primary,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50.0),
-                            ),
-                          ).animateOnPageLoad(
-                              animationsMap['cardOnPageLoadAnimation']!),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 12.0, 0.0, 0.0),
-                            child: Text(
-                              valueOrDefault<String>(
-                                _model.userProfile?.name,
-                                'Name',
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .headlineSmall
-                                  .override(
-                                    fontFamily: 'Inter Tight',
-                                    letterSpacing: 0.0,
+          child: Align(
+            alignment: const AlignmentDirectional(0.0, -1.0),
+            child: Container(
+              constraints: const BoxConstraints(
+                maxWidth: 570.0,
+              ),
+              decoration: const BoxDecoration(),
+              child: Builder(
+                builder: (context) {
+                  if (_model.userProfile != null) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 16.0, 0.0, 0.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Card(
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                color: FlutterFlowTheme.of(context).primary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50.0),
+                                ),
+                              ).animateOnPageLoad(
+                                  animationsMap['cardOnPageLoadAnimation']!),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 12.0, 0.0, 0.0),
+                                child: Text(
+                                  valueOrDefault<String>(
+                                    _model.userProfile?.name,
+                                    'Name',
                                   ),
-                            ).animateOnPageLoad(
-                                animationsMap['textOnPageLoadAnimation1']!),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 4.0, 0.0, 0.0),
-                            child: Text(
-                              valueOrDefault<String>(
-                                _model.userProfile?.email,
-                                'Email',
+                                  style: FlutterFlowTheme.of(context)
+                                      .headlineSmall
+                                      .override(
+                                        fontFamily: 'Inter Tight',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ).animateOnPageLoad(
+                                    animationsMap['textOnPageLoadAnimation1']!),
                               ),
-                              style: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Inter Tight',
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    letterSpacing: 0.0,
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 4.0, 0.0, 0.0),
+                                child: Text(
+                                  valueOrDefault<String>(
+                                    _model.userProfile?.email,
+                                    'Email',
                                   ),
-                            ).animateOnPageLoad(
-                                animationsMap['textOnPageLoadAnimation2']!),
+                                  style: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        fontFamily: 'Inter Tight',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        letterSpacing: 0.0,
+                                      ),
+                                ).animateOnPageLoad(
+                                    animationsMap['textOnPageLoadAnimation2']!),
+                              ),
+                              Divider(
+                                height: 44.0,
+                                thickness: 1.0,
+                                indent: 24.0,
+                                endIndent: 24.0,
+                                color: FlutterFlowTheme.of(context).alternate,
+                              ).animateOnPageLoad(
+                                  animationsMap['dividerOnPageLoadAnimation']!),
+                            ],
                           ),
-                          Divider(
-                            height: 44.0,
-                            thickness: 1.0,
-                            indent: 24.0,
-                            endIndent: 24.0,
-                            color: FlutterFlowTheme.of(context).alternate,
-                          ).animateOnPageLoad(
-                              animationsMap['dividerOnPageLoadAnimation']!),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 12.0, 0.0, 12.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
+                        ),
+                        Container(
+                          decoration: const BoxDecoration(),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 12.0, 0.0, 12.0),
+                            child: Column(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      24.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    'LinkedIn',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Inter',
-                                          letterSpacing: 0.0,
-                                        ),
-                                  ),
-                                ),
-                                Row(
+                                Column(
                                   mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.all(16.0),
-                                      child: Container(
-                                        width:
-                                            MediaQuery.sizeOf(context).width *
-                                                0.7,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(4.0),
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            width: 0.5,
-                                          ),
-                                        ),
-                                        alignment:
-                                            AlignmentDirectional(-1.0, 0.0),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(14.0),
-                                          child: Text(
-                                            valueOrDefault<String>(
-                                              _model.userProfile?.linkedin,
-                                              'LinkedIn URL',
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primary,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Flexible(
-                                      child: Container(
-                                        width:
-                                            MediaQuery.sizeOf(context).width *
-                                                0.17,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(4.0),
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            width: 0.5,
-                                          ),
-                                        ),
-                                        alignment:
-                                            AlignmentDirectional(0.0, 0.0),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(6.0),
-                                          child: Icon(
-                                            Icons.qr_code,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 34.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      24.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    'Tags',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Inter',
-                                          letterSpacing: 0.0,
-                                        ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(16.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(4.0),
-                                      border: Border.all(
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        width: 0.5,
-                                      ),
-                                    ),
-                                    alignment: AlignmentDirectional(-1.0, 0.0),
-                                    child: FlutterFlowChoiceChips(
-                                      options: _model.userProfile!.tags
-                                          .map((label) => ChipData(label))
-                                          .toList(),
-                                      onChanged: (val) => safeSetState(() =>
-                                          _model.choiceChipsValue =
-                                              val?.firstOrNull),
-                                      selectedChipStyle: ChipStyle(
-                                        backgroundColor:
-                                            FlutterFlowTheme.of(context)
-                                                .primary,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .info,
-                                              letterSpacing: 0.0,
-                                            ),
-                                        iconColor:
-                                            FlutterFlowTheme.of(context).info,
-                                        iconSize: 16.0,
-                                        elevation: 0.0,
-                                        borderColor:
-                                            FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                        borderWidth: 0.5,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      unselectedChipStyle: ChipStyle(
-                                        backgroundColor:
-                                            FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              letterSpacing: 0.0,
-                                            ),
-                                        iconColor: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        iconSize: 16.0,
-                                        elevation: 0.0,
-                                        borderColor:
-                                            FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                        borderWidth: 0.5,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      chipSpacing: 8.0,
-                                      rowSpacing: 8.0,
-                                      multiselect: false,
-                                      alignment: WrapAlignment.start,
-                                      controller:
-                                          _model.choiceChipsValueController ??=
-                                              FormFieldController<List<String>>(
-                                        [],
-                                      ),
-                                      wrapped: true,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      24.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    'Bio',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Inter',
-                                          letterSpacing: 0.0,
-                                        ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(16.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(4.0),
-                                      border: Border.all(
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        width: 0.5,
-                                      ),
-                                    ),
-                                    alignment: AlignmentDirectional(-1.0, 0.0),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(14.0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          24.0, 0.0, 0.0, 0.0),
                                       child: Text(
-                                        valueOrDefault<String>(
-                                          _model.userProfile?.bio,
-                                          'Your bio',
-                                        ),
-                                        maxLines: 6,
+                                        'LinkedIn',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -566,16 +333,260 @@ class _UserProfilePageWidgetState extends State<UserProfilePageWidget>
                                             ),
                                       ),
                                     ),
-                                  ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: Container(
+                                            width: MediaQuery.sizeOf(context)
+                                                    .width *
+                                                0.7,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(4.0),
+                                              border: Border.all(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                                width: 0.5,
+                                              ),
+                                            ),
+                                            alignment:
+                                                const AlignmentDirectional(-1.0, 0.0),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(14.0),
+                                              child: Text(
+                                                valueOrDefault<String>(
+                                                  _model.userProfile?.linkedin,
+                                                  'LinkedIn URL',
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyLarge
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: Container(
+                                            width: MediaQuery.sizeOf(context)
+                                                    .width *
+                                                0.17,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(4.0),
+                                              border: Border.all(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                                width: 0.5,
+                                              ),
+                                            ),
+                                            alignment:
+                                                const AlignmentDirectional(0.0, 0.0),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(6.0),
+                                              child: Icon(
+                                                Icons.qr_code,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                size: 34.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          24.0, 0.0, 0.0, 0.0),
+                                      child: Text(
+                                        'Tags',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                          border: Border.all(
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            width: 0.5,
+                                          ),
+                                        ),
+                                        alignment:
+                                            const AlignmentDirectional(-1.0, 0.0),
+                                        child: FlutterFlowChoiceChips(
+                                          options: _model.userProfile!.tags
+                                              .where(
+                                                  (e) => e != '')
+                                              .toList()
+                                              .map((label) => ChipData(label))
+                                              .toList(),
+                                          onChanged: (val) => safeSetState(() =>
+                                              _model.choiceChipsValue =
+                                                  val?.firstOrNull),
+                                          selectedChipStyle: ChipStyle(
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primary,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Inter',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .info,
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            iconColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .info,
+                                            iconSize: 16.0,
+                                            elevation: 0.0,
+                                            borderColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryText,
+                                            borderWidth: 0.5,
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          unselectedChipStyle: ChipStyle(
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryBackground,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Inter',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            iconColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryText,
+                                            iconSize: 16.0,
+                                            elevation: 0.0,
+                                            borderColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryText,
+                                            borderWidth: 0.5,
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          chipSpacing: 8.0,
+                                          rowSpacing: 8.0,
+                                          multiselect: false,
+                                          alignment: WrapAlignment.start,
+                                          controller: _model
+                                                  .choiceChipsValueController ??=
+                                              FormFieldController<List<String>>(
+                                            [],
+                                          ),
+                                          wrapped: true,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          24.0, 0.0, 0.0, 0.0),
+                                      child: Text(
+                                        'Bio',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                          border: Border.all(
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            width: 0.5,
+                                          ),
+                                        ),
+                                        alignment:
+                                            const AlignmentDirectional(-1.0, 0.0),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(14.0),
+                                          child: Text(
+                                            valueOrDefault<String>(
+                                              _model.userProfile?.bio,
+                                              'Your bio',
+                                            ),
+                                            maxLines: 6,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
+                          ),
                         ),
+                      ],
+                    );
+                  } else {
+                    return Container(
+                      width: 100.0,
+                      height: 100.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
-                    ),
-                  ],
-                ),
+                    );
+                  }
+                },
               ),
             ),
           ),

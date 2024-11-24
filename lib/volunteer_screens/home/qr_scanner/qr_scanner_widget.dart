@@ -1,9 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'qr_scanner_model.dart';
 export 'qr_scanner_model.dart';
 
@@ -66,7 +63,7 @@ class _QrScannerWidgetState extends State<QrScannerWidget> {
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
                     child: Text(
                       'Scan QR',
                       style:
@@ -82,7 +79,7 @@ class _QrScannerWidgetState extends State<QrScannerWidget> {
               ),
             ],
           ),
-          actions: [],
+          actions: const [],
           centerTitle: false,
           elevation: 1.0,
         ),
@@ -93,7 +90,7 @@ class _QrScannerWidgetState extends State<QrScannerWidget> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.all(44.0),
+                padding: const EdgeInsets.all(44.0),
                 child: Container(
                   width: double.infinity,
                   height: MediaQuery.sizeOf(context).height * 0.35,
@@ -124,7 +121,7 @@ class _QrScannerWidgetState extends State<QrScannerWidget> {
                     size: 18.0,
                   ),
                   Padding(
-                    padding: EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(12.0),
                     child: Text(
                       'Caption',
                       style: FlutterFlowTheme.of(context).bodyLarge.override(

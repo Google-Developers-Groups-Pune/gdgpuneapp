@@ -1,4 +1,3 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
@@ -7,12 +6,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import 'dart:math';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'user_profile_page_edit_model.dart';
 export 'user_profile_page_edit_model.dart';
@@ -72,8 +67,8 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            begin: Offset(0.6, 0.6),
-            end: Offset(1.0, 1.0),
+            begin: const Offset(0.6, 0.6),
+            end: const Offset(1.0, 1.0),
           ),
         ],
       ),
@@ -92,8 +87,8 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            begin: Offset(0.0, 20.0),
-            end: Offset(0.0, 0.0),
+            begin: const Offset(0.0, 20.0),
+            end: const Offset(0.0, 0.0),
           ),
         ],
       ),
@@ -112,8 +107,8 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            begin: Offset(0.0, 20.0),
-            end: Offset(0.0, 0.0),
+            begin: const Offset(0.0, 20.0),
+            end: const Offset(0.0, 0.0),
           ),
         ],
       ),
@@ -165,26 +160,26 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
             'Profile',
             style: FlutterFlowTheme.of(context).headlineSmall.override(
                   fontFamily: 'Inter Tight',
-                  color: Color(0xFF14181B),
+                  color: const Color(0xFF14181B),
                   fontSize: 22.0,
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: [],
+          actions: const [],
           centerTitle: false,
           elevation: 1.0,
         ),
         body: SafeArea(
           top: true,
           child: Visibility(
-            visible: widget!.userReference != null,
+            visible: widget.userReference != null,
             child: Align(
-              alignment: AlignmentDirectional(0.0, -1.0),
+              alignment: const AlignmentDirectional(0.0, -1.0),
               child: Container(
-                constraints: BoxConstraints(
+                constraints: const BoxConstraints(
                   maxWidth: 570.0,
                 ),
-                decoration: BoxDecoration(),
+                decoration: const BoxDecoration(),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -200,7 +195,7 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                             borderRadius: BorderRadius.circular(50.0),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.all(2.0),
+                            padding: const EdgeInsets.all(2.0),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(60.0),
                               child: Image.network(
@@ -214,7 +209,7 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                         ).animateOnPageLoad(
                             animationsMap['cardOnPageLoadAnimation']!),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 4.0, 0.0, 0.0),
                           child: Text(
                             'Choose Avatar',
@@ -237,9 +232,9 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                         ).animateOnPageLoad(
                             animationsMap['dividerOnPageLoadAnimation']!),
                         Container(
-                          decoration: BoxDecoration(),
+                          decoration: const BoxDecoration(),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 12.0, 0.0, 12.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -250,7 +245,7 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.all(14.0),
+                                      padding: const EdgeInsets.all(14.0),
                                       child: TextFormField(
                                         controller: _model.nameTextController,
                                         focusNode: _model.nameFocusNode,
@@ -289,7 +284,7 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                                 BorderRadius.circular(4.0),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
+                                            borderSide: const BorderSide(
                                               color: Color(0x00000000),
                                               width: 0.5,
                                             ),
@@ -321,7 +316,7 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                           fillColor:
                                               FlutterFlowTheme.of(context)
                                                   .secondaryBackground,
-                                          contentPadding: EdgeInsets.all(20.0),
+                                          contentPadding: const EdgeInsets.all(20.0),
                                         ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -338,7 +333,7 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 16.0, 0.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -346,9 +341,9 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                           Expanded(
                                             child: Container(
                                               width: 101.0,
-                                              decoration: BoxDecoration(),
+                                              decoration: const BoxDecoration(),
                                               child: Padding(
-                                                padding: EdgeInsets.all(14.0),
+                                                padding: const EdgeInsets.all(14.0),
                                                 child: TextFormField(
                                                   controller: _model
                                                       .linkedInURLTextController,
@@ -395,7 +390,7 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                                     ),
                                                     focusedBorder:
                                                         OutlineInputBorder(
-                                                      borderSide: BorderSide(
+                                                      borderSide: const BorderSide(
                                                         color:
                                                             Color(0x00000000),
                                                         width: 0.5,
@@ -435,7 +430,7 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                                             .of(context)
                                                         .secondaryBackground,
                                                     contentPadding:
-                                                        EdgeInsets.all(20.0),
+                                                        const EdgeInsets.all(20.0),
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -467,9 +462,9 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                               ),
                                             ),
                                             alignment:
-                                                AlignmentDirectional(0.0, 0.0),
+                                                const AlignmentDirectional(0.0, 0.0),
                                             child: Padding(
-                                              padding: EdgeInsets.all(6.0),
+                                              padding: const EdgeInsets.all(6.0),
                                               child: Icon(
                                                 Icons.qr_code,
                                                 color:
@@ -489,7 +484,7 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           16.0, 16.0, 0.0, 8.0),
                                       child: FlutterFlowChoiceChips(
                                         options: _model.listOfTags
@@ -523,7 +518,7 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                               BorderRadius.circular(8.0),
                                         ),
                                         unselectedChipStyle: ChipStyle(
-                                          backgroundColor: Color(0x00000000),
+                                          backgroundColor: const Color(0x00000000),
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
                                               .bodyMedium
@@ -561,7 +556,7 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 16.0, 0.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -569,9 +564,9 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                           Expanded(
                                             child: Container(
                                               width: 101.0,
-                                              decoration: BoxDecoration(),
+                                              decoration: const BoxDecoration(),
                                               child: Padding(
-                                                padding: EdgeInsets.all(14.0),
+                                                padding: const EdgeInsets.all(14.0),
                                                 child: TextFormField(
                                                   controller: _model
                                                       .tagInputTextController,
@@ -618,7 +613,7 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                                     ),
                                                     focusedBorder:
                                                         OutlineInputBorder(
-                                                      borderSide: BorderSide(
+                                                      borderSide: const BorderSide(
                                                         color:
                                                             Color(0x00000000),
                                                         width: 0.5,
@@ -658,7 +653,7 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                                             .of(context)
                                                         .secondaryBackground,
                                                     contentPadding:
-                                                        EdgeInsets.all(20.0),
+                                                        const EdgeInsets.all(20.0),
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -690,7 +685,7 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                               ),
                                             ),
                                             alignment:
-                                                AlignmentDirectional(0.0, 0.0),
+                                                const AlignmentDirectional(0.0, 0.0),
                                             child: FlutterFlowIconButton(
                                               borderRadius: 8.0,
                                               buttonSize: 40.0,
@@ -727,7 +722,7 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                   ],
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(14.0),
+                                  padding: const EdgeInsets.all(14.0),
                                   child: TextFormField(
                                     controller: _model.bioInputTextController,
                                     focusNode: _model.bioInputFocusNode,
@@ -762,7 +757,7 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                             BorderRadius.circular(4.0),
                                       ),
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
+                                        borderSide: const BorderSide(
                                           color: Color(0x00000000),
                                           width: 0.5,
                                         ),
@@ -790,7 +785,7 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                                       filled: true,
                                       fillColor: FlutterFlowTheme.of(context)
                                           .secondaryBackground,
-                                      contentPadding: EdgeInsets.all(20.0),
+                                      contentPadding: const EdgeInsets.all(20.0),
                                     ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
@@ -812,48 +807,30 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          if (widget!.userReference != null) {
-                            await widget!.userReference!.update({
-                              ...createUsersRecordData(
-                                bio: valueOrDefault<String>(
-                                  _model.bioInputTextController.text,
-                                  'I Love Google',
-                                ),
-                                linkedin: _model.linkedInURLTextController.text,
-                                name: _model.nameTextController.text,
+                          await FFAppState().userDetail!.update({
+                            ...createUsersRecordData(
+                              bio: valueOrDefault<String>(
+                                _model.bioInputTextController.text,
+                                'I Love Google',
                               ),
-                              ...mapToFirestore(
-                                {
-                                  'tags': _model.tagsChoiceChipsValues,
-                                },
-                              ),
-                            });
-                          } else {
-                            await FFAppState().userDetail!.update({
-                              ...createUsersRecordData(
-                                bio: valueOrDefault<String>(
-                                  _model.bioInputTextController.text,
-                                  'I Love Google',
-                                ),
-                                linkedin: _model.linkedInURLTextController.text,
-                                name: _model.nameTextController.text,
-                              ),
-                              ...mapToFirestore(
-                                {
-                                  'tags': _model.tagsChoiceChipsValues,
-                                },
-                              ),
-                            });
-                          }
+                              linkedin: _model.linkedInURLTextController.text,
+                              name: _model.nameTextController.text,
+                            ),
+                            ...mapToFirestore(
+                              {
+                                'tags': _model.tagsChoiceChipsValues,
+                              },
+                            ),
+                          });
 
                           context.pushNamed(
                             'UserProfilePage',
                             queryParameters: {
                               'userReference': serializeParam(
-                                widget!.userReference,
+                                widget.userReference,
                                 ParamType.DocumentReference,
                               ),
                             }.withoutNulls,
@@ -863,9 +840,9 @@ class _UserProfilePageEditWidgetState extends State<UserProfilePageEditWidget>
                         options: FFButtonOptions(
                           width: MediaQuery.sizeOf(context).width * 1.0,
                           height: 40.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               16.0, 0.0, 16.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).primary,
                           textStyle:

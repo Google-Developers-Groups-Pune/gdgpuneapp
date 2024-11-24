@@ -2,10 +2,7 @@ import '/components/send_btn_component/send_btn_component_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'notification_screen_model.dart';
 export 'notification_screen_model.dart';
 
@@ -75,7 +72,7 @@ class _NotificationScreenWidgetState extends State<NotificationScreenWidget> {
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 0.0, 0.0),
                     child: Text(
                       'Notification',
                       style:
@@ -131,23 +128,23 @@ class _NotificationScreenWidgetState extends State<NotificationScreenWidget> {
                       print('qrBtn pressed ...');
                     },
                   ),
-                ].divide(SizedBox(width: 8.0)),
+                ].divide(const SizedBox(width: 8.0)),
               ),
             ],
           ),
-          actions: [],
+          actions: const [],
           centerTitle: false,
           elevation: 1.0,
         ),
         body: SafeArea(
           top: true,
           child: Container(
-            decoration: BoxDecoration(),
+            decoration: const BoxDecoration(),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: EdgeInsets.all(24.0),
+                  padding: const EdgeInsets.all(24.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -155,7 +152,7 @@ class _NotificationScreenWidgetState extends State<NotificationScreenWidget> {
                     children: [
                       Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 0.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 0.0, 0.0),
                         child: Text(
                           'Title',
                           style:
@@ -168,8 +165,8 @@ class _NotificationScreenWidgetState extends State<NotificationScreenWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Container(
+                        padding: const EdgeInsets.all(10.0),
+                        child: SizedBox(
                           width: double.infinity,
                           child: TextFormField(
                             controller: _model.textController1,
@@ -194,14 +191,14 @@ class _NotificationScreenWidgetState extends State<NotificationScreenWidget> {
                                     fontWeight: FontWeight.normal,
                                   ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xA457636C),
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1.0,
                                 ),
@@ -245,7 +242,7 @@ class _NotificationScreenWidgetState extends State<NotificationScreenWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -253,7 +250,7 @@ class _NotificationScreenWidgetState extends State<NotificationScreenWidget> {
                     children: [
                       Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 0.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 0.0, 0.0),
                         child: Text(
                           'Description',
                           style:
@@ -266,8 +263,8 @@ class _NotificationScreenWidgetState extends State<NotificationScreenWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Container(
+                        padding: const EdgeInsets.all(10.0),
+                        child: SizedBox(
                           width: double.infinity,
                           child: TextFormField(
                             controller: _model.textController2,
@@ -292,14 +289,14 @@ class _NotificationScreenWidgetState extends State<NotificationScreenWidget> {
                                     fontWeight: FontWeight.normal,
                                   ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0xA457636C),
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1.0,
                                 ),
@@ -344,11 +341,11 @@ class _NotificationScreenWidgetState extends State<NotificationScreenWidget> {
                 ),
                 Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(32.0, 20.0, 32.0, 0.0),
+                      const EdgeInsetsDirectional.fromSTEB(32.0, 20.0, 32.0, 0.0),
                   child: wrapWithModel(
                     model: _model.sendBtnComponentModel,
                     updateCallback: () => safeSetState(() {}),
-                    child: SendBtnComponentWidget(),
+                    child: const SendBtnComponentWidget(),
                   ),
                 ),
               ],

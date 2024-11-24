@@ -1,21 +1,10 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
-import '/flutter_flow/flutter_flow_autocomplete_options_list.dart';
-import '/flutter_flow/flutter_flow_choice_chips.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
+import '/components/main_nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'networking_page_widget.dart' show NetworkingPageWidget;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'package:text_search/text_search.dart';
 
 class NetworkingPageModel extends FlutterFlowModel<NetworkingPageWidget> {
   ///  Local state fields for this page.
@@ -49,12 +38,18 @@ class NetworkingPageModel extends FlutterFlowModel<NetworkingPageWidget> {
       choiceChipsValueController?.value = val != null ? [val] : [];
   // Stores action output result for [Firestore Query - Query a collection] action in ChoiceChips widget.
   List<UsersRecord>? usersWithTag;
+  // Model for mainNavBar component.
+  late MainNavBarModel mainNavBarModel;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    mainNavBarModel = createModel(context, () => MainNavBarModel());
+  }
 
   @override
   void dispose() {
     searchFieldFocusNode?.dispose();
+
+    mainNavBarModel.dispose();
   }
 }

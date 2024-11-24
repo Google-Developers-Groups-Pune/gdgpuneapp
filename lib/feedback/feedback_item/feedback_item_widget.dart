@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'feedback_item_model.dart';
 export 'feedback_item_model.dart';
@@ -53,16 +52,16 @@ class _FeedbackItemWidgetState extends State<FeedbackItemWidget> {
     context.watch<FFAppState>();
 
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 12.0),
+      padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 12.0),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
             child: Text(
               valueOrDefault<String>(
-                widget!.feedbackQuestion?.question,
+                widget.feedbackQuestion?.question,
                 'NA',
               ),
               style: FlutterFlowTheme.of(context).bodyLarge.override(
@@ -74,10 +73,10 @@ class _FeedbackItemWidgetState extends State<FeedbackItemWidget> {
           ),
           Stack(
             children: [
-              if (widget!.feedbackQuestion?.type ==
+              if (widget.feedbackQuestion?.type ==
                   FFAppState().feedbackItemRating)
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                   child: RatingBar.builder(
                     onRatingUpdate: (newValue) =>
                         safeSetState(() => _model.ratingBarValue = newValue),
@@ -89,16 +88,16 @@ class _FeedbackItemWidgetState extends State<FeedbackItemWidget> {
                     initialRating: _model.ratingBarValue ??= 0.0,
                     unratedColor: FlutterFlowTheme.of(context).secondaryText,
                     itemCount: 5,
-                    itemPadding: EdgeInsets.fromLTRB(0.0, 0.0, 28.0, 0.0),
+                    itemPadding: const EdgeInsets.fromLTRB(0.0, 0.0, 28.0, 0.0),
                     itemSize: 24.0,
                     glowColor: FlutterFlowTheme.of(context).primary,
                   ),
                 ),
-              if (widget!.feedbackQuestion?.type ==
+              if (widget.feedbackQuestion?.type ==
                   FFAppState().feedbackItemText)
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-                  child: Container(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                  child: SizedBox(
                     width: MediaQuery.sizeOf(context).width * 0.85,
                     child: TextFormField(
                       controller: _model.textController,

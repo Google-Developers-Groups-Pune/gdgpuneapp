@@ -2,10 +2,7 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'event_details_page_model.dart';
 export 'event_details_page_model.dart';
 
@@ -44,7 +41,7 @@ class _EventDetailsPageWidgetState extends State<EventDetailsPageWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<TalkDetailsRecord>(
-      future: TalkDetailsRecord.getDocumentOnce(widget!.eventReference!),
+      future: TalkDetailsRecord.getDocumentOnce(widget.eventReference!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -93,7 +90,7 @@ class _EventDetailsPageWidgetState extends State<EventDetailsPageWidget> {
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
                     child: Text(
                       'Talk Details',
                       style:
@@ -107,7 +104,7 @@ class _EventDetailsPageWidgetState extends State<EventDetailsPageWidget> {
                   ),
                 ],
               ),
-              actions: [],
+              actions: const [],
               centerTitle: false,
               elevation: 1.0,
             ),
@@ -118,7 +115,7 @@ class _EventDetailsPageWidgetState extends State<EventDetailsPageWidget> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(12.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,14 +131,14 @@ class _EventDetailsPageWidgetState extends State<EventDetailsPageWidget> {
                         ),
                         Flexible(
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 12.0, 0.0, 0.0, 0.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 10.0, 0.0, 0.0),
                                   child: Text(
                                     eventDetailsPageTalkDetailsRecord.topic,
@@ -155,7 +152,7 @@ class _EventDetailsPageWidgetState extends State<EventDetailsPageWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 8.0, 0.0, 0.0),
                                   child: Builder(
                                     builder: (context) {
@@ -171,13 +168,13 @@ class _EventDetailsPageWidgetState extends State<EventDetailsPageWidget> {
                                         scrollDirection: Axis.vertical,
                                         itemCount: speakers.length,
                                         separatorBuilder: (_, __) =>
-                                            SizedBox(height: 4.0),
+                                            const SizedBox(height: 4.0),
                                         itemBuilder: (context, speakersIndex) {
                                           final speakersItem =
                                               speakers[speakersIndex];
                                           return Align(
                                             alignment:
-                                                AlignmentDirectional(-1.0, 0.0),
+                                                const AlignmentDirectional(-1.0, 0.0),
                                             child: FFButtonWidget(
                                               onPressed: () async {
                                                 context.pushNamed(
@@ -197,11 +194,11 @@ class _EventDetailsPageWidgetState extends State<EventDetailsPageWidget> {
                                               },
                                               text: speakersItem,
                                               options: FFButtonOptions(
-                                                padding: EdgeInsetsDirectional
+                                                padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         4.0, 0.0, 4.0, 0.0),
                                                 iconPadding:
-                                                    EdgeInsetsDirectional
+                                                    const EdgeInsetsDirectional
                                                         .fromSTEB(
                                                             0.0, 0.0, 0.0, 0.0),
                                                 color:
@@ -238,7 +235,7 @@ class _EventDetailsPageWidgetState extends State<EventDetailsPageWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(12.0),
                     child: Container(
                       height: 100.0,
                       constraints: BoxConstraints(
@@ -268,7 +265,7 @@ class _EventDetailsPageWidgetState extends State<EventDetailsPageWidget> {
                                       letterSpacing: 0.0,
                                     ),
                               ),
-                            ].divide(SizedBox(width: 8.0)),
+                            ].divide(const SizedBox(width: 8.0)),
                           ),
                           Row(
                             mainAxisSize: MainAxisSize.max,
@@ -293,7 +290,7 @@ class _EventDetailsPageWidgetState extends State<EventDetailsPageWidget> {
                                       letterSpacing: 0.0,
                                     ),
                               ),
-                            ].divide(SizedBox(width: 8.0)),
+                            ].divide(const SizedBox(width: 8.0)),
                           ),
                           Row(
                             mainAxisSize: MainAxisSize.max,
@@ -313,15 +310,15 @@ class _EventDetailsPageWidgetState extends State<EventDetailsPageWidget> {
                                       letterSpacing: 0.0,
                                     ),
                               ),
-                            ].divide(SizedBox(width: 8.0)),
+                            ].divide(const SizedBox(width: 8.0)),
                           ),
-                        ].divide(SizedBox(height: 4.0)),
+                        ].divide(const SizedBox(height: 4.0)),
                       ),
                     ),
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(15.0, 10.0, 15.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(15.0, 10.0, 15.0, 0.0),
                     child: Container(
                       width: double.infinity,
                       constraints: BoxConstraints(
@@ -345,7 +342,7 @@ class _EventDetailsPageWidgetState extends State<EventDetailsPageWidget> {
                                 ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 5.0, 0.0, 0.0),
                             child: Text(
                               eventDetailsPageTalkDetailsRecord.description,
@@ -357,7 +354,7 @@ class _EventDetailsPageWidgetState extends State<EventDetailsPageWidget> {
                                   ),
                             ),
                           ),
-                        ].divide(SizedBox(height: 4.0)),
+                        ].divide(const SizedBox(height: 4.0)),
                       ),
                     ),
                   ),

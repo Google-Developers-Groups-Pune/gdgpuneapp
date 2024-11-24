@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
@@ -80,6 +78,35 @@ class FFAppState extends ChangeNotifier {
   String get feedbackItemRating => _feedbackItemRating;
   set feedbackItemRating(String value) {
     _feedbackItemRating = value;
+  }
+
+  List<String> _volunteerRole = ['volunteer_lvl1', 'volunteer_lvl2'];
+  List<String> get volunteerRole => _volunteerRole;
+  set volunteerRole(List<String> value) {
+    _volunteerRole = value;
+  }
+
+  void addToVolunteerRole(String value) {
+    volunteerRole.add(value);
+  }
+
+  void removeFromVolunteerRole(String value) {
+    volunteerRole.remove(value);
+  }
+
+  void removeAtIndexFromVolunteerRole(int index) {
+    volunteerRole.removeAt(index);
+  }
+
+  void updateVolunteerRoleAtIndex(
+    int index,
+    String Function(String) updateFn,
+  ) {
+    volunteerRole[index] = updateFn(_volunteerRole[index]);
+  }
+
+  void insertAtIndexInVolunteerRole(int index, String value) {
+    volunteerRole.insert(index, value);
   }
 }
 

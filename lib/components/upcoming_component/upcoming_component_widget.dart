@@ -1,8 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'upcoming_component_model.dart';
 export 'upcoming_component_model.dart';
 
@@ -41,14 +39,14 @@ class _UpcomingComponentWidgetState extends State<UpcomingComponentWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(4.0, 8.0, 4.0, 8.0),
+      padding: const EdgeInsetsDirectional.fromSTEB(4.0, 8.0, 4.0, 8.0),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.orange,
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Text(
             'UPCOMING',
             style: FlutterFlowTheme.of(context).labelSmall.override(

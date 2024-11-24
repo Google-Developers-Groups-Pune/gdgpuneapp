@@ -1,15 +1,10 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/components/feedback_item_widget.dart';
+import '/feedback/feedback_item/feedback_item_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'feedback_page_model.dart';
 export 'feedback_page_model.dart';
@@ -87,7 +82,7 @@ class _FeedbackPageWidgetState extends State<FeedbackPageWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: [],
+          actions: const [],
           centerTitle: false,
           elevation: 1.0,
         ),
@@ -113,12 +108,12 @@ class _FeedbackPageWidgetState extends State<FeedbackPageWidget> {
                     final feedbackListItemItem =
                         feedbackListItem[feedbackListItemIndex];
                     return Align(
-                      alignment: AlignmentDirectional(0.0, 0.0),
+                      alignment: const AlignmentDirectional(0.0, 0.0),
                       child: Container(
                         height: 200.0,
-                        decoration: BoxDecoration(),
+                        decoration: const BoxDecoration(),
                         child: Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
+                          alignment: const AlignmentDirectional(0.0, 0.0),
                           child: FeedbackItemWidget(
                             key: Key(
                                 'Keyh2e_${feedbackListItemIndex}_of_${feedbackListItem.length}'),

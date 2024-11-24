@@ -5,12 +5,9 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/random_data_util.dart' as random_data;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'agenda_home_screen_model.dart';
 export 'agenda_home_screen_model.dart';
 
@@ -80,7 +77,7 @@ class _AgendaHomeScreenWidgetState extends State<AgendaHomeScreenWidget> {
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 0.0, 0.0),
                     child: Text(
                       'Agenda',
                       style:
@@ -157,31 +154,31 @@ class _AgendaHomeScreenWidgetState extends State<AgendaHomeScreenWidget> {
                       safeSetState(() {});
                     },
                   ),
-                ].divide(SizedBox(width: 8.0)),
+                ].divide(const SizedBox(width: 8.0)),
               ),
             ],
           ),
-          actions: [],
+          actions: const [],
           centerTitle: false,
           elevation: 1.0,
         ),
         body: SafeArea(
           top: true,
           child: Align(
-            alignment: AlignmentDirectional(0.0, -1.0),
+            alignment: const AlignmentDirectional(0.0, -1.0),
             child: Container(
-              constraints: BoxConstraints(
+              constraints: const BoxConstraints(
                 maxWidth: 570.0,
               ),
-              decoration: BoxDecoration(),
+              decoration: const BoxDecoration(),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Align(
-                    alignment: AlignmentDirectional(-1.0, 0.0),
+                    alignment: const AlignmentDirectional(-1.0, 0.0),
                     child: Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 0.0, 5.0),
+                          const EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 0.0, 5.0),
                       child: Text(
                         'Agenda',
                         style: FlutterFlowTheme.of(context).titleLarge.override(
@@ -192,7 +189,7 @@ class _AgendaHomeScreenWidgetState extends State<AgendaHomeScreenWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(12.0),
                     child: Builder(
                       builder: (context) {
                         final trackList = List.generate(
@@ -208,7 +205,7 @@ class _AgendaHomeScreenWidgetState extends State<AgendaHomeScreenWidget> {
                           itemBuilder: (context, trackListIndex) {
                             final trackListItem = trackList[trackListIndex];
                             return Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 10.0),
                               child: Card(
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -236,7 +233,7 @@ class _AgendaHomeScreenWidgetState extends State<AgendaHomeScreenWidget> {
                                                         .height *
                                                     0.2,
                                           ),
-                                          decoration: BoxDecoration(),
+                                          decoration: const BoxDecoration(),
                                           child: ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(0.0),
@@ -267,9 +264,9 @@ class _AgendaHomeScreenWidgetState extends State<AgendaHomeScreenWidget> {
                                                           .height *
                                                       0.2,
                                             ),
-                                            decoration: BoxDecoration(),
+                                            decoration: const BoxDecoration(),
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
+                                              padding: const EdgeInsetsDirectional
                                                   .fromSTEB(8.0, 0.0, 0.0, 0.0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
@@ -281,7 +278,7 @@ class _AgendaHomeScreenWidgetState extends State<AgendaHomeScreenWidget> {
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
+                                                        const EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 0.0,
                                                                 0.0, 12.0),
                                                     child: Container(
@@ -308,7 +305,7 @@ class _AgendaHomeScreenWidgetState extends State<AgendaHomeScreenWidget> {
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                                EdgeInsetsDirectional
+                                                                const EdgeInsetsDirectional
                                                                     .fromSTEB(
                                                                         0.0,
                                                                         5.0,
@@ -369,7 +366,7 @@ class _AgendaHomeScreenWidgetState extends State<AgendaHomeScreenWidget> {
                                                                 ),
                                                       ),
                                                     ].divide(
-                                                        SizedBox(width: 8.0)),
+                                                        const SizedBox(width: 8.0)),
                                                   ),
                                                   Row(
                                                     mainAxisSize:
@@ -397,11 +394,11 @@ class _AgendaHomeScreenWidgetState extends State<AgendaHomeScreenWidget> {
                                                                 ),
                                                       ),
                                                     ].divide(
-                                                        SizedBox(width: 8.0)),
+                                                        const SizedBox(width: 8.0)),
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
+                                                        const EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 0.0,
                                                                 0.0, 5.0),
                                                     child: Row(
@@ -429,7 +426,7 @@ class _AgendaHomeScreenWidgetState extends State<AgendaHomeScreenWidget> {
                                                               ),
                                                         ),
                                                       ].divide(
-                                                          SizedBox(width: 8.0)),
+                                                          const SizedBox(width: 8.0)),
                                                     ),
                                                   ),
                                                 ],
@@ -437,10 +434,10 @@ class _AgendaHomeScreenWidgetState extends State<AgendaHomeScreenWidget> {
                                             ),
                                           ),
                                         ),
-                                      ].divide(SizedBox(width: 8.0)),
+                                      ].divide(const SizedBox(width: 8.0)),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.all(4.0),
+                                      padding: const EdgeInsets.all(4.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -453,12 +450,12 @@ class _AgendaHomeScreenWidgetState extends State<AgendaHomeScreenWidget> {
                                             text: 'CANCEL',
                                             options: FFButtonOptions(
                                               height: 40.0,
-                                              padding: EdgeInsetsDirectional
+                                              padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       16.0, 0.0, 16.0, 0.0),
-                                              iconPadding: EdgeInsetsDirectional
+                                              iconPadding: const EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              color: Color(0x004285F4),
+                                              color: const Color(0x004285F4),
                                               textStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .labelLarge
@@ -475,7 +472,7 @@ class _AgendaHomeScreenWidgetState extends State<AgendaHomeScreenWidget> {
                                           ),
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     8.0, 0.0, 8.0, 0.0),
                                             child: FFButtonWidget(
                                               onPressed: () {
@@ -484,21 +481,21 @@ class _AgendaHomeScreenWidgetState extends State<AgendaHomeScreenWidget> {
                                               text: 'LIVE',
                                               options: FFButtonOptions(
                                                 height: 40.0,
-                                                padding: EdgeInsetsDirectional
+                                                padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         16.0, 0.0, 16.0, 0.0),
                                                 iconPadding:
-                                                    EdgeInsetsDirectional
+                                                    const EdgeInsetsDirectional
                                                         .fromSTEB(
                                                             0.0, 0.0, 0.0, 0.0),
-                                                color: Color(0x004285F4),
+                                                color: const Color(0x004285F4),
                                                 textStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .labelLarge
                                                         .override(
                                                           fontFamily: 'Roboto',
                                                           color:
-                                                              Color(0xFFDD4851),
+                                                              const Color(0xFFDD4851),
                                                           letterSpacing: 1.0,
                                                           fontWeight:
                                                               FontWeight.w500,

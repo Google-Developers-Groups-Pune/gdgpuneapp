@@ -1,17 +1,14 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/live_component/live_component_widget.dart';
+import '/components/main_nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'user_home_page_model.dart';
@@ -102,7 +99,7 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 0.0, 0.0),
                     child: Text(
                       'Home',
                       style:
@@ -179,380 +176,418 @@ class _UserHomePageWidgetState extends State<UserHomePageWidget> {
                       safeSetState(() {});
                     },
                   ),
-                ].divide(SizedBox(width: 8.0)),
+                ].divide(const SizedBox(width: 8.0)),
               ),
             ],
           ),
-          actions: [],
+          actions: const [],
           centerTitle: false,
           elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
-          child: Align(
-            alignment: AlignmentDirectional(0.0, -1.0),
-            child: Container(
-              constraints: BoxConstraints(
-                maxWidth: 570.0,
-              ),
-              decoration: BoxDecoration(),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Align(
-                    alignment: AlignmentDirectional(-1.0, 0.0),
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 0.0, 5.0),
-                      child: Text(
-                        'Agenda',
-                        style: FlutterFlowTheme.of(context).titleLarge.override(
-                              fontFamily: 'Roboto',
-                              letterSpacing: 0.0,
-                            ),
-                      ),
-                    ),
+          child: Stack(
+            alignment: const AlignmentDirectional(0.0, 1.0),
+            children: [
+              Align(
+                alignment: const AlignmentDirectional(0.0, -1.0),
+                child: Container(
+                  constraints: const BoxConstraints(
+                    maxWidth: 570.0,
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(12.0),
-                    child:
-                        PagedListView<DocumentSnapshot<Object?>?, TalksRecord>(
-                      pagingController: _model.setListViewController(
-                          TalksRecord.collection(
-                              _model.requiredAgenda?.reference),
-                          parent: _model.requiredAgenda?.reference),
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      reverse: false,
-                      scrollDirection: Axis.vertical,
-                      builderDelegate: PagedChildBuilderDelegate<TalksRecord>(
-                        // Customize what your widget looks like when it's loading the first page.
-                        firstPageProgressIndicatorBuilder: (_) => Center(
-                          child: SizedBox(
-                            width: 40.0,
-                            height: 40.0,
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                FlutterFlowTheme.of(context).primary,
-                              ),
-                            ),
-                          ),
-                        ),
-                        // Customize what your widget looks like when it's loading another page.
-                        newPageProgressIndicatorBuilder: (_) => Center(
-                          child: SizedBox(
-                            width: 40.0,
-                            height: 40.0,
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                FlutterFlowTheme.of(context).primary,
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        itemBuilder: (context, _, listViewIndex) {
-                          final listViewTalksRecord = _model
-                              .listViewPagingController!
-                              .itemList![listViewIndex];
-                          return Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 10.0),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                context.pushNamed(
-                                  'eventDetailsPage',
-                                  queryParameters: {
-                                    'eventReference': serializeParam(
-                                      listViewTalksRecord.talksReference,
-                                      ParamType.DocumentReference,
-                                    ),
-                                  }.withoutNulls,
-                                );
-                              },
-                              child: Card(
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                elevation: 3.0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                  decoration: const BoxDecoration(),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Align(
+                        alignment: const AlignmentDirectional(-1.0, 0.0),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              10.0, 20.0, 0.0, 5.0),
+                          child: Text(
+                            'Agenda',
+                            style: FlutterFlowTheme.of(context)
+                                .titleLarge
+                                .override(
+                                  fontFamily: 'Roboto',
+                                  letterSpacing: 0.0,
                                 ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Container(
-                                      width: 160.0,
-                                      constraints: BoxConstraints(
-                                        minHeight:
-                                            MediaQuery.sizeOf(context).height *
-                                                0.2,
-                                        maxHeight:
-                                            MediaQuery.sizeOf(context).height *
-                                                0.2,
-                                      ),
-                                      decoration: BoxDecoration(),
-                                      child: Stack(
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(0.0),
-                                            child: CachedNetworkImage(
-                                              fadeInDuration:
-                                                  Duration(milliseconds: 500),
-                                              fadeOutDuration:
-                                                  Duration(milliseconds: 500),
-                                              imageUrl:
-                                                  listViewTalksRecord.image,
-                                              height: MediaQuery.sizeOf(context)
-                                                      .height *
-                                                  1.0,
-                                              fit: BoxFit.cover,
-                                              errorWidget: (context, error,
-                                                      stackTrace) =>
-                                                  Image.asset(
-                                                'assets/images/error_image.jpg',
-                                                height:
-                                                    MediaQuery.sizeOf(context)
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: PagedListView<DocumentSnapshot<Object?>?,
+                            TalksRecord>(
+                          pagingController: _model.setListViewController(
+                              TalksRecord.collection(
+                                  _model.requiredAgenda?.reference),
+                              parent: _model.requiredAgenda?.reference),
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          reverse: false,
+                          scrollDirection: Axis.vertical,
+                          builderDelegate:
+                              PagedChildBuilderDelegate<TalksRecord>(
+                            // Customize what your widget looks like when it's loading the first page.
+                            firstPageProgressIndicatorBuilder: (_) => Center(
+                              child: SizedBox(
+                                width: 40.0,
+                                height: 40.0,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    FlutterFlowTheme.of(context).primary,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // Customize what your widget looks like when it's loading another page.
+                            newPageProgressIndicatorBuilder: (_) => Center(
+                              child: SizedBox(
+                                width: 40.0,
+                                height: 40.0,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    FlutterFlowTheme.of(context).primary,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            itemBuilder: (context, _, listViewIndex) {
+                              final listViewTalksRecord = _model
+                                  .listViewPagingController!
+                                  .itemList![listViewIndex];
+                              return Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 10.0),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    context.pushNamed(
+                                      'eventDetailsPage',
+                                      queryParameters: {
+                                        'eventReference': serializeParam(
+                                          listViewTalksRecord.talksReference,
+                                          ParamType.DocumentReference,
+                                        ),
+                                      }.withoutNulls,
+                                    );
+                                  },
+                                  child: Card(
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    elevation: 3.0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Container(
+                                          width: 160.0,
+                                          constraints: BoxConstraints(
+                                            minHeight:
+                                                MediaQuery.sizeOf(context)
+                                                        .height *
+                                                    0.2,
+                                            maxHeight:
+                                                MediaQuery.sizeOf(context)
+                                                        .height *
+                                                    0.2,
+                                          ),
+                                          decoration: const BoxDecoration(),
+                                          child: Stack(
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(0.0),
+                                                child: CachedNetworkImage(
+                                                  fadeInDuration: const Duration(
+                                                      milliseconds: 500),
+                                                  fadeOutDuration: const Duration(
+                                                      milliseconds: 500),
+                                                  imageUrl:
+                                                      listViewTalksRecord.image,
+                                                  height:
+                                                      MediaQuery.sizeOf(context)
+                                                              .height *
+                                                          1.0,
+                                                  fit: BoxFit.cover,
+                                                  errorWidget: (context, error,
+                                                          stackTrace) =>
+                                                      Image.asset(
+                                                    'assets/images/error_image.jpg',
+                                                    height: MediaQuery.sizeOf(
+                                                                context)
                                                             .height *
                                                         1.0,
-                                                fit: BoxFit.cover,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
                                               ),
-                                            ),
+                                              if (listViewTalksRecord.isLive)
+                                                LiveComponentWidget(
+                                                  key: Key(
+                                                      'Keyrzt_${listViewIndex}_of_${_model.listViewPagingController!.itemList!.length}'),
+                                                ),
+                                            ],
                                           ),
-                                          if (listViewTalksRecord.isLive)
-                                            LiveComponentWidget(
-                                              key: Key(
-                                                  'Keyrzt_${listViewIndex}_of_${_model.listViewPagingController!.itemList!.length}'),
-                                            ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        constraints: BoxConstraints(
-                                          maxHeight: MediaQuery.sizeOf(context)
-                                                  .height *
-                                              0.2,
                                         ),
-                                        decoration: BoxDecoration(),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8.0, 0.0, 0.0, 0.0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 0.0, 12.0),
-                                                child: Container(
-                                                  constraints: BoxConstraints(
-                                                    minHeight: 46.0,
-                                                    maxWidth: MediaQuery.sizeOf(
-                                                                context)
-                                                            .width *
-                                                        1.0,
+                                        Expanded(
+                                          child: Container(
+                                            constraints: BoxConstraints(
+                                              maxHeight:
+                                                  MediaQuery.sizeOf(context)
+                                                          .height *
+                                                      0.2,
+                                            ),
+                                            decoration: const BoxDecoration(),
+                                            child: Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(8.0, 0.0, 0.0, 0.0),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                0.0, 12.0),
+                                                    child: Container(
+                                                      constraints:
+                                                          BoxConstraints(
+                                                        minHeight: 46.0,
+                                                        maxWidth:
+                                                            MediaQuery.sizeOf(
+                                                                        context)
+                                                                    .width *
+                                                                1.0,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryBackground,
+                                                      ),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        5.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Text(
+                                                              listViewTalksRecord
+                                                                  .title,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .titleMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Inter Tight',
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          Builder(
+                                                            builder: (context) {
+                                                              final speakerNames =
+                                                                  listViewTalksRecord
+                                                                      .speakers
+                                                                      .map((e) =>
+                                                                          e.name)
+                                                                      .toList();
+
+                                                              return Wrap(
+                                                                spacing: 8.0,
+                                                                runSpacing: 2.0,
+                                                                alignment:
+                                                                    WrapAlignment
+                                                                        .start,
+                                                                crossAxisAlignment:
+                                                                    WrapCrossAlignment
+                                                                        .start,
+                                                                direction: Axis
+                                                                    .horizontal,
+                                                                runAlignment:
+                                                                    WrapAlignment
+                                                                        .start,
+                                                                verticalDirection:
+                                                                    VerticalDirection
+                                                                        .down,
+                                                                clipBehavior:
+                                                                    Clip.none,
+                                                                children: List.generate(
+                                                                    speakerNames
+                                                                        .length,
+                                                                    (speakerNamesIndex) {
+                                                                  final speakerNamesItem =
+                                                                      speakerNames[
+                                                                          speakerNamesIndex];
+                                                                  return Text(
+                                                                    speakerNamesItem,
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Inter',
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                  );
+                                                                }),
+                                                              );
+                                                            },
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
                                                   ),
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryBackground,
-                                                  ),
-                                                  child: Column(
+                                                  Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
                                                     children: [
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    5.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                        child: Text(
+                                                      Icon(
+                                                        Icons.bookmarks_sharp,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        size: 24.0,
+                                                      ),
+                                                      Text(
+                                                        listViewTalksRecord
+                                                            .typeOfTalk,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .labelMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                    ].divide(
+                                                        const SizedBox(width: 8.0)),
+                                                  ),
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.access_time_sharp,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        size: 24.0,
+                                                      ),
+                                                      Text(
+                                                        dateTimeFormat(
+                                                          "M/d h:mm a",
                                                           listViewTalksRecord
-                                                              .title,
+                                                              .atTime!,
+                                                          locale:
+                                                              FFLocalizations.of(
+                                                                      context)
+                                                                  .languageCode,
+                                                        ),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .labelMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                    ].divide(
+                                                        const SizedBox(width: 8.0)),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                0.0, 5.0),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Icon(
+                                                          Icons
+                                                              .location_city_sharp,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          size: 24.0,
+                                                        ),
+                                                        Text(
+                                                          listViewTalksRecord
+                                                              .location,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .titleMedium
+                                                              .labelMedium
                                                               .override(
                                                                 fontFamily:
-                                                                    'Inter Tight',
+                                                                    'Inter',
                                                                 letterSpacing:
                                                                     0.0,
                                                               ),
                                                         ),
-                                                      ),
-                                                      Builder(
-                                                        builder: (context) {
-                                                          final speakerNames =
-                                                              listViewTalksRecord
-                                                                  .speakers
-                                                                  .map((e) =>
-                                                                      e.name)
-                                                                  .toList();
-
-                                                          return Wrap(
-                                                            spacing: 8.0,
-                                                            runSpacing: 2.0,
-                                                            alignment:
-                                                                WrapAlignment
-                                                                    .start,
-                                                            crossAxisAlignment:
-                                                                WrapCrossAlignment
-                                                                    .start,
-                                                            direction:
-                                                                Axis.horizontal,
-                                                            runAlignment:
-                                                                WrapAlignment
-                                                                    .start,
-                                                            verticalDirection:
-                                                                VerticalDirection
-                                                                    .down,
-                                                            clipBehavior:
-                                                                Clip.none,
-                                                            children: List.generate(
-                                                                speakerNames
-                                                                    .length,
-                                                                (speakerNamesIndex) {
-                                                              final speakerNamesItem =
-                                                                  speakerNames[
-                                                                      speakerNamesIndex];
-                                                              return Text(
-                                                                speakerNamesItem,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Inter',
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                    ),
-                                                              );
-                                                            }),
-                                                          );
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Icon(
-                                                    Icons.bookmarks_sharp,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    size: 24.0,
-                                                  ),
-                                                  Text(
-                                                    listViewTalksRecord
-                                                        .typeOfTalk,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                  ),
-                                                ].divide(SizedBox(width: 8.0)),
-                                              ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Icon(
-                                                    Icons.access_time_sharp,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    size: 24.0,
-                                                  ),
-                                                  Text(
-                                                    dateTimeFormat(
-                                                      "M/d h:mm a",
-                                                      listViewTalksRecord
-                                                          .atTime!,
-                                                      locale:
-                                                          FFLocalizations.of(
-                                                                  context)
-                                                              .languageCode,
+                                                      ].divide(
+                                                          const SizedBox(width: 8.0)),
                                                     ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          letterSpacing: 0.0,
-                                                        ),
                                                   ),
-                                                ].divide(SizedBox(width: 8.0)),
+                                                ],
                                               ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 0.0, 5.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.location_city_sharp,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryText,
-                                                      size: 24.0,
-                                                    ),
-                                                    Text(
-                                                      listViewTalksRecord
-                                                          .location,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .labelMedium
-                                                          .override(
-                                                            fontFamily: 'Inter',
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                    ),
-                                                  ].divide(
-                                                      SizedBox(width: 8.0)),
-                                                ),
-                                              ),
-                                            ],
+                                            ),
                                           ),
                                         ),
-                                      ),
+                                      ].divide(const SizedBox(width: 8.0)),
                                     ),
-                                  ].divide(SizedBox(width: 8.0)),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          );
-                        },
+                              );
+                            },
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+              wrapWithModel(
+                model: _model.mainNavBarModel,
+                updateCallback: () => safeSetState(() {}),
+                child: const MainNavBarWidget(
+                  pageIndex: 1,
+                  loginType: FFAppConstants.loginTypeAttendee,
+                ),
+              ),
+            ],
           ),
         ),
       ),

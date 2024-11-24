@@ -3,8 +3,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'logout_popup_component_model.dart';
 export 'logout_popup_component_model.dart';
 
@@ -48,7 +46,7 @@ class _LogoutPopupComponentWidgetState
       height: MediaQuery.sizeOf(context).height * 0.2,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             blurRadius: 4.0,
             color: Color(0x33000000),
@@ -67,7 +65,7 @@ class _LogoutPopupComponentWidgetState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
             child: Text(
               'Confirm Logout',
               style: FlutterFlowTheme.of(context).titleMedium.override(
@@ -77,7 +75,7 @@ class _LogoutPopupComponentWidgetState
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
             child: Text(
               'Are you sure you want to logout?',
               style: FlutterFlowTheme.of(context).labelLarge.override(
@@ -98,9 +96,9 @@ class _LogoutPopupComponentWidgetState
                 text: 'CANCEL',
                 options: FFButtonOptions(
                   height: 40.0,
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   iconPadding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: Colors.white,
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Roboto',
@@ -123,13 +121,13 @@ class _LogoutPopupComponentWidgetState
                 text: 'LOGOUT',
                 options: FFButtonOptions(
                   height: 40.0,
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   iconPadding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: Color(0x00FFFFFF),
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  color: const Color(0x00FFFFFF),
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Roboto',
-                        color: Color(0xFFCE303B),
+                        color: const Color(0xFFCE303B),
                         letterSpacing: 1.0,
                         fontWeight: FontWeight.w500,
                       ),

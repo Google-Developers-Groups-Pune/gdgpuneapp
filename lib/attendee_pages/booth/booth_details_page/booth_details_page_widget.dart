@@ -2,13 +2,8 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
 import 'booth_details_page_model.dart';
 export 'booth_details_page_model.dart';
 
@@ -47,7 +42,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<BoothsRecord>(
-      stream: BoothsRecord.getDocument(widget!.boothReference!),
+      stream: BoothsRecord.getDocument(widget.boothReference!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -96,7 +91,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
                     child: Text(
                       'Booth Name',
                       style:
@@ -110,7 +105,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                   ),
                 ],
               ),
-              actions: [],
+              actions: const [],
               centerTitle: false,
               elevation: 1.0,
             ),
@@ -119,8 +114,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  if (boothDetailsPageBoothsRecord.compLogo != null &&
-                      boothDetailsPageBoothsRecord.compLogo != '')
+                  if (boothDetailsPageBoothsRecord.compLogo != '')
                     InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
@@ -158,7 +152,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                       ),
                     ),
                   Padding(
-                    padding: EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(12.0),
                     child: Container(
                       width: double.infinity,
                       constraints: BoxConstraints(
@@ -172,7 +166,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 10.0, 0.0, 0.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -189,13 +183,13 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                                       ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 8.0, 0.0, 0.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 8.0, 0.0),
                                         child: FaIcon(
                                           FontAwesomeIcons.store,
@@ -205,7 +199,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 8.0, 0.0),
                                         child: Text(
                                           'Booth No.',
@@ -234,7 +228,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           0.0, 8.0, 0.0, 0.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -251,7 +245,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                                           ),
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     8.0, 0.0, 0.0, 0.0),
                                             child: Text(
                                               'CEO',
@@ -266,7 +260,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                                           ),
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     8.0, 0.0, 0.0, 0.0),
                                             child: Text(
                                               boothDetailsPageBoothsRecord
@@ -284,7 +278,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           0.0, 8.0, 0.0, 0.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -301,7 +295,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                                           ),
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     8.0, 0.0, 0.0, 0.0),
                                             child: Text(
                                               'CTO',
@@ -316,7 +310,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                                           ),
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     8.0, 0.0, 0.0, 0.0),
                                             child: Text(
                                               boothDetailsPageBoothsRecord
@@ -335,11 +329,11 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                                     ),
                                   ],
                                 ),
-                              ].divide(SizedBox(height: 4.0)),
+                              ].divide(const SizedBox(height: 4.0)),
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 20.0, 0.0, 0.0),
                             child: Text(
                               'About',
@@ -353,7 +347,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 5.0, 0.0, 0.0),
                             child: Text(
                               boothDetailsPageBoothsRecord.details,
@@ -366,7 +360,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 10.0, 0.0, 0.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -382,7 +376,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                                       ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 5.0, 0.0, 0.0),
                                   child: InkWell(
                                     splashColor: Colors.transparent,
@@ -399,7 +393,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                                       children: [
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 10.0, 0.0),
                                           child: FaIcon(
                                             FontAwesomeIcons.linkedin,
@@ -422,7 +416,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 5.0, 0.0, 0.0),
                                   child: InkWell(
                                     splashColor: Colors.transparent,
@@ -438,7 +432,7 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                                       children: [
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 10.0, 0.0),
                                           child: FaIcon(
                                             FontAwesomeIcons.globeAmericas,
@@ -460,10 +454,10 @@ class _BoothDetailsPageWidgetState extends State<BoothDetailsPageWidget> {
                                     ),
                                   ),
                                 ),
-                              ].divide(SizedBox(height: 4.0)),
+                              ].divide(const SizedBox(height: 4.0)),
                             ),
                           ),
-                        ].divide(SizedBox(height: 4.0)),
+                        ].divide(const SizedBox(height: 4.0)),
                       ),
                     ),
                   ),

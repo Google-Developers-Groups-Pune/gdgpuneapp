@@ -37,3 +37,6 @@ export '/notifications/notification_page/notification_page_widget.dart'
     show NotificationPageWidget;
 export '/feedback/feedback_page/feedback_page_widget.dart'
     show FeedbackPageWidget;
+export '/about_gdg_pune/about_gdg_pune/about_gdg_pune_widget.dart'
+    show AboutGdgPuneWidget;
+export '/devfest_team/team_page/team_page_widget.dart' show TeamPageWidget;
