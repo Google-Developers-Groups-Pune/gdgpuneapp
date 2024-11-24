@@ -2,6 +2,7 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -30,16 +31,24 @@ class _AboutGdgPuneWidgetState extends State<AboutGdgPuneWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await Future.wait([
         Future(() async {
-          _model.aboutGdgPune = await queryAboutGdgRecordOnce(
-            singleRecord: true,
-          ).then((s) => s.firstOrNull);
+          unawaited(
+            () async {
+              _model.aboutGdgPune = await queryAboutGdgRecordOnce(
+                singleRecord: true,
+              ).then((s) => s.firstOrNull);
+            }(),
+          );
         }),
         Future(() async {
-          _model.listOfOrganizer = await queryUsersRecordOnce(
-            queryBuilder: (usersRecord) => usersRecord.where(
-              'roles',
-              arrayContains: FFAppConstants.organizerRole,
-            ),
+          unawaited(
+            () async {
+              _model.listOfOrganizer = await queryUsersRecordOnce(
+                queryBuilder: (usersRecord) => usersRecord.where(
+                  'roles',
+                  arrayContains: FFAppConstants.organizerRole,
+                ),
+              );
+            }(),
           );
         }),
       ]);

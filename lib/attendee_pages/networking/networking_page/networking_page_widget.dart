@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:collection/collection.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -243,89 +242,103 @@ class _NetworkingPageWidgetState extends State<NetworkingPageWidget> {
                   ),
                   Align(
                     alignment: const AlignmentDirectional(-1.0, 0.0),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(18.0, 0.0, 0.0, 18.0),
-                      child: FlutterFlowChoiceChips(
-                        options: (_model.searchFieldTextController.text != ''
-                                ? _model.simpleSearchResults
-                                : ((_model.tagsList?.tags != null &&
-                                            (_model.tagsList?.tags)!
-                                                .isNotEmpty) ==
-                                        true
-                                    ? _model.tagsList!.tags
-                                    : List.generate(
-                                        random_data.randomInteger(0, 0),
-                                        (index) => random_data.randomName(
-                                            true, false))))
-                            .map((label) => ChipData(label))
-                            .toList(),
-                        onChanged: (val) async {
-                          safeSetState(
-                              () => _model.choiceChipsValue = val?.firstOrNull);
-                          safeSetState(() {
-                            _model.searchFieldTextController?.text =
-                                _model.choiceChipsValue!;
-                            _model.searchFieldFocusNode?.requestFocus();
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              _model.searchFieldTextController?.selection =
-                                  TextSelection.collapsed(
-                                offset: _model
-                                    .searchFieldTextController!.text.length,
-                              );
-                            });
-                          });
-                          _model.usersWithTag = await queryUsersRecordOnce(
-                            queryBuilder: (usersRecord) => usersRecord.where(
-                              'tags',
-                              arrayContains: _model.choiceChipsValue,
-                            ),
-                            limit: 100,
-                          );
-
-                          safeSetState(() {});
-                        },
-                        selectedChipStyle: ChipStyle(
-                          backgroundColor: FlutterFlowTheme.of(context).primary,
-                          textStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Inter',
-                                    color: FlutterFlowTheme.of(context).info,
-                                    letterSpacing: 0.0,
+                    child: Builder(
+                      builder: (context) {
+                        if (_model.tagsList?.tags != null &&
+                            (_model.tagsList?.tags)!.isNotEmpty) {
+                          return Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                18.0, 0.0, 0.0, 18.0),
+                            child: FlutterFlowChoiceChips(
+                              options:
+                                  ((_model.simpleSearchResults.isNotEmpty) ==
+                                              true
+                                          ? _model.simpleSearchResults
+                                          : _model.tagsList!.tags)
+                                      .map((label) => ChipData(label))
+                                      .toList(),
+                              onChanged: (val) async {
+                                safeSetState(() =>
+                                    _model.choiceChipsValue = val?.firstOrNull);
+                                safeSetState(() {
+                                  _model.searchFieldTextController?.text =
+                                      _model.choiceChipsValue!;
+                                  _model.searchFieldFocusNode?.requestFocus();
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    _model.searchFieldTextController
+                                        ?.selection = TextSelection.collapsed(
+                                      offset: _model.searchFieldTextController!
+                                          .text.length,
+                                    );
+                                  });
+                                });
+                                _model.usersWithTag =
+                                    await queryUsersRecordOnce(
+                                  queryBuilder: (usersRecord) =>
+                                      usersRecord.where(
+                                    'tags',
+                                    arrayContains: _model.choiceChipsValue,
                                   ),
-                          iconColor: FlutterFlowTheme.of(context).info,
-                          iconSize: 16.0,
-                          elevation: 0.0,
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        unselectedChipStyle: ChipStyle(
-                          backgroundColor:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          textStyle: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: 'Inter',
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                letterSpacing: 0.0,
+                                  limit: 100,
+                                );
+
+                                safeSetState(() {});
+                              },
+                              selectedChipStyle: ChipStyle(
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).primary,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      color: FlutterFlowTheme.of(context).info,
+                                      letterSpacing: 0.0,
+                                    ),
+                                iconColor: FlutterFlowTheme.of(context).info,
+                                iconSize: 16.0,
+                                elevation: 0.0,
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
-                          iconColor: FlutterFlowTheme.of(context).secondaryText,
-                          iconSize: 16.0,
-                          labelPadding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          elevation: 0.0,
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        chipSpacing: 8.0,
-                        rowSpacing: 8.0,
-                        multiselect: false,
-                        alignment: WrapAlignment.start,
-                        controller: _model.choiceChipsValueController ??=
-                            FormFieldController<List<String>>(
-                          [],
-                        ),
-                        wrapped: true,
-                      ),
+                              unselectedChipStyle: ChipStyle(
+                                backgroundColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      letterSpacing: 0.0,
+                                    ),
+                                iconColor:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                iconSize: 16.0,
+                                labelPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                elevation: 0.0,
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              chipSpacing: 8.0,
+                              rowSpacing: 8.0,
+                              multiselect: false,
+                              alignment: WrapAlignment.start,
+                              controller: _model.choiceChipsValueController ??=
+                                  FormFieldController<List<String>>(
+                                [],
+                              ),
+                              wrapped: true,
+                            ),
+                          );
+                        } else {
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ),
                   if (!FFAppState().searchActive)
