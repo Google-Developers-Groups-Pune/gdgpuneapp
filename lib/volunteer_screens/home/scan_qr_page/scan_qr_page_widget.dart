@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'scan_qr_page_model.dart';
 export 'scan_qr_page_model.dart';
 
@@ -38,6 +39,8 @@ class _ScanQrPageWidgetState extends State<ScanQrPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -222,9 +225,28 @@ class _ScanQrPageWidgetState extends State<ScanQrPageWidget> {
               wrapWithModel(
                 model: _model.mainNavBarModel,
                 updateCallback: () => safeSetState(() {}),
-                child: const MainNavBarWidget(
-                  pageIndex: 1,
-                  loginType: FFAppConstants.loginTypeVolunteer,
+                child: MainNavBarWidget(
+                  pageIndex: 2,
+                  loginType: () {
+                    if (FFAppState()
+                        .loggedInUser
+                        .roles
+                        .contains(FFAppConstants.loginTypeVolunteerlvl1)) {
+                      return FFAppConstants.loginTypeVolunteer;
+                    } else if (FFAppState()
+                        .loggedInUser
+                        .roles
+                        .contains(FFAppConstants.loginTypeVolunteerlvl2)) {
+                      return FFAppConstants.loginTypeVolunteer;
+                    } else if (FFAppState()
+                        .loggedInUser
+                        .roles
+                        .contains(FFAppConstants.organizerRole)) {
+                      return FFAppConstants.loginTypeVolunteer;
+                    } else {
+                      return FFAppConstants.loginTypeAttendee;
+                    }
+                  }(),
                 ),
               ),
             ],

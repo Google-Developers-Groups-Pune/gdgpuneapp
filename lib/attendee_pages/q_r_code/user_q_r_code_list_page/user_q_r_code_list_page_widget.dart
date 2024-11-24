@@ -93,117 +93,21 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 1.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 0.0,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  offset: const Offset(
-                                    0.0,
-                                    1.0,
-                                  ),
-                                )
-                              ],
-                              border: Border.all(
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                width: 0.5,
-                              ),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                    ),
-                                    child: Icon(
-                                      Icons.qr_code_2,
-                                      color: widget.qrData!.registerQrScanned
-                                          ? FlutterFlowTheme.of(context)
-                                              .secondary
-                                          : FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                      size: 72.0,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          12.0, 0.0, 0.0, 0.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 4.0),
-                                            child: Text(
-                                              widget.qrData!.registerQrScanned
-                                                  ? 'Already Registered'
-                                                  : 'Register',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Inter Tight',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                            ),
-                                          ),
-                                          if (widget
-                                                  .qrData?.registerQrScanned ==
-                                              false)
-                                            Text(
-                                              'Show this at registration desk',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                            ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.chevron_right_rounded,
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    size: 24.0,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 1.0),
                           child: InkWell(
                             splashColor: Colors.transparent,
                             focusColor: Colors.transparent,
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
+                              if (widget.qrData?.registerQrScanned == true) {
+                                return;
+                              }
+
                               context.pushNamed(
                                 'UserQRCodePage',
                                 queryParameters: {
                                   'qrCodeData': serializeParam(
-                                    '',
+                                    widget.qrData?.registerQrValue,
                                     ParamType.String,
                                   ),
                                 }.withoutNulls,
@@ -242,8 +146,11 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                                       ),
                                       child: Icon(
                                         Icons.qr_code_2,
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiary,
+                                        color: widget.qrData!.registerQrScanned
+                                            ? FlutterFlowTheme.of(context)
+                                                .secondary
+                                            : FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
                                         size: 72.0,
                                       ),
                                     ),
@@ -262,7 +169,10 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                                               padding: const EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 0.0, 0.0, 4.0),
                                               child: Text(
-                                                'Food',
+                                                widget.qrData!
+                                                        .registerQrScanned
+                                                    ? 'Entry Done'
+                                                    : 'Entry Coupon',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .titleLarge
@@ -273,16 +183,19 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                                                         ),
                                               ),
                                             ),
-                                            Text(
-                                              'Show this at registration desk',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                            ),
+                                            if (widget.qrData
+                                                    ?.registerQrScanned ==
+                                                false)
+                                              Text(
+                                                'Show this at registration desk',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
                                           ],
                                         ),
                                       ),
@@ -302,90 +215,246 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 1.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 0.0,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  offset: const Offset(
-                                    0.0,
-                                    1.0,
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              if (widget.qrData?.foodQrScanned == true) {
+                                return;
+                              }
+
+                              context.pushNamed(
+                                'UserQRCodePage',
+                                queryParameters: {
+                                  'qrCodeData': serializeParam(
+                                    widget.qrData?.foodQrValue,
+                                    ParamType.String,
                                   ),
-                                )
-                              ],
-                              border: Border.all(
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                width: 0.5,
+                                }.withoutNulls,
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 0.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    offset: const Offset(
+                                      0.0,
+                                      1.0,
+                                    ),
+                                  )
+                                ],
+                                border: Border.all(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  width: 0.5,
+                                ),
                               ),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                    ),
-                                    child: Icon(
-                                      Icons.qr_code_2,
-                                      color:
-                                          FlutterFlowTheme.of(context).success,
-                                      size: 72.0,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          12.0, 0.0, 0.0, 0.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 4.0),
-                                            child: Text(
-                                              'Swags',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Inter Tight',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                            ),
-                                          ),
-                                          Text(
-                                            'Show this at registration desk',
-                                            style: FlutterFlowTheme.of(context)
-                                                .labelMedium
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ],
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.rectangle,
+                                      ),
+                                      child: Icon(
+                                        Icons.qr_code_2,
+                                        color: valueOrDefault<Color>(
+                                          widget.qrData!.foodQrScanned
+                                              ? FlutterFlowTheme.of(context)
+                                                  .secondary
+                                              : FlutterFlowTheme.of(context)
+                                                  .primary,
+                                          FlutterFlowTheme.of(context).primary,
+                                        ),
+                                        size: 72.0,
                                       ),
                                     ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 0.0, 0.0, 0.0),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 4.0),
+                                              child: Text(
+                                                widget.qrData!.foodQrScanned
+                                                    ? 'Food Done'
+                                                    : 'Food Coupon',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleLarge
+                                                        .override(
+                                                          fontFamily:
+                                                              'Inter Tight',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
+                                            ),
+                                            if (widget.qrData?.foodQrScanned ==
+                                                false)
+                                              Text(
+                                                'Show this at registration desk',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      size: 24.0,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 1.0),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              if (widget.qrData?.goodieQrScanned == true) {
+                                return;
+                              }
+
+                              context.pushNamed(
+                                'UserQRCodePage',
+                                queryParameters: {
+                                  'qrCodeData': serializeParam(
+                                    widget.qrData?.goodieQrValue,
+                                    ParamType.String,
                                   ),
-                                  Icon(
-                                    Icons.chevron_right_rounded,
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    size: 24.0,
-                                  ),
+                                }.withoutNulls,
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 0.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    offset: const Offset(
+                                      0.0,
+                                      1.0,
+                                    ),
+                                  )
                                 ],
+                                border: Border.all(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  width: 0.5,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.rectangle,
+                                      ),
+                                      child: Icon(
+                                        Icons.qr_code_2,
+                                        color: valueOrDefault<Color>(
+                                          widget.qrData!.goodieQrScanned
+                                              ? FlutterFlowTheme.of(context)
+                                                  .secondary
+                                              : FlutterFlowTheme.of(context)
+                                                  .primary,
+                                          FlutterFlowTheme.of(context).primary,
+                                        ),
+                                        size: 72.0,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 0.0, 0.0, 0.0),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 4.0),
+                                              child: Text(
+                                                widget.qrData!.goodieQrScanned
+                                                    ? 'Swags Taken'
+                                                    : 'Swag\'s Coupon',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleLarge
+                                                        .override(
+                                                          fontFamily:
+                                                              'Inter Tight',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
+                                            ),
+                                            if (widget
+                                                    .qrData?.goodieQrScanned ==
+                                                false)
+                                              Text(
+                                                'Show this at registration desk',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      size: 24.0,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

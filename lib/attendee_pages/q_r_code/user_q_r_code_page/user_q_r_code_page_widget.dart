@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'user_q_r_code_page_model.dart';
 export 'user_q_r_code_page_model.dart';
 
@@ -41,6 +42,8 @@ class _UserQRCodePageWidgetState extends State<UserQRCodePageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -64,7 +67,7 @@ class _UserQRCodePageWidgetState extends State<UserQRCodePageWidget> {
             },
           ),
           title: Text(
-            'Food QR Code',
+            '${widget.qrCodeData} QR Code',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Inter Tight',
                   fontSize: 22.0,
@@ -141,7 +144,7 @@ class _UserQRCodePageWidgetState extends State<UserQRCodePageWidget> {
                                               padding: const EdgeInsets.all(12.0),
                                               child: BarcodeWidget(
                                                 data:
-                                                    '{\n\"user_id\": 1234\n\"user_mail\": \"abc@gmail.com\",\n\"qr_code_type\": \"Food\"\n:}',
+                                                    '${widget.qrCodeData}-${FFAppState().userDetail?.id}',
                                                 barcode: Barcode.qrCode(),
                                                 width: 200.0,
                                                 height: 200.0,
@@ -184,7 +187,18 @@ class _UserQRCodePageWidgetState extends State<UserQRCodePageWidget> {
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
                                                   Text(
-                                                    'Food',
+                                                    () {
+                                                      if (widget.qrCodeData ==
+                                                          'Food') {
+                                                        return 'Food';
+                                                      } else if (widget
+                                                              .qrCodeData ==
+                                                          'Register') {
+                                                        return 'Register';
+                                                      } else {
+                                                        return 'Swags';
+                                                      }
+                                                    }(),
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .headlineMedium
@@ -213,7 +227,19 @@ class _UserQRCodePageWidgetState extends State<UserQRCodePageWidget> {
                                                         size: 24.0,
                                                       ),
                                                       Text(
-                                                        'This is QR Code for Lunch',
+                                                        () {
+                                                          if (widget
+                                                                  .qrCodeData ==
+                                                              'Food') {
+                                                            return 'This is QR code for lunch.';
+                                                          } else if (widget
+                                                                  .qrCodeData ==
+                                                              'Register') {
+                                                            return 'This is QR code for the entry.';
+                                                          } else {
+                                                            return 'This is QR code for swags.';
+                                                          }
+                                                        }(),
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)

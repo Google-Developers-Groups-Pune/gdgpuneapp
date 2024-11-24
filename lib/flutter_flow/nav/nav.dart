@@ -6,6 +6,8 @@ import '/backend/backend.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
+import '/backend/push_notifications/push_notifications_handler.dart'
+    show PushNotificationsHandler;
 import '/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -146,6 +148,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'networkingPage',
               path: 'networkingPage',
+              requireAuth: true,
               builder: (context, params) => const NetworkingPageWidget(),
             ),
             FFRoute(
@@ -170,11 +173,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'scanQrPage',
               path: 'scanQrPage',
+              requireAuth: true,
               builder: (context, params) => const ScanQrPageWidget(),
             ),
             FFRoute(
               name: 'qrScanner',
               path: 'qrScanner',
+              requireAuth: true,
               builder: (context, params) => const QrScannerWidget(),
             ),
             FFRoute(
@@ -186,11 +191,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'notificationScreen',
               path: 'notificationScreen',
+              requireAuth: true,
               builder: (context, params) => const NotificationScreenWidget(),
             ),
             FFRoute(
               name: 'agendaHomeScreen',
               path: 'agendaHomeScreen',
+              requireAuth: true,
               builder: (context, params) => const AgendaHomeScreenWidget(),
             ),
             FFRoute(
@@ -222,11 +229,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'notification_page',
               path: 'notificationPage',
+              requireAuth: true,
               builder: (context, params) => const NotificationPageWidget(),
             ),
             FFRoute(
               name: 'feedback_page',
               path: 'feedbackPage',
+              requireAuth: true,
               builder: (context, params) => const FeedbackPageWidget(),
             ),
             FFRoute(
@@ -238,7 +247,43 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'TeamPage',
               path: 'teamPage',
+              requireAuth: true,
               builder: (context, params) => const TeamPageWidget(),
+            ),
+            FFRoute(
+              name: 'addSpeakerPage',
+              path: 'addSpeakerPage',
+              builder: (context, params) => const AddSpeakerPageWidget(),
+            ),
+            FFRoute(
+              name: 'addEventPage',
+              path: 'addEventPage',
+              builder: (context, params) => const AddEventPageWidget(),
+            ),
+            FFRoute(
+              name: 'feedbackForm',
+              path: 'feedbackForm',
+              builder: (context, params) => const FeedbackFormWidget(),
+            ),
+            FFRoute(
+              name: 'addDevfestTeam',
+              path: 'addDevfestTeam',
+              builder: (context, params) => const AddDevfestTeamWidget(),
+            ),
+            FFRoute(
+              name: 'addActivityPage',
+              path: 'addActivityPage',
+              builder: (context, params) => const AddActivityPageWidget(),
+            ),
+            FFRoute(
+              name: 'addBoothPage',
+              path: 'addBoothPage',
+              builder: (context, params) => const AddBoothPageWidget(),
+            ),
+            FFRoute(
+              name: 'aboutGdgPage',
+              path: 'aboutGdgPage',
+              builder: (context, params) => const AboutGdgPageWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
@@ -439,7 +484,7 @@ class FFRoute {
                         ),
                       ),
                     )
-              : page;
+              : PushNotificationsHandler(child: page);
 
           final transitionInfo = state.transitionInfo;
           return transitionInfo.hasTransition

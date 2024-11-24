@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '/backend/backend.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:csv/csv.dart';
+import 'package:synchronized/synchronized.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
 class FFAppState extends ChangeNotifier {
@@ -16,9 +19,22 @@ class FFAppState extends ChangeNotifier {
   }
 
   Future initializePersistedState() async {
-    prefs = await SharedPreferences.getInstance();
-    _safeInit(() {
-      _userDetail = prefs.getString('ff_userDetail')?.ref ?? _userDetail;
+    secureStorage = const FlutterSecureStorage();
+    await _safeInitAsync(() async {
+      _userDetail =
+          (await secureStorage.getString('ff_userDetail'))?.ref ?? _userDetail;
+    });
+    await _safeInitAsync(() async {
+      if (await secureStorage.read(key: 'ff_loggedInUser') != null) {
+        try {
+          final serializedData =
+              await secureStorage.getString('ff_loggedInUser') ?? '{}';
+          _loggedInUser =
+              UserStruct.fromSerializableMap(jsonDecode(serializedData));
+        } catch (e) {
+          print("Can't decode persisted data type. Error: $e.");
+        }
+      }
     });
   }
 
@@ -27,7 +43,7 @@ class FFAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  late SharedPreferences prefs;
+  late FlutterSecureStorage secureStorage;
 
   bool _searchActive = false;
   bool get searchActive => _searchActive;
@@ -40,8 +56,12 @@ class FFAppState extends ChangeNotifier {
   set userDetail(DocumentReference? value) {
     _userDetail = value;
     value != null
-        ? prefs.setString('ff_userDetail', value.path)
-        : prefs.remove('ff_userDetail');
+        ? secureStorage.setString('ff_userDetail', value.path)
+        : secureStorage.remove('ff_userDetail');
+  }
+
+  void deleteUserDetail() {
+    secureStorage.delete(key: 'ff_userDetail');
   }
 
   String _eventName = 'DevFest 2024';
@@ -80,33 +100,49 @@ class FFAppState extends ChangeNotifier {
     _feedbackItemRating = value;
   }
 
-  List<String> _volunteerRole = ['volunteer_lvl1', 'volunteer_lvl2'];
-  List<String> get volunteerRole => _volunteerRole;
-  set volunteerRole(List<String> value) {
-    _volunteerRole = value;
+  List<String> _loggedInUserRoles = [];
+  List<String> get loggedInUserRoles => _loggedInUserRoles;
+  set loggedInUserRoles(List<String> value) {
+    _loggedInUserRoles = value;
   }
 
-  void addToVolunteerRole(String value) {
-    volunteerRole.add(value);
+  void addToLoggedInUserRoles(String value) {
+    loggedInUserRoles.add(value);
   }
 
-  void removeFromVolunteerRole(String value) {
-    volunteerRole.remove(value);
+  void removeFromLoggedInUserRoles(String value) {
+    loggedInUserRoles.remove(value);
   }
 
-  void removeAtIndexFromVolunteerRole(int index) {
-    volunteerRole.removeAt(index);
+  void removeAtIndexFromLoggedInUserRoles(int index) {
+    loggedInUserRoles.removeAt(index);
   }
 
-  void updateVolunteerRoleAtIndex(
+  void updateLoggedInUserRolesAtIndex(
     int index,
     String Function(String) updateFn,
   ) {
-    volunteerRole[index] = updateFn(_volunteerRole[index]);
+    loggedInUserRoles[index] = updateFn(_loggedInUserRoles[index]);
   }
 
-  void insertAtIndexInVolunteerRole(int index, String value) {
-    volunteerRole.insert(index, value);
+  void insertAtIndexInLoggedInUserRoles(int index, String value) {
+    loggedInUserRoles.insert(index, value);
+  }
+
+  UserStruct _loggedInUser = UserStruct();
+  UserStruct get loggedInUser => _loggedInUser;
+  set loggedInUser(UserStruct value) {
+    _loggedInUser = value;
+    secureStorage.setString('ff_loggedInUser', value.serialize());
+  }
+
+  void deleteLoggedInUser() {
+    secureStorage.delete(key: 'ff_loggedInUser');
+  }
+
+  void updateLoggedInUserStruct(Function(UserStruct) updateFn) {
+    updateFn(_loggedInUser);
+    secureStorage.setString('ff_loggedInUser', _loggedInUser.serialize());
   }
 }
 
@@ -120,4 +156,47 @@ Future _safeInitAsync(Function() initializeField) async {
   try {
     await initializeField();
   } catch (_) {}
+}
+
+extension FlutterSecureStorageExtensions on FlutterSecureStorage {
+  static final _lock = Lock();
+
+  Future<void> writeSync({required String key, String? value}) async =>
+      await _lock.synchronized(() async {
+        await write(key: key, value: value);
+      });
+
+  void remove(String key) => delete(key: key);
+
+  Future<String?> getString(String key) async => await read(key: key);
+  Future<void> setString(String key, String value) async =>
+      await writeSync(key: key, value: value);
+
+  Future<bool?> getBool(String key) async => (await read(key: key)) == 'true';
+  Future<void> setBool(String key, bool value) async =>
+      await writeSync(key: key, value: value.toString());
+
+  Future<int?> getInt(String key) async =>
+      int.tryParse(await read(key: key) ?? '');
+  Future<void> setInt(String key, int value) async =>
+      await writeSync(key: key, value: value.toString());
+
+  Future<double?> getDouble(String key) async =>
+      double.tryParse(await read(key: key) ?? '');
+  Future<void> setDouble(String key, double value) async =>
+      await writeSync(key: key, value: value.toString());
+
+  Future<List<String>?> getStringList(String key) async =>
+      await read(key: key).then((result) {
+        if (result == null || result.isEmpty) {
+          return null;
+        }
+        return const CsvToListConverter()
+            .convert(result)
+            .first
+            .map((e) => e.toString())
+            .toList();
+      });
+  Future<void> setStringList(String key, List<String> value) async =>
+      await writeSync(key: key, value: const ListToCsvConverter().convert([value]));
 }

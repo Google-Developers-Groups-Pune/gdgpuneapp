@@ -307,7 +307,9 @@ class _MenuPageWidgetState extends State<MenuPageWidget> {
                           await authManager.signOut();
                           GoRouter.of(context).clearRedirectLocation();
 
+                          FFAppState().deleteUserDetail();
                           FFAppState().userDetail = null;
+
                           FFAppState().searchActive = false;
 
                           context.goNamedAuth(
@@ -360,9 +362,28 @@ class _MenuPageWidgetState extends State<MenuPageWidget> {
               wrapWithModel(
                 model: _model.mainNavBarModel,
                 updateCallback: () => safeSetState(() {}),
-                child: const MainNavBarWidget(
+                child: MainNavBarWidget(
                   pageIndex: 5,
-                  loginType: FFAppConstants.loginTypeAttendee,
+                  loginType: () {
+                    if (FFAppState()
+                        .loggedInUser
+                        .roles
+                        .contains(FFAppConstants.loginTypeVolunteerlvl1)) {
+                      return FFAppConstants.loginTypeVolunteer;
+                    } else if (FFAppState()
+                        .loggedInUser
+                        .roles
+                        .contains(FFAppConstants.loginTypeVolunteerlvl2)) {
+                      return FFAppConstants.loginTypeVolunteer;
+                    } else if (FFAppState()
+                        .loggedInUser
+                        .roles
+                        .contains(FFAppConstants.organizerRole)) {
+                      return FFAppConstants.loginTypeVolunteer;
+                    } else {
+                      return FFAppConstants.loginTypeAttendee;
+                    }
+                  }(),
                 ),
               ),
             ],
