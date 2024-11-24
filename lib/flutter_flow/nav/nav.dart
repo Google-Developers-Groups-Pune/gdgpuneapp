@@ -232,6 +232,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'AboutGdgPune',
               path: 'aboutGdgPune',
+              requireAuth: true,
               builder: (context, params) => const AboutGdgPuneWidget(),
             ),
             FFRoute(

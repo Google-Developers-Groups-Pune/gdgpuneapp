@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'feedback_page_model.dart';
 export 'feedback_page_model.dart';
@@ -25,17 +24,6 @@ class _FeedbackPageWidgetState extends State<FeedbackPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => FeedbackPageModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.feedBackQuestionsOutput = await queryFeedbackQuestionsRecordOnce(
-        queryBuilder: (feedbackQuestionsRecord) =>
-            feedbackQuestionsRecord.where(
-          'event',
-          isEqualTo: FFAppState().eventName,
-        ),
-      );
-    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -94,34 +82,72 @@ class _FeedbackPageWidgetState extends State<FeedbackPageWidget> {
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
             ),
-            child: Builder(
-              builder: (context) {
-                final feedbackListItem =
-                    _model.feedBackQuestionsOutput?.toList() ?? [];
-
-                return ListView.builder(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  itemCount: feedbackListItem.length,
-                  itemBuilder: (context, feedbackListItemIndex) {
-                    final feedbackListItemItem =
-                        feedbackListItem[feedbackListItemIndex];
-                    return Align(
-                      alignment: const AlignmentDirectional(0.0, 0.0),
-                      child: Container(
-                        height: 200.0,
-                        decoration: const BoxDecoration(),
-                        child: Align(
-                          alignment: const AlignmentDirectional(0.0, 0.0),
-                          child: FeedbackItemWidget(
-                            key: Key(
-                                'Keyh2e_${feedbackListItemIndex}_of_${feedbackListItem.length}'),
-                            feedbackQuestion: feedbackListItemItem
-                                .questions[feedbackListItemIndex],
-                          ),
+            child: StreamBuilder<List<FeedbackQuestionsRecord>>(
+              stream: queryFeedbackQuestionsRecord(
+                queryBuilder: (feedbackQuestionsRecord) =>
+                    feedbackQuestionsRecord.where(
+                  'event',
+                  isEqualTo: FFAppState().eventName,
+                ),
+                singleRecord: true,
+              ),
+              builder: (context, snapshot) {
+                // Customize what your widget looks like when it's loading.
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: SizedBox(
+                      width: 50.0,
+                      height: 50.0,
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          FlutterFlowTheme.of(context).primary,
                         ),
                       ),
+                    ),
+                  );
+                }
+                List<FeedbackQuestionsRecord>
+                    feedbackListFeedbackQuestionsRecordList = snapshot.data!;
+                // Return an empty Container when the item does not exist.
+                if (snapshot.data!.isEmpty) {
+                  return Container();
+                }
+                final feedbackListFeedbackQuestionsRecord =
+                    feedbackListFeedbackQuestionsRecordList.isNotEmpty
+                        ? feedbackListFeedbackQuestionsRecordList.first
+                        : null;
+
+                return Builder(
+                  builder: (context) {
+                    final feedbackListItem = feedbackListFeedbackQuestionsRecord
+                            ?.questions
+                            .toList() ??
+                        [];
+
+                    return ListView.builder(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: feedbackListItem.length,
+                      itemBuilder: (context, feedbackListItemIndex) {
+                        final feedbackListItemItem =
+                            feedbackListItem[feedbackListItemIndex];
+                        return Container(
+                          decoration: const BoxDecoration(),
+                          child: Align(
+                            alignment: const AlignmentDirectional(-1.0, 0.0),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  18.0, 0.0, 0.0, 0.0),
+                              child: FeedbackItemWidget(
+                                key: Key(
+                                    'Keyh2e_${feedbackListItemIndex}_of_${feedbackListItem.length}'),
+                                feedbackQuestion: feedbackListItemItem,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     );
                   },
                 );

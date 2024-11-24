@@ -7,9 +7,9 @@ class AboutGdgPuneModel extends FlutterFlowModel<AboutGdgPuneWidget> {
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Firestore Query - Query a collection] action in AboutGdgPune widget.
-  AboutGdgRecord? aboutGdgPune;
-  // Stores action output result for [Firestore Query - Query a collection] action in AboutGdgPune widget.
   List<UsersRecord>? listOfOrganizer;
+  // Stores action output result for [Firestore Query - Query a collection] action in AboutGdgPune widget.
+  AboutGdgRecord? aboutGdgPune;
 
   @override
   void initState(BuildContext context) {}
