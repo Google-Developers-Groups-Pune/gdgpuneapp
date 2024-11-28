@@ -37,9 +37,10 @@ export '/notifications/notification_page/notification_page_widget.dart'
     show NotificationPageWidget;
 export '/feedback/feedback_page/feedback_page_widget.dart'
     show FeedbackPageWidget;
-export '/about_gdg_pune/about_gdg_pune/about_gdg_pune_widget.dart'
+export '/volunteer_screens/about_gdg_pune/about_gdg_pune/about_gdg_pune_widget.dart'
     show AboutGdgPuneWidget;
-export '/devfest_team/team_page/team_page_widget.dart' show TeamPageWidget;
+export '/volunteer_screens/devfest_team/team_page/team_page_widget.dart'
+    show TeamPageWidget;
 export '/volunteer_screens/add_speaker/add_speaker_page/add_speaker_page_widget.dart'
     show AddSpeakerPageWidget;
 export '/volunteer_screens/add_event/add_event_page/add_event_page_widget.dart'
@@ -54,3 +55,4 @@ export '/volunteer_screens/add_booth/add_booth_page/add_booth_page_widget.dart'
     show AddBoothPageWidget;
 export '/volunteer_screens/about_g_d_g_page/about_gdg_page/about_gdg_page_widget.dart'
     show AboutGdgPageWidget;
+export '/qrcode_widget/qrcode_widget_widget.dart' show QrcodeWidgetWidget;

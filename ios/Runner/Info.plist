@@ -53,13 +53,10 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 
-
-
-    <key>UIBackgroundModes</key>
-    <array>
-        <string>fetch</string>
-        <string>remote-notification</string>
-    </array>
+	<key>NSCameraUsageDescription</key>
+    <string>In order to scan for barcodes and QR codes, this app requires permission to access the camera.</string>
+	<key>PermissionGroupNotification</key>
+    <string>We want to send you regular updates regarding events</string>
 
 
 	<key>UILaunchStoryboardName</key>

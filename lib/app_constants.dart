@@ -6,4 +6,6 @@ abstract class FFAppConstants {
   static const String loginTypeVolunteerlvl2 = 'volunteer_lvl2';
   static const String loginTypeVolunteer = 'volunteer';
   static const String loginTypeSpeaker = 'speaker';
+  static const bool disableQrFunctionality = true;
+  static const bool disableNotificationFunctionality = true;
 }

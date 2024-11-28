@@ -146,11 +146,14 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                                       ),
                                       child: Icon(
                                         Icons.qr_code_2,
-                                        color: widget.qrData!.registerQrScanned
-                                            ? FlutterFlowTheme.of(context)
-                                                .secondary
-                                            : FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
+                                        color: valueOrDefault<Color>(
+                                          widget.qrData!.registerQrScanned
+                                              ? FlutterFlowTheme.of(context)
+                                                  .secondary
+                                              : FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
+                                          FlutterFlowTheme.of(context).primary,
+                                        ),
                                         size: 72.0,
                                       ),
                                     ),
@@ -169,10 +172,13 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                                               padding: const EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 0.0, 0.0, 4.0),
                                               child: Text(
-                                                widget.qrData!
-                                                        .registerQrScanned
-                                                    ? 'Entry Done'
-                                                    : 'Entry Coupon',
+                                                valueOrDefault<String>(
+                                                  widget.qrData!
+                                                          .registerQrScanned
+                                                      ? 'Entry Done'
+                                                      : 'Entry Coupon',
+                                                  'Entry coupon',
+                                                ),
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .titleLarge
@@ -294,9 +300,12 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                                               padding: const EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 0.0, 0.0, 4.0),
                                               child: Text(
-                                                widget.qrData!.foodQrScanned
-                                                    ? 'Food Done'
-                                                    : 'Food Coupon',
+                                                valueOrDefault<String>(
+                                                  widget.qrData!.foodQrScanned
+                                                      ? 'Food Done'
+                                                      : 'Food Coupon',
+                                                  'Food Coupon',
+                                                ),
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .titleLarge
@@ -417,9 +426,13 @@ class _UserQRCodeListPageWidgetState extends State<UserQRCodeListPageWidget> {
                                               padding: const EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 0.0, 0.0, 4.0),
                                               child: Text(
-                                                widget.qrData!.goodieQrScanned
-                                                    ? 'Swags Taken'
-                                                    : 'Swag\'s Coupon',
+                                                valueOrDefault<String>(
+                                                  widget.qrData!
+                                                          .goodieQrScanned
+                                                      ? 'Swags Taken'
+                                                      : 'Swag\'s Coupon',
+                                                  'Swag\'s Coupon',
+                                                ),
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .titleLarge

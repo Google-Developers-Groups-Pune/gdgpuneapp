@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '/backend/backend.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:csv/csv.dart';
-import 'package:synchronized/synchronized.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
 class FFAppState extends ChangeNotifier {
@@ -19,16 +17,14 @@ class FFAppState extends ChangeNotifier {
   }
 
   Future initializePersistedState() async {
-    secureStorage = const FlutterSecureStorage();
-    await _safeInitAsync(() async {
-      _userDetail =
-          (await secureStorage.getString('ff_userDetail'))?.ref ?? _userDetail;
+    prefs = await SharedPreferences.getInstance();
+    _safeInit(() {
+      _userDetail = prefs.getString('ff_userDetail')?.ref ?? _userDetail;
     });
-    await _safeInitAsync(() async {
-      if (await secureStorage.read(key: 'ff_loggedInUser') != null) {
+    _safeInit(() {
+      if (prefs.containsKey('ff_loggedInUser')) {
         try {
-          final serializedData =
-              await secureStorage.getString('ff_loggedInUser') ?? '{}';
+          final serializedData = prefs.getString('ff_loggedInUser') ?? '{}';
           _loggedInUser =
               UserStruct.fromSerializableMap(jsonDecode(serializedData));
         } catch (e) {
@@ -43,7 +39,7 @@ class FFAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  late FlutterSecureStorage secureStorage;
+  late SharedPreferences prefs;
 
   bool _searchActive = false;
   bool get searchActive => _searchActive;
@@ -56,12 +52,8 @@ class FFAppState extends ChangeNotifier {
   set userDetail(DocumentReference? value) {
     _userDetail = value;
     value != null
-        ? secureStorage.setString('ff_userDetail', value.path)
-        : secureStorage.remove('ff_userDetail');
-  }
-
-  void deleteUserDetail() {
-    secureStorage.delete(key: 'ff_userDetail');
+        ? prefs.setString('ff_userDetail', value.path)
+        : prefs.remove('ff_userDetail');
   }
 
   String _eventName = 'DevFest 2024';
@@ -133,16 +125,41 @@ class FFAppState extends ChangeNotifier {
   UserStruct get loggedInUser => _loggedInUser;
   set loggedInUser(UserStruct value) {
     _loggedInUser = value;
-    secureStorage.setString('ff_loggedInUser', value.serialize());
-  }
-
-  void deleteLoggedInUser() {
-    secureStorage.delete(key: 'ff_loggedInUser');
+    prefs.setString('ff_loggedInUser', value.serialize());
   }
 
   void updateLoggedInUserStruct(Function(UserStruct) updateFn) {
     updateFn(_loggedInUser);
-    secureStorage.setString('ff_loggedInUser', _loggedInUser.serialize());
+    prefs.setString('ff_loggedInUser', _loggedInUser.serialize());
+  }
+
+  List<FeedbacksStruct> _feedbackAnswers = [];
+  List<FeedbacksStruct> get feedbackAnswers => _feedbackAnswers;
+  set feedbackAnswers(List<FeedbacksStruct> value) {
+    _feedbackAnswers = value;
+  }
+
+  void addToFeedbackAnswers(FeedbacksStruct value) {
+    feedbackAnswers.add(value);
+  }
+
+  void removeFromFeedbackAnswers(FeedbacksStruct value) {
+    feedbackAnswers.remove(value);
+  }
+
+  void removeAtIndexFromFeedbackAnswers(int index) {
+    feedbackAnswers.removeAt(index);
+  }
+
+  void updateFeedbackAnswersAtIndex(
+    int index,
+    FeedbacksStruct Function(FeedbacksStruct) updateFn,
+  ) {
+    feedbackAnswers[index] = updateFn(_feedbackAnswers[index]);
+  }
+
+  void insertAtIndexInFeedbackAnswers(int index, FeedbacksStruct value) {
+    feedbackAnswers.insert(index, value);
   }
 }
 
@@ -156,47 +173,4 @@ Future _safeInitAsync(Function() initializeField) async {
   try {
     await initializeField();
   } catch (_) {}
-}
-
-extension FlutterSecureStorageExtensions on FlutterSecureStorage {
-  static final _lock = Lock();
-
-  Future<void> writeSync({required String key, String? value}) async =>
-      await _lock.synchronized(() async {
-        await write(key: key, value: value);
-      });
-
-  void remove(String key) => delete(key: key);
-
-  Future<String?> getString(String key) async => await read(key: key);
-  Future<void> setString(String key, String value) async =>
-      await writeSync(key: key, value: value);
-
-  Future<bool?> getBool(String key) async => (await read(key: key)) == 'true';
-  Future<void> setBool(String key, bool value) async =>
-      await writeSync(key: key, value: value.toString());
-
-  Future<int?> getInt(String key) async =>
-      int.tryParse(await read(key: key) ?? '');
-  Future<void> setInt(String key, int value) async =>
-      await writeSync(key: key, value: value.toString());
-
-  Future<double?> getDouble(String key) async =>
-      double.tryParse(await read(key: key) ?? '');
-  Future<void> setDouble(String key, double value) async =>
-      await writeSync(key: key, value: value.toString());
-
-  Future<List<String>?> getStringList(String key) async =>
-      await read(key: key).then((result) {
-        if (result == null || result.isEmpty) {
-          return null;
-        }
-        return const CsvToListConverter()
-            .convert(result)
-            .first
-            .map((e) => e.toString())
-            .toList();
-      });
-  Future<void> setStringList(String key, List<String> value) async =>
-      await writeSync(key: key, value: const ListToCsvConverter().convert([value]));
 }

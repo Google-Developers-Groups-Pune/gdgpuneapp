@@ -1,8 +1,8 @@
-import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -13,9 +13,11 @@ class FeedbackItemWidget extends StatefulWidget {
   const FeedbackItemWidget({
     super.key,
     required this.feedbackQuestion,
+    required this.componentIndex,
   });
 
   final QuestionsStruct? feedbackQuestion;
+  final int? componentIndex;
 
   @override
   State<FeedbackItemWidget> createState() => _FeedbackItemWidgetState();
@@ -35,9 +37,29 @@ class _FeedbackItemWidgetState extends State<FeedbackItemWidget> {
     super.initState();
     _model = createModel(context, () => FeedbackItemModel());
 
+    // On component load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      FFAppState().insertAtIndexInFeedbackAnswers(
+          widget.componentIndex!,
+          FeedbacksStruct(
+            question: widget.feedbackQuestion?.question,
+            type: widget.feedbackQuestion?.type,
+            answer: null,
+          ));
+      safeSetState(() {});
+    });
+
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
-
+    _model.textFieldFocusNode!.addListener(
+      () async {
+        FFAppState().updateFeedbackAnswersAtIndex(
+          widget.componentIndex!,
+          (e) => e..answer = _model.textController.text,
+        );
+        safeSetState(() {});
+      },
+    );
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -78,20 +100,32 @@ class _FeedbackItemWidgetState extends State<FeedbackItemWidget> {
                   FFAppState().feedbackItemRating)
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-                  child: RatingBar.builder(
-                    onRatingUpdate: (newValue) =>
-                        safeSetState(() => _model.ratingBarValue = newValue),
-                    itemBuilder: (context, index) => FaIcon(
-                      FontAwesomeIcons.star,
-                      color: FlutterFlowTheme.of(context).primary,
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    child: RatingBar.builder(
+                      onRatingUpdate: (newValue) {
+                        safeSetState(() => _model.ratingBarValue = newValue);
+                        FFAppState().updateFeedbackAnswersAtIndex(
+                          widget.componentIndex!,
+                          (e) => e..answer = _model.ratingBarValue.toString(),
+                        );
+                        safeSetState(() {});
+                      },
+                      itemBuilder: (context, index) => FaIcon(
+                        FontAwesomeIcons.star,
+                        color: FlutterFlowTheme.of(context).primary,
+                      ),
+                      direction: Axis.horizontal,
+                      initialRating: _model.ratingBarValue ??= 0.0,
+                      unratedColor: FlutterFlowTheme.of(context).secondaryText,
+                      itemCount: 5,
+                      itemPadding: const EdgeInsets.fromLTRB(0.0, 0.0, 28.0, 0.0),
+                      itemSize: 24.0,
+                      glowColor: FlutterFlowTheme.of(context).primary,
                     ),
-                    direction: Axis.horizontal,
-                    initialRating: _model.ratingBarValue ??= 0.0,
-                    unratedColor: FlutterFlowTheme.of(context).secondaryText,
-                    itemCount: 5,
-                    itemPadding: const EdgeInsets.fromLTRB(0.0, 0.0, 28.0, 0.0),
-                    itemSize: 24.0,
-                    glowColor: FlutterFlowTheme.of(context).primary,
                   ),
                 ),
               if (widget.feedbackQuestion?.type ==

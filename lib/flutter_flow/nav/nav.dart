@@ -6,8 +6,6 @@ import '/backend/backend.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
-import '/backend/push_notifications/push_notifications_handler.dart'
-    show PushNotificationsHandler;
 import '/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -236,7 +234,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'feedback_page',
               path: 'feedbackPage',
               requireAuth: true,
-              builder: (context, params) => const FeedbackPageWidget(),
+              builder: (context, params) => FeedbackPageWidget(
+                userFeedback: params.getParam(
+                  'userFeedback',
+                  ParamType.DocumentReference,
+                  isList: false,
+                  collectionNamePath: ['feedbacks'],
+                ),
+              ),
             ),
             FFRoute(
               name: 'AboutGdgPune',
@@ -284,6 +289,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'aboutGdgPage',
               path: 'aboutGdgPage',
               builder: (context, params) => const AboutGdgPageWidget(),
+            ),
+            FFRoute(
+              name: 'qrcode_widget',
+              path: 'qrcodeWidget',
+              builder: (context, params) => QrcodeWidgetWidget(
+                linkedInUrl: params.getParam(
+                  'linkedInUrl',
+                  ParamType.String,
+                ),
+              ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
@@ -484,7 +499,7 @@ class FFRoute {
                         ),
                       ),
                     )
-              : PushNotificationsHandler(child: page);
+              : page;
 
           final transitionInfo = state.transitionInfo;
           return transitionInfo.hasTransition

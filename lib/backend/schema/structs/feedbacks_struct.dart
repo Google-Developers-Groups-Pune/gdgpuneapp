@@ -10,11 +10,11 @@ class FeedbacksStruct extends FFFirebaseStruct {
   FeedbacksStruct({
     String? answer,
     String? question,
-    String? rating,
+    String? type,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _answer = answer,
         _question = question,
-        _rating = rating,
+        _type = type,
         super(firestoreUtilData);
 
   // "answer" field.
@@ -31,17 +31,17 @@ class FeedbacksStruct extends FFFirebaseStruct {
 
   bool hasQuestion() => _question != null;
 
-  // "rating" field.
-  String? _rating;
-  String get rating => _rating ?? '';
-  set rating(String? val) => _rating = val;
+  // "type" field.
+  String? _type;
+  String get type => _type ?? '';
+  set type(String? val) => _type = val;
 
-  bool hasRating() => _rating != null;
+  bool hasType() => _type != null;
 
   static FeedbacksStruct fromMap(Map<String, dynamic> data) => FeedbacksStruct(
         answer: data['answer'] as String?,
         question: data['question'] as String?,
-        rating: data['rating'] as String?,
+        type: data['type'] as String?,
       );
 
   static FeedbacksStruct? maybeFromMap(dynamic data) => data is Map
@@ -51,7 +51,7 @@ class FeedbacksStruct extends FFFirebaseStruct {
   Map<String, dynamic> toMap() => {
         'answer': _answer,
         'question': _question,
-        'rating': _rating,
+        'type': _type,
       }.withoutNulls;
 
   @override
@@ -64,8 +64,8 @@ class FeedbacksStruct extends FFFirebaseStruct {
           _question,
           ParamType.String,
         ),
-        'rating': serializeParam(
-          _rating,
+        'type': serializeParam(
+          _type,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -82,8 +82,8 @@ class FeedbacksStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
-        rating: deserializeParam(
-          data['rating'],
+        type: deserializeParam(
+          data['type'],
           ParamType.String,
           false,
         ),
@@ -97,17 +97,17 @@ class FeedbacksStruct extends FFFirebaseStruct {
     return other is FeedbacksStruct &&
         answer == other.answer &&
         question == other.question &&
-        rating == other.rating;
+        type == other.type;
   }
 
   @override
-  int get hashCode => const ListEquality().hash([answer, question, rating]);
+  int get hashCode => const ListEquality().hash([answer, question, type]);
 }
 
 FeedbacksStruct createFeedbacksStruct({
   String? answer,
   String? question,
-  String? rating,
+  String? type,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -116,7 +116,7 @@ FeedbacksStruct createFeedbacksStruct({
     FeedbacksStruct(
       answer: answer,
       question: question,
-      rating: rating,
+      type: type,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

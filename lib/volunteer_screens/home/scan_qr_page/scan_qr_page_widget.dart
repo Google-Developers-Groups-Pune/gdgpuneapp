@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:provider/provider.dart';
 import 'scan_qr_page_model.dart';
 export 'scan_qr_page_model.dart';
@@ -173,7 +174,45 @@ class _ScanQrPageWidgetState extends State<ScanQrPageWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        context.pushNamed('qrScanner');
+                        _model.userQrType =
+                            await FlutterBarcodeScanner.scanBarcode(
+                          '#C62828', // scanning line color
+                          'Cancel', // cancel button text
+                          true, // whether to show the flash icon
+                          ScanMode.QR,
+                        );
+
+                        _model.userQrDataList = (String var1) {
+                          return var1.split('-');
+                        }(_model.userQrType)
+                            .toList()
+                            .cast<String>();
+                        safeSetState(() {});
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: Text(_model.userQrDataList.first),
+                              content: Text(_model.userQrDataList.last),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: const Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        _model.userQrDetails = await queryQrRecordOnce(
+                          queryBuilder: (qrRecord) => qrRecord.where(
+                            'attendee_email',
+                            isEqualTo: _model.userQrDataList.last,
+                          ),
+                          singleRecord: true,
+                        ).then((s) => s.firstOrNull);
+
+                        safeSetState(() {});
                       },
                       child: Material(
                         color: Colors.transparent,

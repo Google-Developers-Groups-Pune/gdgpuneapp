@@ -1,5 +1,4 @@
 import '/backend/backend.dart';
-import '/backend/push_notifications/push_notifications_util.dart';
 import '/components/main_nav_bar_widget.dart';
 import '/components/send_btn_component/send_btn_component_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -491,17 +490,6 @@ class _NotificationScreenWidgetState extends State<NotificationScreenWidget> {
                                 .cast<DocumentReference>();
                             safeSetState(() {});
                           }
-
-                          triggerPushNotification(
-                            notificationTitle:
-                                _model.notificationTitleTextController.text,
-                            notificationText: _model
-                                .notificationDescriptionTextController.text,
-                            notificationSound: 'default',
-                            userRefs: _model.userSegement.toList(),
-                            initialPageName: 'UserHomePage',
-                            parameterData: {},
-                          );
 
                           safeSetState(() {});
                         },

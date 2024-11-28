@@ -1,5 +1,6 @@
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
+import '/feedback/feedback_item/feedback_item_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'feedback_page_widget.dart' show FeedbackPageWidget;
 import 'package:flutter/material.dart';
@@ -19,9 +20,18 @@ class FeedbackPageModel extends FlutterFlowModel<FeedbackPageWidget> {
           int index, Function(FeedbacksStruct) updateFn) =>
       feedbackAnswers[index] = updateFn(feedbackAnswers[index]);
 
-  @override
-  void initState(BuildContext context) {}
+  ///  State fields for stateful widgets in this page.
+
+  // Models for feedback_item dynamic component.
+  late FlutterFlowDynamicModels<FeedbackItemModel> feedbackItemModels;
 
   @override
-  void dispose() {}
+  void initState(BuildContext context) {
+    feedbackItemModels = FlutterFlowDynamicModels(() => FeedbackItemModel());
+  }
+
+  @override
+  void dispose() {
+    feedbackItemModels.dispose();
+  }
 }

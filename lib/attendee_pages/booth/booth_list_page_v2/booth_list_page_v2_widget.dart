@@ -161,279 +161,328 @@ class _BoothListPageV2WidgetState extends State<BoothListPageV2Widget> {
         ),
         body: SafeArea(
           top: true,
-          child: Stack(
-            alignment: const AlignmentDirectional(0.0, 1.0),
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.max,
+          child: Align(
+            alignment: const AlignmentDirectional(0.0, 0.0),
+            child: Container(
+              constraints: const BoxConstraints(
+                maxWidth: 570.0,
+              ),
+              decoration: const BoxDecoration(),
+              child: Stack(
+                alignment: const AlignmentDirectional(0.0, 1.0),
                 children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: PagedListView<DocumentSnapshot<Object?>?,
-                          BoothsRecord>(
-                        pagingController: _model.setListViewController(
-                          BoothsRecord.collection.where(
-                            'event',
-                            isEqualTo: FFAppState().eventName,
-                          ),
-                        ),
-                        padding: const EdgeInsets.fromLTRB(
-                          0,
-                          0,
-                          0,
-                          58.0,
-                        ),
-                        shrinkWrap: true,
-                        reverse: false,
-                        scrollDirection: Axis.vertical,
-                        builderDelegate:
-                            PagedChildBuilderDelegate<BoothsRecord>(
-                          // Customize what your widget looks like when it's loading the first page.
-                          firstPageProgressIndicatorBuilder: (_) => Center(
-                            child: SizedBox(
-                              width: 50.0,
-                              height: 50.0,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  FlutterFlowTheme.of(context).primary,
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 64.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: PagedListView<DocumentSnapshot<Object?>?,
+                                BoothsRecord>(
+                              pagingController: _model.setListViewController(
+                                BoothsRecord.collection.where(
+                                  'event',
+                                  isEqualTo: FFAppState().eventName,
                                 ),
                               ),
-                            ),
-                          ),
-                          // Customize what your widget looks like when it's loading another page.
-                          newPageProgressIndicatorBuilder: (_) => Center(
-                            child: SizedBox(
-                              width: 50.0,
-                              height: 50.0,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  FlutterFlowTheme.of(context).primary,
-                                ),
+                              padding: const EdgeInsets.fromLTRB(
+                                0,
+                                0,
+                                0,
+                                58.0,
                               ),
-                            ),
-                          ),
-
-                          itemBuilder: (context, _, listViewIndex) {
-                            final listViewBoothsRecord = _model
-                                .listViewPagingController!
-                                .itemList![listViewIndex];
-                            return Container(
-                              height: MediaQuery.sizeOf(context).height * 0.15,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  context.pushNamed(
-                                    'boothDetailsPage',
-                                    queryParameters: {
-                                      'boothReference': serializeParam(
-                                        listViewBoothsRecord.reference,
-                                        ParamType.DocumentReference,
+                              shrinkWrap: true,
+                              reverse: false,
+                              scrollDirection: Axis.vertical,
+                              builderDelegate:
+                                  PagedChildBuilderDelegate<BoothsRecord>(
+                                // Customize what your widget looks like when it's loading the first page.
+                                firstPageProgressIndicatorBuilder: (_) =>
+                                    Center(
+                                  child: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        FlutterFlowTheme.of(context).primary,
                                       ),
-                                    }.withoutNulls,
-                                  );
-                                },
-                                child: Card(
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  elevation: 2.0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    ),
                                   ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Container(
-                                        constraints: BoxConstraints(
-                                          minHeight: MediaQuery.sizeOf(context)
-                                                  .height *
-                                              0.2,
-                                          maxHeight: MediaQuery.sizeOf(context)
-                                                  .height *
-                                              0.2,
+                                ),
+                                // Customize what your widget looks like when it's loading another page.
+                                newPageProgressIndicatorBuilder: (_) => Center(
+                                  child: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        FlutterFlowTheme.of(context).primary,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                                itemBuilder: (context, _, listViewIndex) {
+                                  final listViewBoothsRecord = _model
+                                      .listViewPagingController!
+                                      .itemList![listViewIndex];
+                                  return Container(
+                                    height: MediaQuery.sizeOf(context).height *
+                                        0.15,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        context.pushNamed(
+                                          'boothDetailsPage',
+                                          queryParameters: {
+                                            'boothReference': serializeParam(
+                                              listViewBoothsRecord.reference,
+                                              ParamType.DocumentReference,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      },
+                                      child: Card(
+                                        clipBehavior:
+                                            Clip.antiAliasWithSaveLayer,
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        elevation: 2.0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
                                         ),
-                                        decoration: const BoxDecoration(),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            child: CachedNetworkImage(
-                                              fadeInDuration:
-                                                  const Duration(milliseconds: 500),
-                                              fadeOutDuration:
-                                                  const Duration(milliseconds: 500),
-                                              imageUrl:
-                                                  listViewBoothsRecord.compLogo,
-                                              width: MediaQuery.sizeOf(context)
-                                                      .width *
-                                                  0.3,
-                                              height: 9.0,
-                                              fit: BoxFit.contain,
-                                              errorWidget: (context, error,
-                                                      stackTrace) =>
-                                                  Image.asset(
-                                                'assets/images/error_image.jpg',
-                                                width:
-                                                    MediaQuery.sizeOf(context)
-                                                            .width *
-                                                        0.3,
-                                                height: 9.0,
-                                                fit: BoxFit.contain,
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Container(
+                                              decoration: const BoxDecoration(),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                                child: CachedNetworkImage(
+                                                  fadeInDuration: const Duration(
+                                                      milliseconds: 500),
+                                                  fadeOutDuration: const Duration(
+                                                      milliseconds: 500),
+                                                  imageUrl: listViewBoothsRecord
+                                                      .compLogo,
+                                                  width: () {
+                                                    if (MediaQuery.sizeOf(
+                                                                context)
+                                                            .width <
+                                                        kBreakpointSmall) {
+                                                      return 150.0;
+                                                    } else if (MediaQuery
+                                                                .sizeOf(context)
+                                                            .width <
+                                                        kBreakpointMedium) {
+                                                      return 350.0;
+                                                    } else if (MediaQuery
+                                                                .sizeOf(context)
+                                                            .width <
+                                                        kBreakpointLarge) {
+                                                      return 350.0;
+                                                    } else {
+                                                      return 290.0;
+                                                    }
+                                                  }(),
+                                                  fit: BoxFit.cover,
+                                                  errorWidget: (context, error,
+                                                          stackTrace) =>
+                                                      Image.asset(
+                                                    'assets/images/error_image.jpg',
+                                                    width: () {
+                                                      if (MediaQuery.sizeOf(
+                                                                  context)
+                                                              .width <
+                                                          kBreakpointSmall) {
+                                                        return 150.0;
+                                                      } else if (MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width <
+                                                          kBreakpointMedium) {
+                                                        return 350.0;
+                                                      } else if (MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width <
+                                                          kBreakpointLarge) {
+                                                        return 350.0;
+                                                      } else {
+                                                        return 290.0;
+                                                      }
+                                                    }(),
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          constraints: BoxConstraints(
-                                            maxHeight:
-                                                MediaQuery.sizeOf(context)
-                                                        .height *
-                                                    0.2,
-                                          ),
-                                          decoration: const BoxDecoration(),
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    8.0, 0.0, 0.0, 0.0),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  listViewBoothsRecord.compName,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Inter Tight',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                            Expanded(
+                                              child: Container(
+                                                constraints: BoxConstraints(
+                                                  maxHeight:
+                                                      MediaQuery.sizeOf(context)
+                                                              .height *
+                                                          0.2,
                                                 ),
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  8.0,
-                                                                  0.0),
-                                                      child: Text(
-                                                        'Booth No.',
+                                                decoration: const BoxDecoration(),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          8.0, 0.0, 0.0, 0.0),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        listViewBoothsRecord
+                                                            .compName,
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyMedium
+                                                                .titleMedium
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Inter',
+                                                                      'Inter Tight',
                                                                   letterSpacing:
                                                                       0.0,
                                                                 ),
                                                       ),
-                                                    ),
-                                                    Text(
-                                                      listViewBoothsRecord
-                                                          .boothNumber,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .labelMedium
-                                                          .override(
-                                                            fontFamily: 'Inter',
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w600,
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        8.0,
+                                                                        0.0),
+                                                            child: Text(
+                                                              'Booth No.',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Inter',
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
                                                           ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
-                                                    await launchURL(
-                                                        listViewBoothsRecord
-                                                            .website);
-                                                  },
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      FaIcon(
-                                                        FontAwesomeIcons.globe,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        size: 24.0,
-                                                      ),
-                                                      Text(
-                                                        listViewBoothsRecord
-                                                            .website,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
+                                                          Text(
+                                                            listViewBoothsRecord
+                                                                .boothNumber,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
                                                                 .labelMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Inter',
                                                                   letterSpacing:
                                                                       0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
                                                                 ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ].divide(
-                                                        const SizedBox(width: 8.0)),
+                                                      InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
+                                                        onTap: () async {
+                                                          await launchURL(
+                                                              listViewBoothsRecord
+                                                                  .website);
+                                                        },
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            FaIcon(
+                                                              FontAwesomeIcons
+                                                                  .globe,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryText,
+                                                              size: 24.0,
+                                                            ),
+                                                            Expanded(
+                                                              child: Text(
+                                                                listViewBoothsRecord
+                                                                    .website,
+                                                                maxLines: 2,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Inter',
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ].divide(const SizedBox(
+                                                              width: 8.0)),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
+                                          ].divide(const SizedBox(width: 8.0)),
                                         ),
                                       ),
-                                    ].divide(const SizedBox(width: 8.0)),
-                                  ),
-                                ),
+                                    ),
+                                  );
+                                },
                               ),
-                            );
-                          },
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
+                    ),
+                  ),
+                  wrapWithModel(
+                    model: _model.mainNavBarModel,
+                    updateCallback: () => safeSetState(() {}),
+                    child: const MainNavBarWidget(
+                      pageIndex: 4,
+                      loginType: FFAppConstants.loginTypeAttendee,
                     ),
                   ),
                 ],
               ),
-              wrapWithModel(
-                model: _model.mainNavBarModel,
-                updateCallback: () => safeSetState(() {}),
-                child: const MainNavBarWidget(
-                  pageIndex: 4,
-                  loginType: FFAppConstants.loginTypeAttendee,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
